@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class UserFarmer(models.Model):
-    #Variáveis que o usuário fazendeiro possui, como o nome da fazenda.
+    #Variáveis que o usuário fazendeiro possui
     GENDER_TYPE = (
         ('masculino', 'Masculino'),
         ('feminino', 'Feminino'),
