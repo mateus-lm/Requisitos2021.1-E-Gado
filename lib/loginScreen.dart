@@ -1,7 +1,19 @@
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:flutter/material.dart';
+import 'addBovino.dart';
 
-class LoginMenu extends StatelessWidget {
+class LoginMenu extends StatefulWidget {
+  @override
+  _LoginMenuState createState() => _LoginMenuState();
+}
+
+class _LoginMenuState extends State<LoginMenu> {
+  final emailCon = TextEditingController();
+  final passwordCon = TextEditingController();
+
+  var _email;
+  var _password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +49,8 @@ class LoginMenu extends StatelessWidget {
                 ],
               ),
             ),
-            MyWidgets().caixaTexto('Email'),
-            MyWidgets().caixaTexto('Senha'),
+            MyWidgets().caixaTexto('Email', emailCon),
+            MyWidgets().caixaTexto('Senha', passwordCon),
             Align(
               alignment: Alignment
                   .centerRight, // Align however you like (i.e .centerRight, centerLeft)
@@ -53,9 +65,16 @@ class LoginMenu extends StatelessWidget {
             }),
             MyWidgets().button(
                 'Entrar', 320.0, 50.0, 26, Theme.of(context).primaryColor, () {
-              print("Entrar");
-              // Navigator.push(context,
-              //       MaterialPageRoute(builder: (context) => MainScreen()));
+              setState(() {
+                _email = emailCon.text;
+                _password = passwordCon.text;
+              });
+
+              print(_email);
+              print(_password);
+
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AddBovino()));
             }),
           ],
         ),
