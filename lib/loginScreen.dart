@@ -1,5 +1,8 @@
 import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/addFarm.dart';
+import 'package:dev/homeFarm.dart';
 import 'package:flutter/material.dart';
+import 'homeFarm.dart';
 import 'addFarm.dart';
 
 class LoginMenu extends StatefulWidget {
@@ -18,7 +21,7 @@ class _LoginMenuState extends State<LoginMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
+      body: SingleChildScrollView(
         padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
         child: Column(
           children: [
@@ -61,6 +64,8 @@ class _LoginMenuState extends State<LoginMenu> {
             ),
             MyWidgets().textButton('Criar Conta', 200, 40, 20, Colors.black,
                 () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomeFarm()));
               print("Tela de registro");
             }),
             MyWidgets().button(

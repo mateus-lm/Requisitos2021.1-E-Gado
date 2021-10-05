@@ -23,9 +23,10 @@ class MyWidgets {
         maxLength: maxLength,
         obscureText: isObscure,
         decoration: InputDecoration(
-          border: UnderlineInputBorder(),
-          disabledBorder:
-              UnderlineInputBorder(borderSide: BorderSide(color: Colors.blue)),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+          ),
+          border: const OutlineInputBorder(),
           labelStyle: TextStyle(color: Colors.black54),
           labelText: texto,
           errorText: errorText,
