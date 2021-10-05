@@ -127,7 +127,7 @@ class _AddBovinoState extends State<AddBovino> {
                       ),
                     ),
                   )),
-              CreationPicker(creationTypeCon),
+              DropDownCreate(creationTypeCon, 'Leiteiro', 'Corte',),
               MyWidgets()
                   .caixaTexto('Identificação:', idCon),
               GenderPicker(sexCon),

@@ -1,4 +1,5 @@
 import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/Screens/AddFinancialReport.dart';
 import 'package:dev/Screens/addBovino.dart';
 import 'package:dev/Screens/loginScreen.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class _HomeFarmState extends State<HomeFarm> {
                 15.0,
                 Theme.of(context).primaryColor, () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddBovino()));
+                  MaterialPageRoute(builder: (context) => AddFinancial()));
             })
           ],
         ),

@@ -142,7 +142,11 @@ class _GenderPickerState extends State<GenderPicker> {
           : EdgeInsets.only(bottom: 10.5),
       child: DropdownButtonFormField<String>(
           decoration: InputDecoration(
-            border: UnderlineInputBorder(),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+          ),
+          border: const OutlineInputBorder(),
+          labelStyle: TextStyle(color: Colors.black54),
             errorText: widget.errorText,
           ),
           hint: Text('Sexo'),
@@ -281,19 +285,21 @@ class _ErrorTextState extends State<ErrorText> {
   }
 }
 
-class CreationPicker extends StatefulWidget {
+class DropDownCreate extends StatefulWidget {
   final TextEditingController controller;
+  final String opcao1;
+  final String opcao2;
   final String errorText;
   final String dropdownValue;
-  const CreationPicker(this.controller,
+  const DropDownCreate(this.controller, this.opcao1, this.opcao2,
       {Key key, this.errorText, this.dropdownValue})
       : super(key: key);
 
   @override
-  _CreationPickerState createState() => _CreationPickerState();
+  _DropDownCreateState createState() => _DropDownCreateState();
 }
 
-class _CreationPickerState extends State<CreationPicker> {
+class _DropDownCreateState extends State<DropDownCreate> {
   String dropdownValue;
   @override
   Widget build(BuildContext context) {
@@ -304,7 +310,11 @@ class _CreationPickerState extends State<CreationPicker> {
           : EdgeInsets.only(bottom: 10.5),
       child: DropdownButtonFormField<String>(
           decoration: InputDecoration(
-            border: UnderlineInputBorder(),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.blue, width: 1.0),
+          ),
+          border: const OutlineInputBorder(),
+          labelStyle: TextStyle(color: Colors.black54),
             errorText: widget.errorText,
           ),
           hint: Text('Tipo de criação'),
@@ -318,11 +328,11 @@ class _CreationPickerState extends State<CreationPicker> {
           },
           items: [
             DropdownMenuItem(
-              child: Text('Leiteiro'),
+              child: Text(widget.opcao1),
               value: '1', //value pode ser mudado para valor mais significativo
             ),
             DropdownMenuItem(
-              child: Text('Corte'),
+              child: Text(widget.opcao2),
               value: '2',
             ),
           ]),
