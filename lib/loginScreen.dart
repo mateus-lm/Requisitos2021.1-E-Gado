@@ -1,6 +1,6 @@
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:flutter/material.dart';
-import 'addBovino.dart';
+import 'addFarm.dart';
 
 class LoginMenu extends StatefulWidget {
   @override
@@ -73,8 +73,8 @@ class _LoginMenuState extends State<LoginMenu> {
               print(_email);
               print(_password);
 
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddBovino()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => AddFarm()));
             }),
           ],
         ),
