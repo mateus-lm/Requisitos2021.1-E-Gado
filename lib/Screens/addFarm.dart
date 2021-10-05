@@ -1,5 +1,5 @@
 import 'package:dev/Componentes/MyWidgets.dart';
-import 'package:dev/loginScreen.dart';
+import 'package:dev/Screens/loginScreen.dart';
 import 'package:flutter/material.dart';
 
 class AddFarm extends StatefulWidget {
@@ -12,6 +12,11 @@ class _AddFarmState extends State<AddFarm> {
   final farmCityCon = new TextEditingController();
   final farmStateCon = new TextEditingController();
   final farmSizeCon = new TextEditingController();
+
+  var _farmName;
+  var _farmCity;
+  var _farmState;
+  var _farmSize;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +78,16 @@ class _AddFarmState extends State<AddFarm> {
                     Padding(
                       padding: const EdgeInsets.only(left: 25.0, top: 15.0),
                       child: MyWidgets().button(
-                          'Salvar', 100, 40, 15, Colors.greenAccent, () {}),
+                          'Salvar', 100, 40, 15, Colors.greenAccent, () {
+                        setState(() {
+                          _farmName = farmNameCon.text;
+                          _farmCity = farmCityCon.text;
+                          _farmState = farmStateCon.text;
+                          _farmSize = farmSizeCon.text;
+                        
+                        });
+                        print(_farmName);
+                      }),
                     )
                   ],
                 )
