@@ -50,30 +50,47 @@ class _AddFinancialState extends State<AddFinancial> {
         padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
         child: Column(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Cadastro de Relatório Financeiro',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Roboto',
-                      fontSize: 18,
+            Padding(
+              padding: const EdgeInsets.only(top:20, bottom: 30.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Cadastro de Relatório Financeiro',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+                        fontSize: 18,
+                      ),
                     ),
                   ),
-                ),
-                Image(
-                  image: AssetImage('assets/images/logo.png'),
-                  width: 40,
-                  height: 40,
-                ),
-              ],
+                  Image(
+                    image: AssetImage('assets/images/logo.png'),
+                    width: 40,
+                    height: 40,
+                  ),
+                ],
+              ),
             ),
             DropDownCreate(financesTypeCon, 'Lucro', 'Despesa'),
             MyWidgets().caixaTexto('Valor', valueCon),
             DatePick(dateCon, 'data'),
-            
-            
+            Container(
+              padding: EdgeInsets.only(bottom: 11.5),
+              child: TextField(
+                controller: descriptionCon,
+                decoration: InputDecoration(
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.blue, width: 1.0),
+                  ),
+                  border: const OutlineInputBorder(),
+                  labelStyle: TextStyle(color: Colors.black54),
+                  labelText: 'Descrição',
+                ),
+                //controller: _textEditingController,
+              ),
+            )
           ],
         ),
       ),
