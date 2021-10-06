@@ -6,4 +6,4 @@ class CattleSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Cattle
-        fields = ['type_cattle', 'id_cattle', 'gender', 'birth_day', 'weigth', 'qtd_milk', 'days_to_lactation', 'farm']
+        fields = ['id','type_cattle', 'id_cattle', 'gender', 'birth_day', 'weigth', 'qtd_milk', 'days_to_lactation', 'farm']
