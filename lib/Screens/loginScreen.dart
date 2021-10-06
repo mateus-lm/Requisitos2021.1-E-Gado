@@ -1,9 +1,12 @@
 import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/Screens/addBovino.dart';
 import 'package:dev/Screens/addFarm.dart';
 import 'package:dev/Screens/homeFarm.dart';
 import 'package:flutter/material.dart';
 import 'homeFarm.dart';
 import 'addFarm.dart';
+import '../Controllers/userController.dart';
+import 'package:dev/globals.dart';
 
 class LoginMenu extends StatefulWidget {
   @override
@@ -16,6 +19,15 @@ class _LoginMenuState extends State<LoginMenu> {
 
   var _email;
   var _password;
+
+  void mudaTela(bool resposta) async {
+    if (resposta == true) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AddFarm()));
+    } else {
+      print('erro');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +87,9 @@ class _LoginMenuState extends State<LoginMenu> {
                 _password = passwordCon.text;
               });
 
-              print(_email);
-              print(_password);
-
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => AddFarm()));
+               userController
+                  .login(_email, _password)
+                  .then((resposta) => mudaTela(resposta));
             }),
           ],
         ),
