@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'user_farmer',
     'drf_yasg',
-    'cattle'
-    
+    'cattle',
+    'income_farm',
+    'farm',
 ]
 
 SWAGGER_SETTINGS = {

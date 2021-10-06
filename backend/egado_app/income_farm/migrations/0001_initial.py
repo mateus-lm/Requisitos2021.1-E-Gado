@@ -15,16 +15,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Cattle',
+            name='Income',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type_cattle', models.CharField(choices=[('GADO_LEITEIRO', 'GADO_LEITEIRO'), ('GADO_CORTE', 'GADO_CORTE')], max_length=255)),
-                ('id_cattle', models.CharField(max_length=255)),
-                ('gender', models.CharField(choices=[('FEMALE', 'FEMALE'), ('MALE', 'MALE')], max_length=255)),
-                ('birth_day', models.DateField()),
-                ('weigth', models.DecimalField(decimal_places=4, max_digits=6, max_length=255)),
-                ('qtd_milk', models.DecimalField(decimal_places=4, max_digits=6, max_length=255)),
-                ('days_to_lactation', models.DateField()),
+                ('income_type', models.CharField(choices=[('LUCRO', 'LUCRO'), ('DESPESA', 'DESPESA')], max_length=255)),
+                ('value', models.DecimalField(decimal_places=4, max_digits=6, max_length=255)),
+                ('date', models.DateField()),
+                ('description', models.CharField(max_length=255)),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

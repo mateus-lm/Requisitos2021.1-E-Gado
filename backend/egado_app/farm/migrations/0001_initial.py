@@ -10,21 +10,22 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('income_farm', '0001_initial'),
+        ('cattle', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Cattle',
+            name='Farm',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type_cattle', models.CharField(choices=[('GADO_LEITEIRO', 'GADO_LEITEIRO'), ('GADO_CORTE', 'GADO_CORTE')], max_length=255)),
-                ('id_cattle', models.CharField(max_length=255)),
-                ('gender', models.CharField(choices=[('FEMALE', 'FEMALE'), ('MALE', 'MALE')], max_length=255)),
-                ('birth_day', models.DateField()),
-                ('weigth', models.DecimalField(decimal_places=4, max_digits=6, max_length=255)),
-                ('qtd_milk', models.DecimalField(decimal_places=4, max_digits=6, max_length=255)),
-                ('days_to_lactation', models.DateField()),
+                ('name_farm', models.CharField(max_length=30)),
+                ('city', models.CharField(max_length=30)),
+                ('state', models.CharField(max_length=30)),
+                ('tam', models.CharField(max_length=30)),
+                ('cattles', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cattle.cattle')),
+                ('incomes_farm', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='income_farm.income')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
