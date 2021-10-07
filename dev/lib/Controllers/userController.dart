@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:dio/dio.dart';
 import 'package:dev/globals.dart';
-
+import 'dart:convert';
 
 part 'userController.g.dart';
 
@@ -33,10 +33,13 @@ abstract class UserControllerBase with Store {
   changeRegister(bool value) => isRegister = value;
 
   @action
+  @action
   login(String email, String password) async {
     var resposta = true;
     try {
       Response response = await api.auth(email, password);
+      var tokenss = response.data['tokens'];
+      print(tokenss.refresh);
       changeToken(response.data['tokens']);
       changeEmail(response.data["email"]);
     } on DioError catch (err) {

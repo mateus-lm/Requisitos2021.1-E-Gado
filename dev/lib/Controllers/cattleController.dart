@@ -17,10 +17,19 @@ abstract class CattleControllerBase with Store {
   }
 
   @action
-  postCattles(String creationType, String cattleId, String gender, String birthDay, String weigth, String qtdMilk, String daysToLactation, int farm) async {
+  postCattles(
+      String creationType,
+      String cattleId,
+      String gender,
+      String birthDay,
+      String weigth,
+      String qtdMilk,
+      String daysToLactation,
+      int farm) async {
     var resposta = true;
     try {
-      await api.postCattles(creationType, cattleId, gender, birthDay, weigth, qtdMilk, daysToLactation, farm);
+      await api.postCattles(creationType, cattleId, gender, birthDay, weigth,
+          qtdMilk, daysToLactation, farm);
     } on DioError catch (err) {
       print("Erro: ${err.response.statusCode}");
       resposta = false;
@@ -34,8 +43,8 @@ abstract class CattleControllerBase with Store {
     return response.data["Cattle"];
   }
 
-
-  updateCattle(String cattleId, String creationType, String gender, String birthDay, String weigth, String qtdMilk, String daysToLactation, int farm) async {
+  updateCattle(String cattleId, String creationType, String gender, String birthDay,
+      String weigth, String qtdMilk, String daysToLactation, int farm) async {
     try {
       await api.updateCattle(cattleId, creationType, gender, birthDay, weigth, qtdMilk, daysToLactation, farm);
     } on DioError catch (err) {

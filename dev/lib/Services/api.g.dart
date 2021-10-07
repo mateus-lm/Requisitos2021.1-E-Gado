@@ -84,6 +84,36 @@ mixin _$Api on ApiBase, Store {
         .run(() => super.deleteCattleById(cattleId));
   }
 
+  final _$getFarmsAsyncAction = AsyncAction('ApiBase.getFarms');
+
+  @override
+  Future getFarms() {
+    return _$getFarmsAsyncAction.run(() => super.getFarms());
+  }
+
+  final _$getFarmByIdAsyncAction = AsyncAction('ApiBase.getFarmById');
+
+  @override
+  Future getFarmById(String farmId) {
+    return _$getFarmByIdAsyncAction.run(() => super.getFarmById(farmId));
+  }
+
+  final _$updatefarmAsyncAction = AsyncAction('ApiBase.updatefarm');
+
+  @override
+  Future updatefarm(
+      String nameFarm, String city, String state, String size, String farmId) {
+    return _$updatefarmAsyncAction
+        .run(() => super.updatefarm(nameFarm, city, state, size, farmId));
+  }
+
+  final _$deleteFarmByIdAsyncAction = AsyncAction('ApiBase.deleteFarmById');
+
+  @override
+  Future deleteFarmById(String farmId) {
+    return _$deleteFarmByIdAsyncAction.run(() => super.deleteFarmById(farmId));
+  }
+
   @override
   String toString() {
     return '''
