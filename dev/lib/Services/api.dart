@@ -14,7 +14,7 @@ abstract class ApiBase with Store {
   @action
   auth(String email, String password) async {
     Response response = await dio
-        .post('/auth/login/', data: {'email': email, 'password': password});
+        .post('/auth/login/', data: {'email': '$email', 'password': '$password'});
     return response;
   }
 

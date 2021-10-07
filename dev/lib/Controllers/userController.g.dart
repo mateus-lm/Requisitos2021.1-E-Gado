@@ -110,7 +110,7 @@ mixin _$UserController on UserControllerBase, Store {
   }
 
   @override
-  dynamic changeToken(String value) {
+  dynamic changeToken(dynamic value) {
     final _$actionInfo = _$UserControllerBaseActionController.startAction(
         name: 'UserControllerBase.changeToken');
     try {

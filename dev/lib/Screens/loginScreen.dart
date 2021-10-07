@@ -19,13 +19,18 @@ class _LoginMenuState extends State<LoginMenu> {
 
   var _email;
   var _password;
+  String _wrongEmail;
+  String _wrongPassword;
 
   void mudaTela(bool resposta) async {
     if (resposta == true) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => AddFarm()));
     } else {
-      print('erro');
+      setState(() {
+        _wrongEmail = "";
+        _wrongPassword = "Email e/ou senha inválidos";
+      });
     }
   }
 
@@ -64,8 +69,8 @@ class _LoginMenuState extends State<LoginMenu> {
                 ],
               ),
             ),
-            MyWidgets().caixaTexto('Email', emailCon),
-            MyWidgets().caixaTexto('Senha', passwordCon),
+            MyWidgets().caixaTexto('Email', emailCon, errorText: _wrongEmail),
+            MyWidgets().caixaTexto('Senha', passwordCon, isObscure: true ,errorText: _wrongPassword),
             Align(
               alignment: Alignment
                   .centerRight, // Align however you like (i.e .centerRight, centerLeft)

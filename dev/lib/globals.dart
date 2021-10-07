@@ -6,7 +6,7 @@ Api api = new Api();
 UserController userController = new UserController();
 
 var options = BaseOptions(
-  baseUrl: 'https://e-vacina-backend.herokuapp.com',  
+  baseUrl: 'http://127.0.0.1:8000/',  
   connectTimeout: 5000,
   receiveTimeout: 3000,
 );

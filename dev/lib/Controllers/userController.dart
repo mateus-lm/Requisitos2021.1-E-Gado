@@ -24,7 +24,7 @@ abstract class UserControllerBase with Store {
   dynamic token = '';
 
   @action
-  changeToken(String value) => token = value;
+  changeToken(dynamic value) => token = value;
 
   @observable
   bool isRegister = false;
@@ -37,8 +37,8 @@ abstract class UserControllerBase with Store {
     var resposta = true;
     try {
       Response response = await api.auth(email, password);
-      changeToken(response.data['token']['access']);
-      changeEmail(response.data['user']['email']);
+      changeToken(response.data['tokens']);
+      changeEmail(response.data["email"]);
     } on DioError catch (err) {
       print("Erro: ${err.response.statusCode}");
       resposta = false;
