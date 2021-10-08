@@ -113,47 +113,65 @@ abstract class ApiBase with Store {
 
   @action
   deleteCattleById(String cattleId) async {
-    Response response = await dio.delete('/cattle/$cattleId');
+    var token = userController.token;
+    Response response = await dio.delete('/cattle/$cattleId', options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),);
     return response;
   }
 
   @action
   getFarms() async {
-    Response response = await dio.get('/farm/');
+    var token = userController.token;
+    Response response = await dio.get('/farm/', options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),);
     return response;
   }
 
   postFarm(String nameFarm, String city, String state, String size) async {
+    var token = userController.token;
     Response response = await dio.post('/farm/', data: {
       "name_farm": nameFarm,
       "city": city,
       "state": state,
       "tam": size
-    });
+    }, options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),);
     return response;
   }
 
   @action
-  getFarmById(String farmId) async {
-    Response response = await dio.get('/farm/$farmId');
+  getFarmById(int farmId) async {
+    var token = userController.token;
+    Response response = await dio.get('/farm/${farmId.toString()}', options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),);
     return response;
   }
 
   @action
   updatefarm(String nameFarm, String city, String state, String size,
       String farmId) async {
+        var token = userController.token;
     Response response = await dio.put('/farm/$farmId', data: {
       "name_farm": nameFarm,
       "city": city,
       "state": state,
       "tam": size
-    });
+    }, options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),);
     return response;
   }
 
   @action
   deleteFarmById(String farmId) async {
-    Response response = await dio.delete('/farm/$farmId');
+    var token = userController.token;
+    Response response = await dio.delete('/farm/$farmId', options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),);
     return response;
   }
 }

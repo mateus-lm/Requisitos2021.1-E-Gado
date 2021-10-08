@@ -21,10 +21,10 @@ abstract class UserControllerBase with Store {
   changePassword(String value) => password = value;
 
   @observable
-  dynamic token = '';
+  String token = '';
 
   @action
-  changeToken(dynamic value) => token = value;
+  changeToken(String value) => token = value;
 
   @observable
   bool isRegister = false;
@@ -38,10 +38,11 @@ abstract class UserControllerBase with Store {
     var resposta = true;
     try {
       Response response = await api.auth(email, password);
-      var tokenss = response.data['tokens'];
-      print(tokenss.refresh);
-      changeToken(response.data['tokens']);
-      changeEmail(response.data["email"]);
+  //  Map < String , dynamic > user = jsonDecode (response.data['tokens']);
+      String tokens = response.data['tokens'];
+      int tam = tokens.length;
+      changeToken(tokens.substring(12,tam-2));
+      changeEmail(response.data['email']);
     } on DioError catch (err) {
       print("Erro: ${err.response.statusCode}");
       resposta = false;

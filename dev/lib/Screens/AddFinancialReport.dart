@@ -38,8 +38,7 @@ class _AddFinancialState extends State<AddFinancial> {
               color: Colors.black,
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginMenu()));
+                Navigator.pop(context);
               },
               alignment: Alignment.centerRight,
             ),

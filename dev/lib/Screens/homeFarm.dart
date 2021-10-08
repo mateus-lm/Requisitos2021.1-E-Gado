@@ -3,6 +3,7 @@ import 'package:dev/Screens/AddFinancialReport.dart';
 import 'package:dev/Screens/addBovino.dart';
 import 'package:dev/Screens/loginScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:dev/globals.dart';
 
 class HomeFarm extends StatefulWidget {
   @override
@@ -34,8 +35,7 @@ class _HomeFarmState extends State<HomeFarm> {
               color: Colors.black,
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginMenu()));
+                Navigator.pop(context);
               },
               alignment: Alignment.centerRight,
             ),

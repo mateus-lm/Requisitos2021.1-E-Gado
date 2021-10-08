@@ -42,13 +42,13 @@ mixin _$UserController on UserControllerBase, Store {
   final _$tokenAtom = Atom(name: 'UserControllerBase.token');
 
   @override
-  dynamic get token {
+  String get token {
     _$tokenAtom.reportRead();
     return super.token;
   }
 
   @override
-  set token(dynamic value) {
+  set token(String value) {
     _$tokenAtom.reportWrite(value, super.token, () {
       super.token = value;
     });
@@ -110,7 +110,7 @@ mixin _$UserController on UserControllerBase, Store {
   }
 
   @override
-  dynamic changeToken(dynamic value) {
+  dynamic changeToken(String value) {
     final _$actionInfo = _$UserControllerBaseActionController.startAction(
         name: 'UserControllerBase.changeToken');
     try {

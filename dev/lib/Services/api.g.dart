@@ -94,7 +94,7 @@ mixin _$Api on ApiBase, Store {
   final _$getFarmByIdAsyncAction = AsyncAction('ApiBase.getFarmById');
 
   @override
-  Future getFarmById(String farmId) {
+  Future getFarmById(int farmId) {
     return _$getFarmByIdAsyncAction.run(() => super.getFarmById(farmId));
   }
 
