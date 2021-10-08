@@ -1,8 +1,6 @@
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:flutter/material.dart';
 
-import 'loginScreen.dart';
-
 class AddFinancial extends StatefulWidget {
   @override
   _AddFinancialState createState() => _AddFinancialState();
@@ -38,8 +36,7 @@ class _AddFinancialState extends State<AddFinancial> {
               color: Colors.black,
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginMenu()));
+                Navigator.pop(context);
               },
               alignment: Alignment.centerRight,
             ),

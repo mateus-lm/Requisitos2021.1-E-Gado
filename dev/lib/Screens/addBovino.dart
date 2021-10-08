@@ -1,5 +1,4 @@
 import 'package:dev/Componentes/MyWidgets.dart';
-import 'package:dev/Screens/loginScreen.dart';
 import 'package:flutter/material.dart';
 
 class AddBovino extends StatefulWidget {
@@ -49,8 +48,7 @@ class _AddBovinoState extends State<AddBovino> {
                 color: Colors.black ,
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginMenu()));
+                  Navigator.pop(context);
                 },
                 alignment: Alignment.centerRight,
               ),

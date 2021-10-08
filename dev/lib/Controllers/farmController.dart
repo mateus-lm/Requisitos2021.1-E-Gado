@@ -10,10 +10,18 @@ class FarmController = FarmControllerBase with _$FarmController;
 // final _storage = new FlutterSecureStorage();
 
 abstract class FarmControllerBase with Store {
+  
+  @observable
+  String farmName = '';
+
   @action
-  get() async {
+  changeFarmName(String value) => farmName = value;
+
+  @action
+  getFarms() async {
     Response response = await api.getFarms();
-    return response.data["Farm"];
+    print('Get farms: ${response.data}');
+    return response.data;
   }
 
   @action
@@ -29,9 +37,9 @@ abstract class FarmControllerBase with Store {
   }
 
   @action
-  getFarmById(String farmId) async {
+  getFarmById(int farmId) async {
     Response response = await api.getFarmById(farmId);
-    return response.data["Farm"];
+    return response.data;
   }
 
 

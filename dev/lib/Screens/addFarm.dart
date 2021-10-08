@@ -1,5 +1,4 @@
 import 'package:dev/Componentes/MyWidgets.dart';
-import 'package:dev/Screens/loginScreen.dart';
 import 'package:flutter/material.dart';
 
 class AddFarm extends StatefulWidget {
@@ -42,8 +41,7 @@ class _AddFarmState extends State<AddFarm> {
                 color: Colors.black,
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginMenu()));
+                  Navigator.pop(context);
                 },
                 alignment: Alignment.centerRight,
               ),

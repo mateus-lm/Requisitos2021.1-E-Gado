@@ -1,11 +1,8 @@
 import 'package:dev/Componentes/MyWidgets.dart';
-import 'package:dev/Screens/addBovino.dart';
-import 'package:dev/Screens/addFarm.dart';
+import 'package:dev/Screens/farmsScreen.dart';
 import 'package:dev/Screens/homeFarm.dart';
 import 'package:flutter/material.dart';
 import 'homeFarm.dart';
-import 'addFarm.dart';
-import '../Controllers/userController.dart';
 import 'package:dev/globals.dart';
 
 class LoginMenu extends StatefulWidget {
@@ -25,7 +22,7 @@ class _LoginMenuState extends State<LoginMenu> {
   void mudaTela(bool resposta) async {
     if (resposta == true) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => AddFarm()));
+          context, MaterialPageRoute(builder: (context) => FarmsScreen()));
     } else {
       setState(() {
         _wrongEmail = "";

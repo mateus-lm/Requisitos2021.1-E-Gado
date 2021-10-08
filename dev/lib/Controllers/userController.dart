@@ -1,11 +1,14 @@
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mobx/mobx.dart';
 import 'package:dio/dio.dart';
 import 'package:dev/globals.dart';
-import 'dart:convert';
 
 part 'userController.g.dart';
 
 class UserController = UserControllerBase with _$UserController;
+
+// final _storage = new FlutterSecureStorage();
 
 abstract class UserControllerBase with Store {
   @observable
@@ -15,16 +18,10 @@ abstract class UserControllerBase with Store {
   changeEmail(String value) => email = value;
 
   @observable
-  String password = '';
+  String token = '';
 
   @action
-  changePassword(String value) => password = value;
-
-  @observable
-  dynamic token = '';
-
-  @action
-  changeToken(dynamic value) => token = value;
+  changeToken(String value) => token = value;
 
   @observable
   bool isRegister = false;
@@ -38,10 +35,14 @@ abstract class UserControllerBase with Store {
     var resposta = true;
     try {
       Response response = await api.auth(email, password);
-      var tokenss = response.data['tokens'];
-      print(tokenss.refresh);
-      changeToken(response.data['tokens']);
-      changeEmail(response.data["email"]);
+      String tokens = response.data['tokens'];
+      int tam = tokens.length;
+      changeToken(tokens.substring(12, tam - 2));
+      changeEmail(response.data['email']);
+      // await _storage.write(key: 'email', value: email);
+      // await _storage.write(key: 'password', value: password);
+      // await _storage.write(key: 'token', value: token);
+
     } on DioError catch (err) {
       print("Erro: ${err.response.statusCode}");
       resposta = false;
@@ -55,9 +56,6 @@ abstract class UserControllerBase with Store {
   //   try {
   //     String _password = await _storage.read(key: 'password');
   //     String _email = await _storage.read(key: 'email');
-  //     String _index = await _storage.read(key: 'profileIndex') ?? "0";
-  //     int intParse = int.parse(_index);
-  //     profileController.changeCurrentIndex(intParse);
   //     bool rLogin = await login(_email, _password);
   //     if (!rLogin) _resposta = false;
   //   } catch (err) {
@@ -67,11 +65,19 @@ abstract class UserControllerBase with Store {
   // }
 
   @action
-  // logout() async {
-  //   changeToken('');
-  //   changeUserId('');
-  //   await _storage.write(key: 'profileIndex', value: "0");
-  //   await _storage.deleteAll();
+  logout() async {
+    changeToken('');
+    // await _storage.write(key: 'profileIndex', value: "0");
+    // await _storage.deleteAll();
+  }
+
+  // checkToken() async {
+  //   bool _resposta = true;
+  //   bool hasExpired = JwtDecoder.isExpired(token);
+  //   if (hasExpired) {
+  //     if (!await persistLogin()) _resposta = false;
+  //   }
+  //   return _resposta;
   // }
 
   @action
