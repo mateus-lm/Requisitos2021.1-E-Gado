@@ -6,4 +6,4 @@ class FarmSerializer(serializers.ModelSerializer):
     # incomes = serializers.StringRelatedField(many = True)
     class Meta:
         model = Farm
-        fields = ['id', 'name_farm', 'city', 'state', 'tam']
+        fields = ['id', 'name_farm', 'city', 'state', 'tam',]

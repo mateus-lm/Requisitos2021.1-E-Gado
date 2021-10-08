@@ -19,9 +19,9 @@ class CattleListAPIView(ListCreateAPIView):
     
 class CattleDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = CattleSerializer
-    query_set = Cattle.objects.all()
+    queryset = Cattle.objects.all()
     permissions = (permissions.IsAuthenticated, IsOwner,)
-    lookup_fields = "id"
+    lookup_field = "id"
 
     def perform_create(self, serializer):
         return serializer.save(owner = self.request.user)
