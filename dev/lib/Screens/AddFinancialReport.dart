@@ -1,8 +1,6 @@
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:flutter/material.dart';
 
-import 'loginScreen.dart';
-
 class AddFinancial extends StatefulWidget {
   @override
   _AddFinancialState createState() => _AddFinancialState();

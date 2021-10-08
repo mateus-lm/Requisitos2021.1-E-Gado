@@ -1,8 +1,7 @@
-import 'package:dev/Screens/addBovino.dart';
 import 'package:dev/Screens/addFarm.dart';
 import 'package:dev/Screens/homeFarm.dart';
 import 'package:flutter/material.dart';
-import 'package:dev/globals.dart';
+
 
 
 Widget buildListFarms(

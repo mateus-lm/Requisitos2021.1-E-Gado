@@ -1,7 +1,5 @@
 import 'package:dev/Componentes/MyWidgets.dart';
-import 'package:dev/Screens/loginScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:dev/globals.dart';
 
 class AddFarm extends StatefulWidget {
   @override

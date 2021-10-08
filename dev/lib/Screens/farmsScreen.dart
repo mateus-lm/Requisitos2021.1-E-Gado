@@ -1,4 +1,5 @@
 import 'package:dev/Componentes/ListFarms.dart';
+import 'package:dev/Screens/addFarm.dart';
 import 'package:dev/globals.dart';
 import 'package:flutter/material.dart';
 
@@ -24,10 +25,10 @@ class _FarmsScreenState extends State<FarmsScreen> {
     return name;
   }
 
-  // void createProfile(bool resposta) {
+  // void createFarm(bool resposta) {
   //   if (resposta) {
   //     Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => CreateProfile()));
+  //         context, MaterialPageRoute(builder: (context) => AddFarm()));
   //   } else
   //     MyWidgets().logout(context, resposta);
   // }
@@ -84,10 +85,11 @@ class _FarmsScreenState extends State<FarmsScreen> {
                   ],
                 ),
                 onTap: () {
-                  print('Adicionar');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddFarm()));
                   // userController
                   //     .checkToken()
-                  //     .then((resposta) => createProfile(resposta));
+                  //     .then((resposta) => createFarm(resposta));
                 },
               ),
             ),

@@ -1,5 +1,4 @@
 import 'package:dev/Componentes/MyWidgets.dart';
-import 'package:dev/Screens/loginScreen.dart';
 import 'package:flutter/material.dart';
 
 class AddBovino extends StatefulWidget {

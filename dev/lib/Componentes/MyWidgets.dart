@@ -117,6 +117,59 @@ class MyWidgets {
       ),
     );
   }
+
+  // void logout(BuildContext context, bool resposta) {
+  //   if (!resposta) {
+  //     showDialog(
+  //       barrierDismissible: false,
+  //       context: context,
+  //       builder: (_) => PopUpAlertDialog(
+  //         "Sua sessão expirou, por favor faça o login novamente.",
+  //         onPressed: () {
+  //           userController.logout();
+  //           Navigator.push(
+  //               context, MaterialPageRoute(builder: (context) => LoginMenu()));
+  //         },
+  //       ),
+  //     );
+  //   }
+  // }
+}
+
+class PopUpAlertDialog extends StatefulWidget {
+  final String label;
+  final Function onPressed;
+
+  const PopUpAlertDialog(this.label, {Key key, this.onPressed})
+      : super(key: key);
+  @override
+  _PopUpAlertDialogState createState() => _PopUpAlertDialogState();
+}
+
+class _PopUpAlertDialogState extends State<PopUpAlertDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Text(
+        widget.label,
+        style: TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: widget.onPressed,
+          child: Text(
+            "Ok",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class GenderPicker extends StatefulWidget {

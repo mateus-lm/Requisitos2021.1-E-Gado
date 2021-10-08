@@ -24,21 +24,6 @@ mixin _$UserController on UserControllerBase, Store {
     });
   }
 
-  final _$passwordAtom = Atom(name: 'UserControllerBase.password');
-
-  @override
-  String get password {
-    _$passwordAtom.reportRead();
-    return super.password;
-  }
-
-  @override
-  set password(String value) {
-    _$passwordAtom.reportWrite(value, super.password, () {
-      super.password = value;
-    });
-  }
-
   final _$tokenAtom = Atom(name: 'UserControllerBase.token');
 
   @override
@@ -76,6 +61,13 @@ mixin _$UserController on UserControllerBase, Store {
     return _$loginAsyncAction.run(() => super.login(email, password));
   }
 
+  final _$logoutAsyncAction = AsyncAction('UserControllerBase.logout');
+
+  @override
+  Future logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
   final _$registerAsyncAction = AsyncAction('UserControllerBase.register');
 
   @override
@@ -93,17 +85,6 @@ mixin _$UserController on UserControllerBase, Store {
         name: 'UserControllerBase.changeEmail');
     try {
       return super.changeEmail(value);
-    } finally {
-      _$UserControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic changePassword(String value) {
-    final _$actionInfo = _$UserControllerBaseActionController.startAction(
-        name: 'UserControllerBase.changePassword');
-    try {
-      return super.changePassword(value);
     } finally {
       _$UserControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -135,7 +116,6 @@ mixin _$UserController on UserControllerBase, Store {
   String toString() {
     return '''
 email: ${email},
-password: ${password},
 token: ${token},
 isRegister: ${isRegister}
     ''';
