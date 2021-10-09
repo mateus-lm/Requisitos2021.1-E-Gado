@@ -1,5 +1,8 @@
 import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/globals.dart';
 import 'package:flutter/material.dart';
+
+import 'homeFarm.dart';
 
 class AddFarm extends StatefulWidget {
   @override
@@ -29,7 +32,7 @@ class _AddFarmState extends State<AddFarm> {
           title: Text(
             'Cadastrar fazenda',
             style: TextStyle(
-              color: Colors.black,
+              color: Theme.of(context).primaryColor,
               fontFamily: 'Roboto',
               fontSize: 15,
             ),
@@ -40,7 +43,7 @@ class _AddFarmState extends State<AddFarm> {
               child: IconButton(
                 color: Colors.black,
                 icon: const Icon(Icons.arrow_back),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.pop(context);
                 },
                 alignment: Alignment.centerRight,
@@ -76,15 +79,24 @@ class _AddFarmState extends State<AddFarm> {
                     Padding(
                       padding: const EdgeInsets.only(left: 25.0, top: 15.0),
                       child: MyWidgets().button(
-                          'Salvar', 100, 40, 15, Colors.greenAccent, () {
+                          'Salvar', 100, 40, 15, Colors.greenAccent, () async {
                         setState(() {
                           _farmName = farmNameCon.text;
                           _farmCity = farmCityCon.text;
                           _farmState = farmStateCon.text;
                           _farmSize = farmSizeCon.text;
-                        
                         });
-                        print(_farmName);
+
+                        await farmController.postFarm(
+                            _farmName, _farmCity, _farmState, _farmSize);
+                        List farmsList = await farmController.getFarms();
+                        await farmController
+                            .getFarmById(farmsList[farmsList.length - 1]['id']);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeFarm()));
+                        // farmController.updateFarm(_farmName, _farmCity, _farmState, _farmSize, farmController.farmId);
                       }),
                     )
                   ],

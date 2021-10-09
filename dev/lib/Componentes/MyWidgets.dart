@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../globals.dart';
+
 class MyWidgets {
   final Color gangGray = Color.fromRGBO(51, 51, 51, 1.0);
 
@@ -134,6 +136,17 @@ class MyWidgets {
   //     );
   //   }
   // }
+  String splitName() {
+    List array = farmController.farmName.split(' ');
+    String name;
+    if (array.length > 1) {
+      name = array[0].substring(0, 1).toUpperCase() +
+          array[1].substring(0, 1).toUpperCase();
+    } else {
+      name = array[0].substring(0, 1).toUpperCase();
+    }
+    return name;
+  }
 }
 
 class PopUpAlertDialog extends StatefulWidget {

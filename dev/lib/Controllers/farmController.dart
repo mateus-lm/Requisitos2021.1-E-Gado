@@ -17,6 +17,29 @@ abstract class FarmControllerBase with Store {
   @action
   changeFarmName(String value) => farmName = value;
 
+  @observable
+  String farmCity = '';
+
+  @action
+  changeFarmCity(String value) => farmCity = value;
+
+  @observable
+  String farmState = '';
+
+  @action
+  changeFarmState(String value) => farmState = value;
+  @observable
+
+  String farmTam = '';
+
+  @action
+  changeFarmTam(String value) => farmTam = value;
+
+  int farmId = 0;
+
+  @action
+  changeFarmId(int value) => farmId = value;
+
   @action
   getFarms() async {
     Response response = await api.getFarms();
@@ -39,11 +62,17 @@ abstract class FarmControllerBase with Store {
   @action
   getFarmById(int farmId) async {
     Response response = await api.getFarmById(farmId);
+    changeFarmName(response.data['name_farm']);
+    changeFarmCity(response.data['city']);
+    changeFarmState(response.data['state']);
+    changeFarmTam(response.data['tam']);
+    changeFarmId(farmId);
+    
     return response.data;
   }
 
 
-  updateFarm(String nameFarm, String city, String state, String size, String farmId) async {
+  updateFarm(String nameFarm, String city, String state, String size, int farmId) async {
     try {
       await api.updatefarm(nameFarm, city, state, size, farmId);
     } on DioError catch (err) {
@@ -52,7 +81,7 @@ abstract class FarmControllerBase with Store {
     }
   }
 
-  deleteFarm(String farmId) async {
+  deleteFarm(int farmId) async {
     try {
       await api.deleteFarmById(farmId);
     } on DioError catch (err) {

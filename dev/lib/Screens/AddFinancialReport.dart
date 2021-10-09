@@ -1,6 +1,8 @@
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:flutter/material.dart';
 
+import '../globals.dart';
+
 class AddFinancial extends StatefulWidget {
   @override
   _AddFinancialState createState() => _AddFinancialState();
@@ -21,13 +23,29 @@ class _AddFinancialState extends State<AddFinancial> {
         elevation: 5,
         shadowColor: Color.fromRGBO(0, 0, 0, 1),
         centerTitle: true,
-        title: Text(
-          'Nome da fazenda',
+        title: Padding(
+          padding: EdgeInsets.only(right: 30),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: CircleAvatar(
+                radius: 17.5,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: Text(
+                  MyWidgets().splitName(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            Text(
+          farmController.farmName,
           style: TextStyle(
-            color: Colors.black,
+            color: Theme.of(context).primaryColor,
             fontFamily: 'Roboto',
             fontSize: 15,
           ),
+        ),
+          ]),
         ),
         leading: Builder(builder: (BuildContext context) {
           return Padding(

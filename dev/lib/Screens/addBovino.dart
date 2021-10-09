@@ -1,6 +1,8 @@
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:flutter/material.dart';
 
+import '../globals.dart';
+
 class AddBovino extends StatefulWidget {
   @override
   _AddBovinoState createState() => _AddBovinoState();
@@ -33,14 +35,30 @@ class _AddBovinoState extends State<AddBovino> {
           elevation: 5,
           shadowColor: Color.fromRGBO(0, 0, 0, 1),
           centerTitle: true,
-          title: Text(
-            'Nome da fazenda',
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Roboto',
-              fontSize: 15,
+          title: Padding(
+          padding: EdgeInsets.only(right: 30),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: CircleAvatar(
+                radius: 17.5,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: Text(
+                  MyWidgets().splitName(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
+            Text(
+          farmController.farmName,
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontFamily: 'Roboto',
+            fontSize: 15,
           ),
+        ),
+          ]),
+        ),
           leading: Builder(builder: (BuildContext context) {
             return Padding(
               padding: const EdgeInsets.only(left: 30.0),

@@ -3,6 +3,8 @@ import 'package:dev/Screens/AddFinancialReport.dart';
 import 'package:dev/Screens/addBovino.dart';
 import 'package:flutter/material.dart';
 
+import '../globals.dart';
+
 
 class HomeFarm extends StatefulWidget {
   @override
@@ -10,6 +12,9 @@ class HomeFarm extends StatefulWidget {
 }
 
 class _HomeFarmState extends State<HomeFarm> {
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,13 +24,29 @@ class _HomeFarmState extends State<HomeFarm> {
         elevation: 5,
         shadowColor: Color.fromRGBO(0, 0, 0, 1),
         centerTitle: true,
-        title: Text(
-          'Fazenda Backend',
+        title: Padding(
+          padding: EdgeInsets.only(right: 30),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: CircleAvatar(
+                radius: 17.5,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: Text(
+                  MyWidgets().splitName(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            Text(
+          farmController.farmName,
           style: TextStyle(
-            color: Colors.black,
+            color: Theme.of(context).primaryColor,
             fontFamily: 'Roboto',
             fontSize: 15,
           ),
+        ),
+          ]),
         ),
         leading: Builder(builder: (BuildContext context) {
           return Padding(

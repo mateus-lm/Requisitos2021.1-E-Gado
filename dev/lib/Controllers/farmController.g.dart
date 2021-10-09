@@ -24,6 +24,51 @@ mixin _$FarmController on FarmControllerBase, Store {
     });
   }
 
+  final _$farmCityAtom = Atom(name: 'FarmControllerBase.farmCity');
+
+  @override
+  String get farmCity {
+    _$farmCityAtom.reportRead();
+    return super.farmCity;
+  }
+
+  @override
+  set farmCity(String value) {
+    _$farmCityAtom.reportWrite(value, super.farmCity, () {
+      super.farmCity = value;
+    });
+  }
+
+  final _$farmStateAtom = Atom(name: 'FarmControllerBase.farmState');
+
+  @override
+  String get farmState {
+    _$farmStateAtom.reportRead();
+    return super.farmState;
+  }
+
+  @override
+  set farmState(String value) {
+    _$farmStateAtom.reportWrite(value, super.farmState, () {
+      super.farmState = value;
+    });
+  }
+
+  final _$farmTamAtom = Atom(name: 'FarmControllerBase.farmTam');
+
+  @override
+  String get farmTam {
+    _$farmTamAtom.reportRead();
+    return super.farmTam;
+  }
+
+  @override
+  set farmTam(String value) {
+    _$farmTamAtom.reportWrite(value, super.farmTam, () {
+      super.farmTam = value;
+    });
+  }
+
   final _$getFarmsAsyncAction = AsyncAction('FarmControllerBase.getFarms');
 
   @override
@@ -62,9 +107,45 @@ mixin _$FarmController on FarmControllerBase, Store {
   }
 
   @override
+  dynamic changeFarmCity(String value) {
+    final _$actionInfo = _$FarmControllerBaseActionController.startAction(
+        name: 'FarmControllerBase.changeFarmCity');
+    try {
+      return super.changeFarmCity(value);
+    } finally {
+      _$FarmControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeFarmState(String value) {
+    final _$actionInfo = _$FarmControllerBaseActionController.startAction(
+        name: 'FarmControllerBase.changeFarmState');
+    try {
+      return super.changeFarmState(value);
+    } finally {
+      _$FarmControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeFarmTam(String value) {
+    final _$actionInfo = _$FarmControllerBaseActionController.startAction(
+        name: 'FarmControllerBase.changeFarmTam');
+    try {
+      return super.changeFarmTam(value);
+    } finally {
+      _$FarmControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-farmName: ${farmName}
+farmName: ${farmName},
+farmCity: ${farmCity},
+farmState: ${farmState},
+farmTam: ${farmTam}
     ''';
   }
 }

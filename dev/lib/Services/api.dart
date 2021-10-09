@@ -145,7 +145,7 @@ abstract class ApiBase with Store {
   @action
   getFarmById(int farmId) async {
     var token = userController.token;
-    Response response = await dio.get('/farm/${farmId.toString()}', options: Options(
+    Response response = await dio.get('/farm/$farmId', options: Options(
         headers: {'Authorization': 'Bearer $token'},
       ),);
     return response;
@@ -153,7 +153,7 @@ abstract class ApiBase with Store {
 
   @action
   updatefarm(String nameFarm, String city, String state, String size,
-      String farmId) async {
+      int farmId) async {
         var token = userController.token;
     Response response = await dio.put('/farm/$farmId', data: {
       "name_farm": nameFarm,
@@ -167,7 +167,7 @@ abstract class ApiBase with Store {
   }
 
   @action
-  deleteFarmById(String farmId) async {
+  deleteFarmById(int farmId) async {
     var token = userController.token;
     Response response = await dio.delete('/farm/$farmId', options: Options(
         headers: {'Authorization': 'Bearer $token'},

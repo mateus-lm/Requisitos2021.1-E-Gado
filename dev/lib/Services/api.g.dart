@@ -102,7 +102,7 @@ mixin _$Api on ApiBase, Store {
 
   @override
   Future updatefarm(
-      String nameFarm, String city, String state, String size, String farmId) {
+      String nameFarm, String city, String state, String size, int farmId) {
     return _$updatefarmAsyncAction
         .run(() => super.updatefarm(nameFarm, city, state, size, farmId));
   }
@@ -110,7 +110,7 @@ mixin _$Api on ApiBase, Store {
   final _$deleteFarmByIdAsyncAction = AsyncAction('ApiBase.deleteFarmById');
 
   @override
-  Future deleteFarmById(String farmId) {
+  Future deleteFarmById(int farmId) {
     return _$deleteFarmByIdAsyncAction.run(() => super.deleteFarmById(farmId));
   }
 

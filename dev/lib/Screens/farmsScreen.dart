@@ -10,8 +10,7 @@ class FarmsScreen extends StatefulWidget {
 
 class _FarmsScreenState extends State<FarmsScreen> {
   @override
-  List array = farmController.farmName.split(' ');
-  String _nome = farmController.farmName;
+
   bool _isLoading = true;
 
   String splitName(List array) {
@@ -50,7 +49,7 @@ class _FarmsScreenState extends State<FarmsScreen> {
               ),
             ),
             Text(
-              _nome,
+              farmController.farmName,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: 16,
