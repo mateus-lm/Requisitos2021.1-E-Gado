@@ -2,6 +2,7 @@ import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:dev/Screens/farmsScreen.dart';
 import 'package:dev/Screens/homeFarm.dart';
 import 'package:flutter/material.dart';
+import 'createUserScreen.dart';
 import 'homeFarm.dart';
 import 'package:dev/globals.dart';
 
@@ -67,7 +68,8 @@ class _LoginMenuState extends State<LoginMenu> {
               ),
             ),
             MyWidgets().caixaTexto('Email', emailCon, errorText: _wrongEmail),
-            MyWidgets().caixaTexto('Senha', passwordCon, isObscure: true ,errorText: _wrongPassword),
+            MyWidgets().caixaTexto('Senha', passwordCon,
+                isObscure: true, errorText: _wrongPassword),
             Align(
               alignment: Alignment
                   .centerRight, // Align however you like (i.e .centerRight, centerLeft)
@@ -78,8 +80,8 @@ class _LoginMenuState extends State<LoginMenu> {
             ),
             MyWidgets().textButton('Criar Conta', 200, 40, 20, Colors.black,
                 () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomeFarm()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CreateUserScreen()));
               print("Tela de registro");
             }),
             MyWidgets().button(
@@ -89,7 +91,7 @@ class _LoginMenuState extends State<LoginMenu> {
                 _password = passwordCon.text;
               });
 
-               userController
+              userController
                   .login(_email, _password)
                   .then((resposta) => mudaTela(resposta));
             }),

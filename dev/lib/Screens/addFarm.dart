@@ -69,17 +69,19 @@ class _AddFarmState extends State<AddFarm> {
                 MyWidgets().caixaTexto('Estado', farmStateCon),
                 MyWidgets().caixaTexto('Tamanho em hectares', farmSizeCon),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
                           right: 25.0, left: 20.0, top: 15.0),
-                      child: MyWidgets().button(
-                          'Cancelar', 100, 40, 15, Colors.redAccent, () {}),
+                      child: MyWidgets().button('Cancelar', 100, 40, 15,
+                          Colors.redAccent[700], () {}),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 25.0, top: 15.0),
                       child: MyWidgets().button(
-                          'Salvar', 100, 40, 15, Colors.greenAccent, () async {
+                          'Salvar', 100, 40, 15, Colors.greenAccent[700],
+                          () async {
                         setState(() {
                           _farmName = farmNameCon.text;
                           _farmCity = farmCityCon.text;

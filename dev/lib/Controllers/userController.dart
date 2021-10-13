@@ -18,6 +18,12 @@ abstract class UserControllerBase with Store {
   changeEmail(String value) => email = value;
 
   @observable
+  String userName = '';
+
+  @action
+  changeUsername(String value) => userName = value;
+
+  @observable
   String token = '';
 
   @action
@@ -86,8 +92,9 @@ abstract class UserControllerBase with Store {
     changeRegister(true);
     try {
       await api.registerUser(email, userName, password);
-      await login(email, password);
+      //await login(email, password);
     } catch (err) {
+      print(err.response.data.toString());
       return err.response.data.toString();
     }
 
