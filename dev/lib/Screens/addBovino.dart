@@ -10,21 +10,59 @@ class AddBovino extends StatefulWidget {
 
 class _AddBovinoState extends State<AddBovino> {
   final creationTypeCon = new TextEditingController();
-  final idCon = new TextEditingController();
+  final nameCon = new TextEditingController();
   final sexCon = new TextEditingController();
   final birthDateCon = new TextEditingController();
   final weightCon = new TextEditingController();
   final milkProducedCon = new TextEditingController();
   final lactationPeriodCon = new TextEditingController();
 
+  String _wrongName;
+  String _wrongCreationType;
+  String _wrongSex;
+  String _wrongBirthDate;
+  bool _error = false;
+
   var _creationType;
-  var _id;
+  var _cattleName;
   var _sex;
   var _birthDate;
   var _weight;
   var _lactationPeriod;
   var _milkProduced;
 
+  var day;
+  var month;
+  var year;
+  String _date;
+
+  void postCattle() {
+    if (isEmpty() == false) {
+      _error = false;
+      print(farmController.farmId);
+      cattleController
+          .postCattles(_creationType, _cattleName, _sex, _birthDate, _weight,
+              _milkProduced, _lactationPeriod, farmController.farmId)
+          .then((resposta) => validate(resposta));
+    } else {
+      print("is empty");
+      _error = true;
+    }
+  }
+
+  String setDate(String dateTime) {
+    if (dateTime.isEmpty) {
+      return null;
+    }
+    setState(() {
+      day = dateTime.substring(8, 10);
+      month = dateTime.substring(5, 7);
+      year = dateTime.substring(0, 4);
+      _date = "$year-$month-$day";
+      print(_date);
+    });
+    return _date;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,34 +74,34 @@ class _AddBovinoState extends State<AddBovino> {
           shadowColor: Color.fromRGBO(0, 0, 0, 1),
           centerTitle: true,
           title: Padding(
-          padding: EdgeInsets.only(right: 30),
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: CircleAvatar(
-                radius: 17.5,
-                backgroundColor: Theme.of(context).primaryColor,
-                child: Text(
-                  MyWidgets().splitName(),
-                  style: TextStyle(color: Colors.white),
+            padding: EdgeInsets.only(right: 30),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: CircleAvatar(
+                  radius: 17.5,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    MyWidgets().splitName(),
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
-            ),
-            Text(
-          farmController.farmName,
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontFamily: 'Roboto',
-            fontSize: 15,
+              Text(
+                farmController.farmName,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 15,
+                ),
+              ),
+            ]),
           ),
-        ),
-          ]),
-        ),
           leading: Builder(builder: (BuildContext context) {
             return Padding(
               padding: const EdgeInsets.only(left: 30.0),
               child: IconButton(
-                color: Colors.black ,
+                color: Colors.black,
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.pop(context);
@@ -79,25 +117,26 @@ class _AddBovinoState extends State<AddBovino> {
                   onPressed: () {
                     setState(() {
                       if (creationTypeCon.text == '1')
-                        _creationType = 'Leiteiro';
+                        _creationType = 'GADO_LEITEIRO';
                       else if (creationTypeCon.text == '2')
-                        _creationType = 'Corte';
+                        _creationType = 'GADO_CORTE';
                       else
                         _creationType = null;
-                      _id = idCon.text;
-                      _birthDate = birthDateCon.text;
-                      sexCon.text == '1'
-                          ? _sex = 'Masculino'
-                          : _sex = 'Feminino';
+                      _cattleName = nameCon.text;
+                      _birthDate = setDate(birthDateCon.text);
+                      if (sexCon.text == '1')
+                        _sex = 'MALE';
+                      else if (sexCon.text == '2')
+                        _sex = 'FEMALE';
+                      else
+                        _sex = null;
                       _weight = weightCon.text;
-                      _lactationPeriod = lactationPeriodCon.text;
+                      _lactationPeriod = setDate(birthDateCon
+                          .text); // Arrumar isso, tem que ser lactationPeriodCon (Deixei por enquanto)
                       _milkProduced = milkProducedCon.text;
                     });
-
-                    print(_creationType);
-                    print(_birthDate);
                     print(_sex);
-                    print(_weight);
+                    postCattle();
                   },
                   child: Text(
                     "Salvar",
@@ -143,11 +182,24 @@ class _AddBovinoState extends State<AddBovino> {
                       ),
                     ),
                   )),
-              DropDownCreate(creationTypeCon, 'Leiteiro', 'Corte',),
+              ErrorText(_error),
+              DropDownCreate(
+                creationTypeCon,
+                'Leiteiro',
+                'Corte',
+                errorText: _wrongCreationType,
+              ),
               MyWidgets()
-                  .caixaTexto('Identificação:', idCon),
-              GenderPicker(sexCon),
-              DatePick(birthDateCon, "Data de Nascimento"),
+                  .caixaTexto('Identificação:', nameCon, errorText: _wrongName),
+              GenderPicker(
+                sexCon,
+                errorText: _wrongSex,
+              ),
+              DatePick(
+                birthDateCon,
+                "Data de Nascimento",
+                errorText: _wrongBirthDate,
+              ),
               MyWidgets().caixaTexto('Peso', weightCon),
               MyWidgets()
                   .caixaTexto('Quantidade de leite diário', milkProducedCon),
@@ -157,25 +209,39 @@ class _AddBovinoState extends State<AddBovino> {
         ));
   }
 
-  // bool isEmpty() {
-  //   String text = "";
-  //   bool empty = false;
-  //   setState(() {
-  //     _creationType.isEmpty
-  //         ? _wrongCreationType = text
-  //         : _wrongCreationType = null;
-  //     _id.isEmpty ? _wrongId = text : _wrongId = null;
-  //     birthDateCon.text.isEmpty
-  //         ? _wrongBirthDate = text
-  //         : _wrongBirthDate = null;
-  //     sexCon.text.isEmpty ? _wrongSex = text : _wrongSex = null;
-  //   });
-  //   if (_creationType.isEmpty |
-  //       _id.isEmpty ||
-  //       birthDateCon.text.isEmpty ||
-  //       sexCon.text.isEmpty) {
-  //     empty = true;
-  //   }
-  //   return empty;
-  // }
+  bool isEmpty() {
+    String text = "";
+    bool empty = false;
+    setState(() {
+      _creationType == null
+          ? _wrongCreationType = text
+          : _wrongCreationType = null;
+      _cattleName.isEmpty ? _wrongName = text : _wrongName = null;
+      _birthDate == null ? _wrongBirthDate = text : _wrongBirthDate = null;
+      _sex == null ? _wrongSex = text : _wrongSex = null;
+    });
+    if (_creationType == null ||
+        _cattleName.isEmpty ||
+        _birthDate == null ||
+        _sex == null) {
+      empty = true;
+    }
+    return empty;
+  }
+
+  void validate(bool resposta) {
+    if (resposta == true) {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (_) => PopUpAlertDialog(
+          "Bovino criado com sucesso.",
+          onPressed: () async {
+            await cattleController.getCattles();
+            Navigator.of(context).pop();
+          },
+        ),
+      );
+    }
+  }
 }

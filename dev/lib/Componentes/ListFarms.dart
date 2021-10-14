@@ -1,3 +1,4 @@
+import 'package:dev/Screens/ConfigFarm.dart';
 import 'package:dev/Screens/addFarm.dart';
 import 'package:dev/Screens/homeFarm.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ Widget buildListFarms(
                   //       key: 'profileIndex', value: index.toString());
                     await farmController.getFarmById(farmId);
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AddFarm()));
+                        MaterialPageRoute(builder: (context) => ConfigFarm()));
                   // } else
                   //   MyWidgets().logout(context, resposta);
                 })

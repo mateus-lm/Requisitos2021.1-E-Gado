@@ -10,7 +10,6 @@ class FarmController = FarmControllerBase with _$FarmController;
 // final _storage = new FlutterSecureStorage();
 
 abstract class FarmControllerBase with Store {
-  
   @observable
   String farmName = '';
 
@@ -29,7 +28,6 @@ abstract class FarmControllerBase with Store {
   @action
   changeFarmState(String value) => farmState = value;
   @observable
-
   String farmTam = '';
 
   @action
@@ -67,18 +65,21 @@ abstract class FarmControllerBase with Store {
     changeFarmState(response.data['state']);
     changeFarmTam(response.data['tam']);
     changeFarmId(farmId);
-    
+
     return response.data;
   }
 
-
-  updateFarm(String nameFarm, String city, String state, String size, int farmId) async {
+  updateFarm(String nameFarm, String city, String state, String size,
+      int farmId) async {
+    var resposta = true;
     try {
       await api.updatefarm(nameFarm, city, state, size, farmId);
     } on DioError catch (err) {
       print('erro');
       print("Erro: ${err.response.statusCode}");
+      resposta = false;
     }
+    return resposta;
   }
 
   deleteFarm(int farmId) async {

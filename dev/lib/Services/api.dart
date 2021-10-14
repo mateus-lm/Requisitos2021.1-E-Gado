@@ -32,7 +32,10 @@ abstract class ApiBase with Store {
 
   @action
   getCattles() async {
-    Response response = await dio.get('/cattle/');
+    var token = userController.token;
+    Response response = await dio.get('/cattle/', options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),);
     return response;
   }
 
@@ -56,7 +59,7 @@ abstract class ApiBase with Store {
         "weigth": weigth,
         "qtd_milk": qtdMilk,
         "days_to_lactation": daysToLactation,
-        "farm": 0
+        "farm": farm,
       },
       options: Options(
         headers: {'Authorization': 'Bearer $token'},
@@ -67,7 +70,10 @@ abstract class ApiBase with Store {
 
   @action
   getCattleById(String cattleId) async {
-    Response response = await dio.get('/cattle/$cattleId');
+    var token = userController.token;
+    Response response = await dio.get('/cattle/$cattleId', options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),);
     return response;
   }
 
