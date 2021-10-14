@@ -50,12 +50,15 @@ class _AddBovinoState extends State<AddBovino> {
     }
   }
 
-   String setDate(String dateTime) {
+  String setDate(String dateTime) {
+    if (dateTime.isEmpty) {
+      return null;
+    }
     setState(() {
       day = dateTime.substring(8, 10);
       month = dateTime.substring(5, 7);
       year = dateTime.substring(0, 4);
-      _date ="$year-$month-$day";
+      _date = "$year-$month-$day";
       print(_date);
     });
     return _date;
@@ -111,7 +114,7 @@ class _AddBovinoState extends State<AddBovino> {
             Padding(
                 padding: const EdgeInsets.only(right: 30.0),
                 child: TextButton(
-                  onPressed: ()  {
+                  onPressed: () {
                     setState(() {
                       if (creationTypeCon.text == '1')
                         _creationType = 'GADO_LEITEIRO';
@@ -121,16 +124,19 @@ class _AddBovinoState extends State<AddBovino> {
                         _creationType = null;
                       _cattleName = nameCon.text;
                       _birthDate = setDate(birthDateCon.text);
-                      sexCon.text == '1'
-                          ? _sex = 'MALE'
-                          : _sex = 'FEMALE';
+                      if (sexCon.text == '1')
+                        _sex = 'MALE';
+                      else if (sexCon.text == '2')
+                        _sex = 'FEMALE';
+                      else
+                        _sex = null;
                       _weight = weightCon.text;
-                      _lactationPeriod = setDate(birthDateCon.text); // Arrumar isso, tem que ser lactationPeriodCon (Deixei por enquanto)
+                      _lactationPeriod = setDate(birthDateCon
+                          .text); // Arrumar isso, tem que ser lactationPeriodCon (Deixei por enquanto)
                       _milkProduced = milkProducedCon.text;
                     });
-
+                    print(_sex);
                     postCattle();
-                    
                   },
                   child: Text(
                     "Salvar",
@@ -180,11 +186,20 @@ class _AddBovinoState extends State<AddBovino> {
               DropDownCreate(
                 creationTypeCon,
                 'Leiteiro',
-                'Corte', errorText: _wrongCreationType,
+                'Corte',
+                errorText: _wrongCreationType,
               ),
-              MyWidgets().caixaTexto('Identificação:', nameCon, errorText: _wrongName),
-              GenderPicker(sexCon, errorText: _wrongSex,),
-              DatePick(birthDateCon, "Data de Nascimento", errorText: _wrongBirthDate,),
+              MyWidgets()
+                  .caixaTexto('Identificação:', nameCon, errorText: _wrongName),
+              GenderPicker(
+                sexCon,
+                errorText: _wrongSex,
+              ),
+              DatePick(
+                birthDateCon,
+                "Data de Nascimento",
+                errorText: _wrongBirthDate,
+              ),
               MyWidgets().caixaTexto('Peso', weightCon),
               MyWidgets()
                   .caixaTexto('Quantidade de leite diário', milkProducedCon),
@@ -198,14 +213,17 @@ class _AddBovinoState extends State<AddBovino> {
     String text = "";
     bool empty = false;
     setState(() {
-      _creationType.isEmpty ? _wrongCreationType = text : _wrongCreationType = null;
+      _creationType == null
+          ? _wrongCreationType = text
+          : _wrongCreationType = null;
       _cattleName.isEmpty ? _wrongName = text : _wrongName = null;
-      _birthDate.isEmpty ? _wrongBirthDate = text : _wrongBirthDate = null;
-      _sex.isEmpty ? _wrongSex = text : _wrongSex = null;
+      _birthDate == null ? _wrongBirthDate = text : _wrongBirthDate = null;
+      _sex == null ? _wrongSex = text : _wrongSex = null;
     });
-    if (_creationType.isEmpty || _cattleName.isEmpty ||
-        _birthDate.isEmpty ||
-        _sex.isEmpty) {
+    if (_creationType == null ||
+        _cattleName.isEmpty ||
+        _birthDate == null ||
+        _sex == null) {
       empty = true;
     }
     return empty;
