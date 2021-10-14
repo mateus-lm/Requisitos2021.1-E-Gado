@@ -38,13 +38,13 @@ class _AddFinancialState extends State<AddFinancial> {
               ),
             ),
             Text(
-          farmController.farmName,
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontFamily: 'Roboto',
-            fontSize: 15,
-          ),
-        ),
+              farmController.farmName,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontFamily: 'Roboto',
+                fontSize: 15,
+              ),
+            ),
           ]),
         ),
         leading: Builder(builder: (BuildContext context) {
@@ -66,7 +66,7 @@ class _AddFinancialState extends State<AddFinancial> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top:20, bottom: 30.0),
+              padding: const EdgeInsets.only(top: 20, bottom: 30.0),
               child: Row(
                 children: [
                   Expanded(
@@ -105,6 +105,21 @@ class _AddFinancialState extends State<AddFinancial> {
                 ),
                 //controller: _textEditingController,
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(right: 25.0, left: 20.0, top: 30.0),
+                  child: MyWidgets().button(
+                      'Cancelar', 100, 40, 15, Colors.redAccent[700], () {}),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 25.0, top: 30.0),
+                    child: MyWidgets().button(
+                        'Salvar', 100, 40, 15, Colors.greenAccent[700], () {})),
+              ],
             )
           ],
         ),
