@@ -1,6 +1,7 @@
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:dev/Screens/AddFinancialReport.dart';
 import 'package:dev/Screens/addBovino.dart';
+import 'package:dev/Screens/farmsScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart';
@@ -48,19 +49,6 @@ class _HomeFarmState extends State<HomeFarm> {
         ),
           ]),
         ),
-        leading: Builder(builder: (BuildContext context) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: IconButton(
-              color: Colors.black,
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              alignment: Alignment.centerRight,
-            ),
-          );
-        }),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
@@ -93,6 +81,15 @@ class _HomeFarmState extends State<HomeFarm> {
                 Theme.of(context).primaryColor, () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => AddFinancial()));
+            }),
+            MyWidgets().button(
+                'Fazendas',
+                MediaQuery.of(context).size.width * 0.8,
+                50.0,
+                15.0,
+                Theme.of(context).primaryColor, () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FarmsScreen()));
             })
           ],
         ),
