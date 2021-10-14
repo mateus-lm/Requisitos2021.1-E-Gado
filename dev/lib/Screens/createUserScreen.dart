@@ -22,8 +22,15 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 
   void validateLogin(String resposta) async {
     if (resposta == "true") {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginMenu()));
+      showDialog(
+          context: context,
+          builder: (_) => PopUpAlertDialog(
+                "Usuário cadastrado com sucesso",
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginMenu()));
+                },
+              ));
     } else {
       setState(() {
         if (resposta.contains("email:")) {
@@ -36,12 +43,12 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
               .contains("email: [user with this email already exists.]"))
             _wrongEmail = "Email já cadastrado, entre com um email válido";
         } else
-          return _wrongEmail = null;
+          _wrongEmail = null;
 
         if (resposta.contains("username: [This field may not be blank.]"))
           _wrongUserName = "Nome não pode ser branco ou nulo.";
         else
-          return _wrongUserName = null;
+          _wrongUserName = null;
 
         if (resposta.contains("password:")) {
           if (resposta.contains("password: [This field may not be blank.]"))
@@ -50,7 +57,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
               "password: [Ensure this field has at least 6 characters.]"))
             _wrongPassword = "Senha deve conter no mínimo 6 caractéres.";
         } else
-          return _wrongPassword = null;
+          _wrongPassword = null;
       });
     }
   }
@@ -88,7 +95,8 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                     () {
                       setState(() {
                         _email = emailCon.text;
-                        _userName = _password = passwordCon.text;
+                        _userName = nameCon.text;
+                        _password = passwordCon.text;
                       });
                       //  userController
                       //     .register(_email, _userName, _password)

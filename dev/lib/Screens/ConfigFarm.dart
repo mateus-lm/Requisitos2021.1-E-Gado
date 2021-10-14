@@ -173,7 +173,7 @@ class _ConfigFarmState extends State<ConfigFarm> {
 
   void validateDelete(bool resposta) async {
     List farms = await farmController.getFarms();
-    if (farms.length == 1) {
+    if (farms.length == 0) {
       showDialog(
         context: context,
         builder: (_) =>
@@ -184,6 +184,7 @@ class _ConfigFarmState extends State<ConfigFarm> {
       );
     } else {
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (_) => PopUpAlertDialog(
           "Fazenda deletada com sucesso.",
