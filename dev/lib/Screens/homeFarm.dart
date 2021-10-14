@@ -73,15 +73,18 @@ class _HomeFarmState extends State<HomeFarm> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AddBovino()));
                 })),
-            MyWidgets().button(
-                'Financeiro',
-                MediaQuery.of(context).size.width * 0.8,
-                50.0,
-                15.0,
-                Theme.of(context).primaryColor, () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddFinancial()));
-            }),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 25.0),
+              child: MyWidgets().button(
+                  'Financeiro',
+                  MediaQuery.of(context).size.width * 0.8,
+                  50.0,
+                  15.0,
+                  Theme.of(context).primaryColor, () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddFinancial()));
+              }),
+            ),
             MyWidgets().button(
                 'Fazendas',
                 MediaQuery.of(context).size.width * 0.8,

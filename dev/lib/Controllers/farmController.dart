@@ -77,7 +77,7 @@ abstract class FarmControllerBase with Store {
     } on DioError catch (err) {
       print('erro');
       print("Erro: ${err.response.statusCode}");
-       resposta = false;
+      resposta = false;
     }
     return resposta;
   }
