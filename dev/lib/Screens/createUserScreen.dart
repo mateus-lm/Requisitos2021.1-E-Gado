@@ -65,6 +65,42 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 5,
+          shadowColor: Color.fromRGBO(0, 0, 0, 1),
+          centerTitle: true,
+          title: Padding(
+            padding: EdgeInsets.only(right: 30),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Text(
+                  'Criar Login de usuário',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ]),
+          ),
+          leading: Builder(builder: (BuildContext context) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 30.0),
+              child: IconButton(
+                color: Colors.black,
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                alignment: Alignment.centerRight,
+              ),
+            );
+          }),
+        ),
         body: SingleChildScrollView(
             padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
             child: Column(children: [
