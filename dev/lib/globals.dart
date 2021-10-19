@@ -11,7 +11,7 @@ CattleController cattleController = new CattleController();
 
 
 var options = BaseOptions(
-  baseUrl: 'http://127.0.0.1:8000/',  
+  baseUrl: 'https://egadoapi.herokuapp.com/',  
   connectTimeout: 5000,
   receiveTimeout: 3000,
 );
