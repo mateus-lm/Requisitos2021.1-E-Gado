@@ -19,8 +19,8 @@ class Cattle(models.Model):
     gender = models.CharField(choices=GENDER, max_length=255)
     birth_day = models.DateField(null = False, blank = False)
     weigth = models.DecimalField(max_digits=8, decimal_places=2, max_length=255)
-    qtd_milk = models.DecimalField(max_digits=8, decimal_places=2, max_length=255)
-    days_to_lactation = models.DateField(null = False, blank = False)
+    qtd_milk = models.DecimalField(max_digits=4, decimal_places=2, max_length=255)
+    days_to_lactation = models.DecimalField(max_length=255)
 
     farm = models.ForeignKey(Farm, related_name='cattles', on_delete=models.CASCADE)
 
