@@ -33,9 +33,12 @@ abstract class ApiBase with Store {
   @action
   getCattles() async {
     var token = userController.token;
-    Response response = await dio.get('/cattle/', options: Options(
+    Response response = await dio.get(
+      '/cattle/',
+      options: Options(
         headers: {'Authorization': 'Bearer $token'},
-      ),);
+      ),
+    );
     return response;
   }
 
@@ -69,17 +72,21 @@ abstract class ApiBase with Store {
   }
 
   @action
-  getCattleById(String cattleId) async {
+  getCattleById(int cattleId) async {
     var token = userController.token;
-    Response response = await dio.get('/cattle/$cattleId', options: Options(
+    Response response = await dio.get(
+      '/cattle/$cattleId',
+      options: Options(
         headers: {'Authorization': 'Bearer $token'},
-      ),);
+      ),
+    );
     return response;
   }
 
   @action
   updateCattle(
-    String cattleId,
+    int cattleId,
+    String cattleName,
     String creationType,
     String gender,
     String birthDay,
@@ -93,7 +100,7 @@ abstract class ApiBase with Store {
       '/cattle/$cattleId',
       data: {
         "type_cattle": creationType,
-        "id_cattle": cattleId,
+        "id_cattle": cattleName,
         "gender": gender,
         "birth_day": birthDay,
         "weigth": weigth,
@@ -109,7 +116,7 @@ abstract class ApiBase with Store {
   }
 
   @action
-  patchCattleById(String cattleId) async {
+  patchCattleById(int cattleId) async {
     Response response = await dio.patch(
       '/cattle/$cattleId',
       data: {},
@@ -118,66 +125,145 @@ abstract class ApiBase with Store {
   }
 
   @action
-  deleteCattleById(String cattleId) async {
+  deleteCattleById(int cattleId) async {
     var token = userController.token;
-    Response response = await dio.delete('/cattle/$cattleId', options: Options(
+    Response response = await dio.delete(
+      '/cattle/$cattleId',
+      options: Options(
         headers: {'Authorization': 'Bearer $token'},
-      ),);
+      ),
+    );
     return response;
   }
 
   @action
   getFarms() async {
     var token = userController.token;
-    Response response = await dio.get('/farm/', options: Options(
+    Response response = await dio.get(
+      '/farm/',
+      options: Options(
         headers: {'Authorization': 'Bearer $token'},
-      ),);
+      ),
+    );
     return response;
   }
 
   postFarm(String nameFarm, String city, String state, String size) async {
     var token = userController.token;
-    Response response = await dio.post('/farm/', data: {
-      "name_farm": nameFarm,
-      "city": city,
-      "state": state,
-      "tam": size
-    }, options: Options(
+    Response response = await dio.post(
+      '/farm/',
+      data: {"name_farm": nameFarm, "city": city, "state": state, "tam": size},
+      options: Options(
         headers: {'Authorization': 'Bearer $token'},
-      ),);
+      ),
+    );
     return response;
   }
 
   @action
   getFarmById(int farmId) async {
     var token = userController.token;
-    Response response = await dio.get('/farm/$farmId', options: Options(
+    Response response = await dio.get(
+      '/farm/$farmId',
+      options: Options(
         headers: {'Authorization': 'Bearer $token'},
-      ),);
+      ),
+    );
     return response;
   }
 
   @action
   updatefarm(String nameFarm, String city, String state, String size,
       int farmId) async {
-        var token = userController.token;
-    Response response = await dio.put('/farm/$farmId', data: {
-      "name_farm": nameFarm,
-      "city": city,
-      "state": state,
-      "tam": size
-    }, options: Options(
+    var token = userController.token;
+    Response response = await dio.put(
+      '/farm/$farmId',
+      data: {"name_farm": nameFarm, "city": city, "state": state, "tam": size},
+      options: Options(
         headers: {'Authorization': 'Bearer $token'},
-      ),);
+      ),
+    );
     return response;
   }
 
   @action
   deleteFarmById(int farmId) async {
     var token = userController.token;
-    Response response = await dio.delete('/farm/$farmId', options: Options(
+    Response response = await dio.delete(
+      '/farm/$farmId',
+      options: Options(
         headers: {'Authorization': 'Bearer $token'},
-      ),);
+      ),
+    );
+    return response;
+  }
+
+  @action
+  getIncome() async {
+    var token = userController.token;
+    Response response = await dio.get(
+      '/income/',
+      options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),
+    );
+    return response;
+  }
+
+//POST
+  postIncome(int farm) async {
+    var token = userController.token;
+    Response response = await dio.post(
+      '/income/',
+      data: {
+        "farm": farm,
+      },
+      options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),
+    );
+    return response;
+  }
+
+  @action
+  getIncomeById(int incomeId) async {
+    var token = userController.token;
+    Response response = await dio.get(
+      '/income/$incomeId',
+      options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),
+    );
+    return response;
+  }
+
+  // Income
+
+  @action
+  updateIncome(
+    int incomeId,
+    int farm,
+  ) async {
+    var token = userController.token;
+    Response response = await dio.put(
+      '/income/$incomeId',
+      data: {"farm": 0},
+      options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),
+    );
+    return response;
+  }
+
+  @action
+  deleteIncomeById(int incomeId) async {
+    var token = userController.token;
+    Response response = await dio.delete(
+      '/income/$incomeId',
+      options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),
+    );
     return response;
   }
 }

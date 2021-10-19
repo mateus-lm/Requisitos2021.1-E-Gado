@@ -82,7 +82,7 @@ abstract class CattleControllerBase with Store {
   }
 
   @action
-  getCattleById(String cattleID) async {
+  getCattleById(int cattleID) async {
     Response response = await api.getCattleById(cattleID);
     changeCattleType(response.data['type_cattle']);
     changeCattleName(response.data['id_cattle']);
@@ -95,7 +95,8 @@ abstract class CattleControllerBase with Store {
   }
 
   updateCattle(
-      String cattleId,
+      int cattleId,
+      String cattleName,
       String creationType,
       String gender,
       String birthDay,
@@ -105,7 +106,7 @@ abstract class CattleControllerBase with Store {
       int farm) async {
     var resposta = true;
     try {
-      await api.updateCattle(cattleId, creationType, gender, birthDay, weigth,
+      await api.updateCattle(cattleId, cattleName, creationType, gender, birthDay, weigth,
           qtdMilk, daysToLactation, farm);
     } on DioError catch (err) {
       resposta = false;
@@ -113,5 +114,13 @@ abstract class CattleControllerBase with Store {
       print("Erro: ${err.response.statusCode}");
     }
     return resposta;
+  }
+
+  deleteCattle(int cattleId) async {
+    try {
+      await api.deleteCattleById(cattleId);
+    } on DioError catch (err) {
+      print("Erro: ${err.response.statusCode}");
+    }
   }
 }

@@ -239,6 +239,7 @@ class _AddBovinoState extends State<AddBovino> {
           onPressed: () async {
             await cattleController.getCattles();
             Navigator.of(context).pop();
+            Navigator.of(context).pop();
           },
         ),
       );

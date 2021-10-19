@@ -1,37 +1,15 @@
-import 'package:dev/Componentes/ListFarms.dart';
-import 'package:dev/Screens/addFarm.dart';
 import 'package:dev/globals.dart';
 import 'package:flutter/material.dart';
+import '../Componentes/ListCattle.dart';
+import '../Componentes/MyWidgets.dart';
+import 'addBovino.dart';
 
-class FarmsScreen extends StatefulWidget {
+class CattlesScreen extends StatefulWidget {
   @override
-  _FarmsScreenState createState() => _FarmsScreenState();
+  _CattlesScreenState createState() => _CattlesScreenState();
 }
 
-class _FarmsScreenState extends State<FarmsScreen> {
-  @override
-
-  bool _isLoading = true;
-
-  String splitName(List array) {
-    String name;
-    if (array.length > 1) {
-      name = array[0].substring(0, 1).toUpperCase() +
-          array[1].substring(0, 1).toUpperCase();
-    } else {
-      name = array[0].substring(0, 1).toUpperCase();
-    }
-    return name;
-  }
-
-  // void createFarm(bool resposta) {
-  //   if (resposta) {
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => AddFarm()));
-  //   } else
-  //     MyWidgets().logout(context, resposta);
-  // }
-
+class _CattlesScreenState extends State<CattlesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,14 +18,41 @@ class _FarmsScreenState extends State<FarmsScreen> {
         backgroundColor: Colors.white,
         title: Padding(
           padding: EdgeInsets.only(right: 30),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Text(
-              'Fazendas',
-              style: TextStyle(color: Theme.of(context).primaryColor),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: CircleAvatar(
+                radius: 17.5,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: Text(
+                  MyWidgets().splitName(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
-          ),
+            Text(
+              farmController.farmName,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontFamily: 'Roboto',
+                fontSize: 15,
+              ),
+            ),
+          ]),
         ),
+        leading: Builder(builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              alignment: Alignment.centerRight,
+            ),
+          );
+        }),
       ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
@@ -55,7 +60,6 @@ class _FarmsScreenState extends State<FarmsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              //alignment: Alignment.centerRight,
               child: GestureDetector(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -64,7 +68,7 @@ class _FarmsScreenState extends State<FarmsScreen> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(5, 40, 30, 40),
                       child: Text(
-                        "Adicionar Fazenda",
+                        "Adicionar Bovino",
                         style: TextStyle(
                           fontFamily: 'Roboto',
                           fontSize: 16,
@@ -76,15 +80,12 @@ class _FarmsScreenState extends State<FarmsScreen> {
                 ),
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddFarm()));
-                  // userController
-                  //     .checkToken()
-                  //     .then((resposta) => createFarm(resposta));
+                      MaterialPageRoute(builder: (context) => AddBovino()));
                 },
               ),
             ),
             FutureBuilder(
-                future: farmController.getFarms(),
+                future: cattleController.getCattles(),
                 builder: (context, projectSnap) {
                   if (projectSnap.hasError) {
                     return Text("Something went wrong");
@@ -96,9 +97,9 @@ class _FarmsScreenState extends State<FarmsScreen> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: projectSnap.data.length,
                         itemBuilder: (context, i) {
-                          List farm = projectSnap.data;
-                          return buildListFarms(
-                              context, i, farm[i]['name_farm'], farm[i]['id']);
+                          List cattles = projectSnap.data;
+                          return buildListCattles(context, i,
+                              cattles[i]['id_cattle'], cattles[i]['id']);
                         });
                   } else {
                     return Center(child: CircularProgressIndicator());

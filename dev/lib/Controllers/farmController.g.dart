@@ -140,6 +140,17 @@ mixin _$FarmController on FarmControllerBase, Store {
   }
 
   @override
+  dynamic changeFarmId(int value) {
+    final _$actionInfo = _$FarmControllerBaseActionController.startAction(
+        name: 'FarmControllerBase.changeFarmId');
+    try {
+      return super.changeFarmId(value);
+    } finally {
+      _$FarmControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 farmName: ${farmName},

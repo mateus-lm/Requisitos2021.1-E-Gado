@@ -41,7 +41,7 @@ mixin _$Api on ApiBase, Store {
   final _$getCattleByIdAsyncAction = AsyncAction('ApiBase.getCattleById');
 
   @override
-  Future getCattleById(String cattleId) {
+  Future getCattleById(int cattleId) {
     return _$getCattleByIdAsyncAction.run(() => super.getCattleById(cattleId));
   }
 
@@ -49,7 +49,8 @@ mixin _$Api on ApiBase, Store {
 
   @override
   Future updateCattle(
-      String cattleId,
+      int cattleId,
+      String cattleName,
       String creationType,
       String gender,
       String birthDay,
@@ -59,6 +60,7 @@ mixin _$Api on ApiBase, Store {
       int farm) {
     return _$updateCattleAsyncAction.run(() => super.updateCattle(
         cattleId,
+        cattleName,
         creationType,
         gender,
         birthDay,
@@ -71,7 +73,7 @@ mixin _$Api on ApiBase, Store {
   final _$patchCattleByIdAsyncAction = AsyncAction('ApiBase.patchCattleById');
 
   @override
-  Future patchCattleById(String cattleId) {
+  Future patchCattleById(int cattleId) {
     return _$patchCattleByIdAsyncAction
         .run(() => super.patchCattleById(cattleId));
   }
@@ -79,7 +81,7 @@ mixin _$Api on ApiBase, Store {
   final _$deleteCattleByIdAsyncAction = AsyncAction('ApiBase.deleteCattleById');
 
   @override
-  Future deleteCattleById(String cattleId) {
+  Future deleteCattleById(int cattleId) {
     return _$deleteCattleByIdAsyncAction
         .run(() => super.deleteCattleById(cattleId));
   }
@@ -112,6 +114,36 @@ mixin _$Api on ApiBase, Store {
   @override
   Future deleteFarmById(int farmId) {
     return _$deleteFarmByIdAsyncAction.run(() => super.deleteFarmById(farmId));
+  }
+
+  final _$getIncomeAsyncAction = AsyncAction('ApiBase.getIncome');
+
+  @override
+  Future getIncome() {
+    return _$getIncomeAsyncAction.run(() => super.getIncome());
+  }
+
+  final _$getIncomeByIdAsyncAction = AsyncAction('ApiBase.getIncomeById');
+
+  @override
+  Future getIncomeById(int incomeId) {
+    return _$getIncomeByIdAsyncAction.run(() => super.getIncomeById(incomeId));
+  }
+
+  final _$updateIncomeAsyncAction = AsyncAction('ApiBase.updateIncome');
+
+  @override
+  Future updateIncome(int incomeId, int farm) {
+    return _$updateIncomeAsyncAction
+        .run(() => super.updateIncome(incomeId, farm));
+  }
+
+  final _$deleteIncomeByIdAsyncAction = AsyncAction('ApiBase.deleteIncomeById');
+
+  @override
+  Future deleteIncomeById(int incomeId) {
+    return _$deleteIncomeByIdAsyncAction
+        .run(() => super.deleteIncomeById(incomeId));
   }
 
   @override

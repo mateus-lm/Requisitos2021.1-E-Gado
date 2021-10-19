@@ -24,6 +24,21 @@ mixin _$UserController on UserControllerBase, Store {
     });
   }
 
+  final _$userNameAtom = Atom(name: 'UserControllerBase.userName');
+
+  @override
+  String get userName {
+    _$userNameAtom.reportRead();
+    return super.userName;
+  }
+
+  @override
+  set userName(String value) {
+    _$userNameAtom.reportWrite(value, super.userName, () {
+      super.userName = value;
+    });
+  }
+
   final _$tokenAtom = Atom(name: 'UserControllerBase.token');
 
   @override
@@ -91,6 +106,17 @@ mixin _$UserController on UserControllerBase, Store {
   }
 
   @override
+  dynamic changeUsername(String value) {
+    final _$actionInfo = _$UserControllerBaseActionController.startAction(
+        name: 'UserControllerBase.changeUsername');
+    try {
+      return super.changeUsername(value);
+    } finally {
+      _$UserControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic changeToken(String value) {
     final _$actionInfo = _$UserControllerBaseActionController.startAction(
         name: 'UserControllerBase.changeToken');
@@ -116,6 +142,7 @@ mixin _$UserController on UserControllerBase, Store {
   String toString() {
     return '''
 email: ${email},
+userName: ${userName},
 token: ${token},
 isRegister: ${isRegister}
     ''';
