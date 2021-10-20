@@ -157,6 +157,7 @@ class _ConfigFarmState extends State<ConfigFarm> {
   void validate(bool resposta) {
     if (resposta == true) {
       showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (_) => PopUpAlertDialog(
                 "Fazenda atualizada com sucesso.",
@@ -175,6 +176,7 @@ class _ConfigFarmState extends State<ConfigFarm> {
     List farms = await farmController.getFarms();
     if (farms.length == 0) {
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (_) =>
             PopUpAlertDialog("Você excluiu todas as fazendas", onPressed: () {

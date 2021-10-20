@@ -53,6 +53,12 @@ abstract class CattleControllerBase with Store {
   @action
   changeCattleLactationPeriod(String value) => cattleLactationPeriod = value;
 
+  @observable
+  int cattleId = 0;
+
+  @action
+  changeCattleId(int value) => cattleId = value;
+
   @action
   getCattles() async {
     Response response = await api.getCattles();
@@ -84,6 +90,7 @@ abstract class CattleControllerBase with Store {
   @action
   getCattleById(int cattleID) async {
     Response response = await api.getCattleById(cattleID);
+    changeCattleId(response.data['id']);
     changeCattleType(response.data['type_cattle']);
     changeCattleName(response.data['id_cattle']);
     changeCattleGender(response.data['gender']);

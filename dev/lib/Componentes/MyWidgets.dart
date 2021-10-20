@@ -147,6 +147,7 @@ class MyWidgets {
     }
     return name;
   }
+
 }
 
 class PopUpAlertDialog extends StatefulWidget {
@@ -353,11 +354,12 @@ class _ErrorTextState extends State<ErrorText> {
 
 class DropDownCreate extends StatefulWidget {
   final TextEditingController controller;
+  final String label;
   final String opcao1;
   final String opcao2;
   final String errorText;
   final String dropdownValue;
-  const DropDownCreate(this.controller, this.opcao1, this.opcao2,
+  const DropDownCreate(this.controller, this.label, this.opcao1, this.opcao2,
       {Key key, this.errorText, this.dropdownValue})
       : super(key: key);
 
@@ -383,7 +385,7 @@ class _DropDownCreateState extends State<DropDownCreate> {
           labelStyle: TextStyle(color: Colors.black54),
             errorText: widget.errorText,
           ),
-          hint: Text('Tipo de criação'),
+          hint: Text(widget.label),
           value: widget.dropdownValue,
           isExpanded: true,
           onChanged: (String newValue) {

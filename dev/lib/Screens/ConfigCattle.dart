@@ -1,14 +1,16 @@
 import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/Screens/CattlesScreen.dart';
+import 'package:dev/Screens/homeFarm.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart';
 
-class AddBovino extends StatefulWidget {
+class ConfigCattle extends StatefulWidget {
   @override
-  _AddBovinoState createState() => _AddBovinoState();
+  _ConfigCattleState createState() => _ConfigCattleState();
 }
 
-class _AddBovinoState extends State<AddBovino> {
+class _ConfigCattleState extends State<ConfigCattle> {
   final creationTypeCon = new TextEditingController();
   final nameCon = new TextEditingController();
   final sexCon = new TextEditingController();
@@ -36,17 +38,24 @@ class _AddBovinoState extends State<AddBovino> {
   var year;
   String _date;
 
-  void postCattle() {
+  void updateCattle() {
     if (isEmpty() == false) {
       _error = false;
-      print(farmController.farmId);
       cattleController
-          .postCattles(_creationType, _cattleName, _sex, _birthDate, _weight,
-              _milkProduced, _lactationPeriod, farmController.farmId)
+          .updateCattle(
+              cattleController.cattleId,
+              _cattleName,
+              _creationType,
+              _sex,
+              _birthDate,
+              _weight,
+              _milkProduced,
+              _lactationPeriod,
+              farmController.farmId)
           .then((resposta) => validate(resposta));
     } else {
-      print("is empty");
       _error = true;
+      print("OLÁ");
     }
   }
 
@@ -62,6 +71,19 @@ class _AddBovinoState extends State<AddBovino> {
       print(_date);
     });
     return _date;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    creationTypeCon.text = cattleController.cattleType;
+    nameCon.text = cattleController.cattleName;
+    sexCon.text = cattleController.cattleGender;
+    birthDateCon.text = cattleController.cattleBirthDay;
+    weightCon.text = cattleController.cattleWeight;
+    milkProducedCon.text = cattleController.cattleMilkProduced;
+    lactationPeriodCon.text = cattleController.cattleLactationPeriod;
   }
 
   @override
@@ -110,43 +132,6 @@ class _AddBovinoState extends State<AddBovino> {
               ),
             );
           }),
-          actions: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(right: 30.0),
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      if (creationTypeCon.text == '1')
-                        _creationType = 'GADO_LEITEIRO';
-                      else if (creationTypeCon.text == '2')
-                        _creationType = 'GADO_CORTE';
-                      else
-                        _creationType = null;
-                      _cattleName = nameCon.text;
-                      _birthDate = setDate(birthDateCon.text);
-                      if (sexCon.text == '1')
-                        _sex = 'MALE';
-                      else if (sexCon.text == '2')
-                        _sex = 'FEMALE';
-                      else
-                        _sex = null;
-                      _weight = weightCon.text;
-                      _lactationPeriod = lactationPeriodCon.text; 
-                      _milkProduced = milkProducedCon.text;
-                    });
-                    print(_sex);
-                    postCattle();
-                  },
-                  child: Text(
-                    "Salvar",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 15,
-                      color: Color.fromRGBO(42, 174, 198, 1),
-                    ),
-                  ),
-                )),
-          ],
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
@@ -184,7 +169,7 @@ class _AddBovinoState extends State<AddBovino> {
               ErrorText(_error),
               DropDownCreate(
                 creationTypeCon,
-                'Tipo de criação',
+                'Tipo de Criação',
                 'Leiteiro',
                 'Corte',
                 errorText: _wrongCreationType,
@@ -201,9 +186,48 @@ class _AddBovinoState extends State<AddBovino> {
                 errorText: _wrongBirthDate,
               ),
               MyWidgets().caixaTexto('Peso(KG)', weightCon),
+              MyWidgets().caixaTexto(
+                  'Quantidade de leite diário(Litros)', milkProducedCon),
               MyWidgets()
-                  .caixaTexto('Quantidade de leite diário(Litros)', milkProducedCon),
-              MyWidgets().caixaTexto('Periodo de lactação(dias)', lactationPeriodCon),
+                  .caixaTexto('Periodo de lactação(dias)', lactationPeriodCon),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 25.0, left: 20.0, top: 30.0),
+                    child: MyWidgets().button(
+                        'Excluir', 100, 40, 15, Colors.redAccent[700], () {
+                      cattleController.deleteCattle(cattleController.cattleId).then((resposta) => validateDelete(resposta));
+                    }),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 25.0, top: 30.0),
+                      child: MyWidgets().button(
+                          'Salvar', 100, 40, 15, Colors.greenAccent[700], () {
+                        setState(() {
+                          if (creationTypeCon.text == '1')
+                            _creationType = 'GADO_LEITEIRO';
+                          else if (creationTypeCon.text == '2')
+                            _creationType = 'GADO_CORTE';
+                          else
+                            _creationType = null;
+                          _cattleName = nameCon.text;
+                          _birthDate = setDate(birthDateCon.text);
+                          if (sexCon.text == '1')
+                            _sex = 'MALE';
+                          else if (sexCon.text == '2')
+                            _sex = 'FEMALE';
+                          else
+                            _sex = null;
+                          _weight = weightCon.text;
+                          _lactationPeriod = lactationPeriodCon.text;
+                          _milkProduced = milkProducedCon.text;
+                        });
+                        updateCattle();
+                      })),
+                ],
+              )
             ],
           ),
         ));
@@ -235,14 +259,29 @@ class _AddBovinoState extends State<AddBovino> {
         barrierDismissible: false,
         context: context,
         builder: (_) => PopUpAlertDialog(
-          "Bovino criado com sucesso.",
+          "Bovino atualizado com sucesso.",
           onPressed: () async {
             await cattleController.getCattles();
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomeFarm()));
           },
         ),
       );
     }
   }
+
+  void validateDelete(bool resposta) async {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (_) => PopUpAlertDialog(
+          "Bovino deletado com sucesso.",
+          onPressed: () async {
+            await cattleController.getCattles();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => CattlesScreen()));
+          },
+        ),
+      );
+    }
 }

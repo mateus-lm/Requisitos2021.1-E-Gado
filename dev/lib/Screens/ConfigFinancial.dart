@@ -1,14 +1,14 @@
-import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/Screens/FinancialScreen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:dev/Componentes/MyWidgets.dart';
 import '../globals.dart';
 
-class AddFinancial extends StatefulWidget {
+class ConfigFinancial extends StatefulWidget {
   @override
-  _AddFinancialState createState() => _AddFinancialState();
+  _ConfigFinancialState createState() => _ConfigFinancialState();
 }
 
-class _AddFinancialState extends State<AddFinancial> {
+class _ConfigFinancialState extends State<ConfigFinancial> {
   final financesTypeCon = new TextEditingController();
   final valueCon = new TextEditingController();
   final dateCon = new TextEditingController();
@@ -44,18 +44,26 @@ class _AddFinancialState extends State<AddFinancial> {
     return _dateT;
   }
 
-  void postIncome() {
+  void updateIncome() {
     if (isEmpty() == false) {
       _error = false;
-      print(farmController.farmId);
       incomeController
-          .postIncome(
-              _financesType, _value, _date, _description, farmController.farmId)
+          .updateIncome(_financesType, _value, _date, _description,
+              incomeController.incomeId, farmController.farmId)
           .then((resposta) => validate(resposta));
     } else {
-      print("is empty");
       _error = true;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print(incomeController.incomeType);
+    incomeController.incomeType == "LUCRO" ? financesTypeCon.text = '1': financesTypeCon.text = '2' ;
+    valueCon.text = incomeController.incomeValue;
+    dateCon.text = incomeController.incomeDate;
+    descriptionCon.text = incomeController.incomeDescription;
   }
 
   @override
@@ -131,7 +139,8 @@ class _AddFinancialState extends State<AddFinancial> {
                 ],
               ),
             ),
-            DropDownCreate(financesTypeCon, 'Tipo de gasto', 'Lucro', 'Despesa'),
+            DropDownCreate(
+                financesTypeCon, 'Tipo de gasto', 'Lucro', 'Despesa'),
             MyWidgets().caixaTexto('Valor', valueCon),
             DatePick(dateCon, 'data'),
             Container(
@@ -157,8 +166,8 @@ class _AddFinancialState extends State<AddFinancial> {
                   padding:
                       const EdgeInsets.only(right: 25.0, left: 20.0, top: 30.0),
                   child: MyWidgets().button(
-                      'Cancelar', 100, 40, 15, Colors.redAccent[700], () {
-                    Navigator.pop(context);
+                      'Excluir', 100, 40, 15, Colors.redAccent[700], () {
+                        incomeController.deleteIncome(incomeController.incomeId).then((resposta) => validateDelete(resposta));
                   }),
                 ),
                 Padding(
@@ -176,7 +185,7 @@ class _AddFinancialState extends State<AddFinancial> {
                         _date = setDate(dateCon.text);
                         _description = descriptionCon.text;
                       });
-                      postIncome();
+                      updateIncome();
                     })),
               ],
             )
@@ -195,7 +204,9 @@ class _AddFinancialState extends State<AddFinancial> {
           : _wrongFinancesType = null;
       _value.isEmpty ? _wrongValue = text : _wrongValue = null;
       _date == null ? _wrongDate = text : _wrongDate = null;
-      _description == null ? _wrongDescription = text : _wrongDescription = null;
+      _description == null
+          ? _wrongDescription = text
+          : _wrongDescription = null;
     });
     if (_financesType == null ||
         _value.isEmpty ||
@@ -212,13 +223,27 @@ class _AddFinancialState extends State<AddFinancial> {
         barrierDismissible: false,
         context: context,
         builder: (_) => PopUpAlertDialog(
-          "Finança registrada com sucesso.",
+          "Finança atualizada com sucesso.",
           onPressed: () async {
-            await incomeController.getIncome();
             Navigator.pop(context);
           },
         ),
       );
     }
   }
+
+   void validateDelete(bool resposta) async {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (_) => PopUpAlertDialog(
+          "Finança deletada com sucesso.",
+          onPressed: () async {
+            await incomeController.getIncome();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => FinancialScreen()));
+          },
+        ),
+      );
+    }
 }

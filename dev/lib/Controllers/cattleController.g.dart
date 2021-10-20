@@ -118,6 +118,21 @@ mixin _$CattleController on CattleControllerBase, Store {
     });
   }
 
+  final _$cattleIdAtom = Atom(name: 'CattleControllerBase.cattleId');
+
+  @override
+  int get cattleId {
+    _$cattleIdAtom.reportRead();
+    return super.cattleId;
+  }
+
+  @override
+  set cattleId(int value) {
+    _$cattleIdAtom.reportWrite(value, super.cattleId, () {
+      super.cattleId = value;
+    });
+  }
+
   final _$getCattlesAsyncAction =
       AsyncAction('CattleControllerBase.getCattles');
 
@@ -232,6 +247,17 @@ mixin _$CattleController on CattleControllerBase, Store {
   }
 
   @override
+  dynamic changeCattleId(int value) {
+    final _$actionInfo = _$CattleControllerBaseActionController.startAction(
+        name: 'CattleControllerBase.changeCattleId');
+    try {
+      return super.changeCattleId(value);
+    } finally {
+      _$CattleControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 cattleName: ${cattleName},
@@ -240,7 +266,8 @@ cattleGender: ${cattleGender},
 cattleBirthDay: ${cattleBirthDay},
 cattleWeight: ${cattleWeight},
 cattleMilkProduced: ${cattleMilkProduced},
-cattleLactationPeriod: ${cattleLactationPeriod}
+cattleLactationPeriod: ${cattleLactationPeriod},
+cattleId: ${cattleId}
     ''';
   }
 }

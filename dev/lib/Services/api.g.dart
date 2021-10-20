@@ -133,9 +133,10 @@ mixin _$Api on ApiBase, Store {
   final _$updateIncomeAsyncAction = AsyncAction('ApiBase.updateIncome');
 
   @override
-  Future updateIncome(int incomeId, int farm) {
-    return _$updateIncomeAsyncAction
-        .run(() => super.updateIncome(incomeId, farm));
+  Future updateIncome(String incomeType, String value, String date,
+      String description, int incomeId, int farm) {
+    return _$updateIncomeAsyncAction.run(() => super
+        .updateIncome(incomeType, value, date, description, incomeId, farm));
   }
 
   final _$deleteIncomeByIdAsyncAction = AsyncAction('ApiBase.deleteIncomeById');

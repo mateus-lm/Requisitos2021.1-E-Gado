@@ -1,24 +1,15 @@
-import 'package:dev/Componentes/ListFarms.dart';
-import 'package:dev/Screens/addFarm.dart';
+import 'package:dev/Componentes/ListIncome.dart';
+import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/Screens/AddFinancialReport.dart';
 import 'package:dev/globals.dart';
 import 'package:flutter/material.dart';
 
-class FarmsScreen extends StatefulWidget {
+class FinancialScreen extends StatefulWidget {
   @override
-  _FarmsScreenState createState() => _FarmsScreenState();
+  _FinancialScreenState createState() => _FinancialScreenState();
 }
 
-class _FarmsScreenState extends State<FarmsScreen> {
-  @override
-
-  // void createFarm(bool resposta) {
-  //   if (resposta) {
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => AddFarm()));
-  //   } else
-  //     MyWidgets().logout(context, resposta);
-  // }
-
+class _FinancialScreenState extends State<FinancialScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +18,41 @@ class _FarmsScreenState extends State<FarmsScreen> {
         backgroundColor: Colors.white,
         title: Padding(
           padding: EdgeInsets.only(right: 30),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Text(
-              'Fazendas',
-              style: TextStyle(color: Theme.of(context).primaryColor),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: CircleAvatar(
+                radius: 17.5,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: Text(
+                  MyWidgets().splitName(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
-          ),
+            Text(
+              farmController.farmName,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontFamily: 'Roboto',
+                fontSize: 15,
+              ),
+            ),
+          ]),
         ),
+        leading: Builder(builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: IconButton(
+              color: Colors.black,
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              alignment: Alignment.centerRight,
+            ),
+          );
+        }),
       ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
@@ -51,7 +69,7 @@ class _FarmsScreenState extends State<FarmsScreen> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(5, 40, 30, 40),
                       child: Text(
-                        "Adicionar Fazenda",
+                        "Adicionar Finança",
                         style: TextStyle(
                           fontFamily: 'Roboto',
                           fontSize: 16,
@@ -63,7 +81,7 @@ class _FarmsScreenState extends State<FarmsScreen> {
                 ),
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddFarm()));
+                      MaterialPageRoute(builder: (context) => AddFinancial()));
                   // userController
                   //     .checkToken()
                   //     .then((resposta) => createFarm(resposta));
@@ -71,7 +89,7 @@ class _FarmsScreenState extends State<FarmsScreen> {
               ),
             ),
             FutureBuilder(
-                future: farmController.getFarms(),
+                future: incomeController.getIncome(),
                 builder: (context, projectSnap) {
                   if (projectSnap.hasError) {
                     return Text("Something went wrong");
@@ -83,9 +101,15 @@ class _FarmsScreenState extends State<FarmsScreen> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: projectSnap.data.length,
                         itemBuilder: (context, i) {
-                          List farm = projectSnap.data;
-                          return buildListFarms(
-                              context, i, farm[i]['name_farm'], farm[i]['id']);
+                          List income = projectSnap.data;
+                          return buildListIncome(
+                              context,
+                              i,
+                              income[i]['income_type'],
+                              income[i]['description'],
+                              income[i]['value'],
+                              income[i]['date'],
+                              income[i]['id']);
                         });
                   } else {
                     return Center(child: CircularProgressIndicator());

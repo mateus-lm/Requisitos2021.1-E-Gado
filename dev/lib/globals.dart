@@ -1,5 +1,6 @@
 import 'package:dev/Controllers/cattleController.dart';
 import 'package:dev/Controllers/farmController.dart';
+import 'package:dev/Controllers/incomeController.dart';
 import 'package:dev/Controllers/userController.dart';
 import 'package:dio/dio.dart';
 import 'Services/api.dart';
@@ -8,6 +9,7 @@ Api api = new Api();
 UserController userController = new UserController();
 FarmController farmController = new FarmController();
 CattleController cattleController = new CattleController();
+IncomeController incomeController = new IncomeController();
 
 
 var options = BaseOptions(

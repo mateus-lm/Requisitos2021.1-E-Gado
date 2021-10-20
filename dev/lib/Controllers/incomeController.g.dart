@@ -36,8 +36,10 @@ mixin _$IncomeController on IncomeControllerBase, Store {
       AsyncAction('IncomeControllerBase.postIncome');
 
   @override
-  Future postIncome(int farm) {
-    return _$postIncomeAsyncAction.run(() => super.postIncome(farm));
+  Future postIncome(String incomeType, String value, String date,
+      String description, int farm) {
+    return _$postIncomeAsyncAction.run(
+        () => super.postIncome(incomeType, value, date, description, farm));
   }
 
   final _$getIncomeByIdAsyncAction =

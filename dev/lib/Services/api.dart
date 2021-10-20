@@ -210,12 +210,16 @@ abstract class ApiBase with Store {
     return response;
   }
 
-//POST
-  postIncome(int farm) async {
+  postIncome(String incomeType, String value, String date, String description,
+      int farm) async {
     var token = userController.token;
     Response response = await dio.post(
       '/income/',
       data: {
+        "income_type": incomeType,
+        "value": value,
+        "date": date,
+        "description": description,
         "farm": farm,
       },
       options: Options(
@@ -237,17 +241,25 @@ abstract class ApiBase with Store {
     return response;
   }
 
-  // Income
-
   @action
   updateIncome(
+    String incomeType,
+    String value,
+    String date,
+    String description,
     int incomeId,
     int farm,
   ) async {
     var token = userController.token;
     Response response = await dio.put(
       '/income/$incomeId',
-      data: {"farm": 0},
+      data: {
+        "income_type": incomeType,
+        "value": value,
+        "date": date,
+        "description": description,
+        "farm": farm,
+      },
       options: Options(
         headers: {'Authorization': 'Bearer $token'},
       ),
