@@ -11,7 +11,7 @@ class Income(models.Model):
     ]
 
     income_type = models.CharField(choices=INPUT_TYPE, max_length=255)
-    value = models.DecimalField(max_digits=6, decimal_places=4, max_length=255)
+    value = models.CharField(max_length=255)
     date = models.DateField(null = False, blank = False)
     description = models.CharField(max_length=255)
 
