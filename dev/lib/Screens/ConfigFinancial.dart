@@ -140,7 +140,7 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
               ),
             ),
             DropDownCreate(
-                financesTypeCon, 'Tipo de gasto', 'Lucro', 'Despesa'),
+                financesTypeCon, 'Tipo de gasto', 'Lucro', 'Despesa', dropdownValue: financesTypeCon.text,),
             MyWidgets().caixaTexto('Valor', valueCon),
             DatePick(dateCon, 'data'),
             Container(

@@ -77,9 +77,9 @@ class _ConfigCattleState extends State<ConfigCattle> {
   void initState() {
     super.initState();
 
-    creationTypeCon.text = cattleController.cattleType;
+    cattleController.cattleType == 'GADO_LEITEIRO' ? creationTypeCon.text = '1' : creationTypeCon.text = '2';
     nameCon.text = cattleController.cattleName;
-    sexCon.text = cattleController.cattleGender;
+    cattleController.cattleGender == 'MALE'? sexCon.text =  '1' : sexCon.text = '2';
     birthDateCon.text = cattleController.cattleBirthDay;
     weightCon.text = cattleController.cattleWeight;
     milkProducedCon.text = cattleController.cattleMilkProduced;
@@ -172,13 +172,13 @@ class _ConfigCattleState extends State<ConfigCattle> {
                 'Tipo de Criação',
                 'Leiteiro',
                 'Corte',
-                errorText: _wrongCreationType,
+                errorText: _wrongCreationType, dropdownValue: creationTypeCon.text,
               ),
               MyWidgets()
                   .caixaTexto('Identificação:', nameCon, errorText: _wrongName),
               GenderPicker(
                 sexCon,
-                errorText: _wrongSex,
+                errorText: _wrongSex, dropdownValue: sexCon.text,
               ),
               DatePick(
                 birthDateCon,
