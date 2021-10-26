@@ -44,7 +44,7 @@ Widget buildListIncome(BuildContext context, int index, String financeType,
           Padding(
             padding:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.06),
-            child: Text("$value"),
+            child: Text("R\$ $value"),
           ),
           IconButton(
               icon: const Icon(Icons.settings_outlined),

@@ -7,6 +7,23 @@ part 'incomeController.g.dart';
 class IncomeController = IncomeControllerBase with _$IncomeController;
 
 abstract class IncomeControllerBase with Store {
+  @observable
+  int profit = 0;
+
+  @action
+  changeProfit(int value) => profit = value;
+
+  @observable
+  int expense = 0;
+
+  @action
+  changeExpense(int value) => expense = value;
+
+  @observable
+  int totalValue = 0;
+
+  @action
+  changeTotalValue(int value) => totalValue = value;
   
   @observable
   int incomeId = 0;
@@ -37,11 +54,38 @@ abstract class IncomeControllerBase with Store {
 
   @action
   changeIncomeDescription(String value) => incomeDescription = value;
+  
+  @observable
+  List incomeList;
+
+  @action
+  changeIncomeList(List value) => incomeList = value;
 
   @action
   getIncome() async {
     Response response = await api.getIncome();
+    changeIncomeList(response.data);
     return response.data;
+  }
+  @action
+  getValues() async {
+    int profitt = 0;
+    int expensee = 0;
+    int valueParse = 0;
+    for(int i=0; i < incomeList.length; i++){
+      if (incomeList[i]['income_type'] == 'LUCRO'){
+        valueParse = int.parse(incomeList[i]['value']);
+        profitt += valueParse;
+      }
+      else if (incomeList[i]['income_type'] == 'DESPESA'){
+        valueParse = int.parse(incomeList[i]['value']);
+        expensee += valueParse;
+      }
+    }
+    int valorSomado = profitt - expensee;
+     changeProfit(profitt);
+     changeExpense(expensee);
+     changeTotalValue(valorSomado);
   }
 
   @action

@@ -80,7 +80,9 @@ class _HomeFarmState extends State<HomeFarm> {
                   MediaQuery.of(context).size.width * 0.8,
                   50.0,
                   15.0,
-                  Theme.of(context).primaryColor, () {
+                  Theme.of(context).primaryColor, () async {
+                    await incomeController.getIncome();
+                    await incomeController.getValues();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => FinancialScreen()));
               }),

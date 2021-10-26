@@ -10,6 +10,8 @@ class FinancialScreen extends StatefulWidget {
 }
 
 class _FinancialScreenState extends State<FinancialScreen> {
+  int expense = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,69 +56,141 @@ class _FinancialScreenState extends State<FinancialScreen> {
           );
         }),
       ),
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              //alignment: Alignment.centerRight,
-              child: GestureDetector(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(Icons.add, size: 30),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(5, 40, 30, 40),
-                      child: Text(
-                        "Adicionar Finança",
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              physics: ScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    //alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(Icons.add, size: 30),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(5, 40, 30, 40),
+                            child: Text(
+                              "Adicionar Finança",
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddFinancial()));
+                        // userController
+                        //     .checkToken()
+                        //     .then((resposta) => createFarm(resposta));
+                      },
                     ),
-                  ],
-                ),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddFinancial()));
-                  // userController
-                  //     .checkToken()
-                  //     .then((resposta) => createFarm(resposta));
-                },
+                  ),
+                  FutureBuilder(
+                      future: incomeController.getIncome(),
+                      builder: (context, projectSnap) {
+                        if (projectSnap.hasError) {
+                          return Text("Something went wrong");
+                        } else if (projectSnap.connectionState ==
+                            ConnectionState.done) {
+                          print('ProjectSnap ${projectSnap.data.length}');
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: projectSnap.data.length,
+                              itemBuilder: (context, i) {
+                                List income = projectSnap.data;
+                                return buildListIncome(
+                                    context,
+                                    i,
+                                    income[i]['income_type'],
+                                    income[i]['description'],
+                                    income[i]['value'],
+                                    income[i]['date'],
+                                    income[i]['id']);
+                              });
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      })
+                ],
               ),
             ),
-            FutureBuilder(
-                future: incomeController.getIncome(),
-                builder: (context, projectSnap) {
-                  if (projectSnap.hasError) {
-                    return Text("Something went wrong");
-                  } else if (projectSnap.connectionState ==
-                      ConnectionState.done) {
-                    print('ProjectSnap ${projectSnap.data.length}');
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: projectSnap.data.length,
-                        itemBuilder: (context, i) {
-                          List income = projectSnap.data;
-                          return buildListIncome(
-                              context,
-                              i,
-                              income[i]['income_type'],
-                              income[i]['description'],
-                              income[i]['value'],
-                              income[i]['date'],
-                              income[i]['id']);
-                        });
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                })
-          ],
-        ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.18,
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Row(children: [
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Container(
+                      alignment: Alignment.center,
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Text(
+                        'Soma dos Lucros',
+                        style: TextStyle(fontSize: 16),
+                      )),
+                  Container(
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: Text('R\$${incomeController.profit.toString()}',
+                        style: TextStyle(fontSize: 16)),
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        border: Border(
+                          top: BorderSide(color: Colors.black, width: 1.0),
+                          bottom: BorderSide(color: Colors.black, width: 1.0),
+                        )),
+                  )
+                ]),
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Container(
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Soma das Despesas',
+                        style: TextStyle(fontSize: 16),
+                      )),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: Colors.red[800],
+                        border: Border(
+                          left: BorderSide(color: Colors.black, width: 1.0),
+                          top: BorderSide(color: Colors.black, width: 1.0),
+                          bottom: BorderSide(color: Colors.black, width: 1.0),
+                        )),
+                    child: Text('R\$${incomeController.expense.toString()}',
+                        style: TextStyle(fontSize: 16)),
+                  )
+                ])
+              ]),
+              Container(
+                alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width,
+                color: Colors.blue,
+                child: Text(
+                    'Total: R\$${incomeController.totalValue.toString()}',
+                    style: TextStyle(fontSize: 16)),
+              )
+            ]),
+          ),
+        ],
       ),
     );
   }

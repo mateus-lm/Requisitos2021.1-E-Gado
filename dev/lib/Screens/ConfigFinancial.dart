@@ -225,7 +225,11 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
         builder: (_) => PopUpAlertDialog(
           "Finança atualizada com sucesso.",
           onPressed: () async {
+            await incomeController.getIncome();
+            await incomeController.getValues();
             Navigator.pop(context);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => FinancialScreen()));
           },
         ),
       );
@@ -240,6 +244,8 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
           "Finança deletada com sucesso.",
           onPressed: () async {
             await incomeController.getIncome();
+            await incomeController.getValues();
+            Navigator.pop(context);
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => FinancialScreen()));
           },
