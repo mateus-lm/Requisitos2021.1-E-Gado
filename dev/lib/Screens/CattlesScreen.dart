@@ -88,7 +88,7 @@ class _CattlesScreenState extends State<CattlesScreen> {
               ),
             ),
             FutureBuilder(
-                future: cattleController.getCattles(),
+                future: cattleController.getListCattles(),
                 builder: (context, projectSnap) {
                   if (projectSnap.hasError) {
                     return Text("Something went wrong");
@@ -100,11 +100,9 @@ class _CattlesScreenState extends State<CattlesScreen> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: projectSnap.data.length,
                         itemBuilder: (context, i) {
-                          List cattles = projectSnap.data;
-                          if(cattles[i]['farm'] == farmController.farmId){
+                          List cattles = projectSnap.data; 
                           return buildListCattles(context, i,
                               cattles[i]['id_cattle'], cattles[i]['id']);
-                          }
                         });
                   } else {
                     return Center(child: CircularProgressIndicator());

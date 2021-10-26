@@ -15,6 +15,9 @@ Widget buildListFarms(
       // bool resposta = await userController.checkToken();
       // if (resposta) {
         await farmController.getFarmById(farmId);
+        incomeController.changeExpense(0);
+        incomeController.changeProfit(0);
+        incomeController.changeTotalValue(0);
         Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomeFarm()));

@@ -24,7 +24,7 @@ abstract class IncomeControllerBase with Store {
 
   @action
   changeTotalValue(int value) => totalValue = value;
-  
+
   @observable
   int incomeId = 0;
 
@@ -48,13 +48,13 @@ abstract class IncomeControllerBase with Store {
 
   @action
   changeIncomeDate(String value) => incomeDate = value;
-  
+
   @observable
   String incomeDescription = '';
 
   @action
   changeIncomeDescription(String value) => incomeDescription = value;
-  
+
   @observable
   List incomeList;
 
@@ -67,27 +67,39 @@ abstract class IncomeControllerBase with Store {
     changeIncomeList(response.data);
     return response.data;
   }
+
+  @action
+  getList() async {
+    var list = <dynamic>[];
+    assert(list.isEmpty);
+    for (int i = 0; i < incomeList.length; i++) {
+      if (incomeList[i]['farm'] == farmController.farmId) {
+        list.add(incomeList[i]);
+      }
+    }
+    return list;
+  }
+
   @action
   getValues() async {
     int profitt = 0;
     int expensee = 0;
     int valueParse = 0;
-    for(int i=0; i < incomeList.length; i++){
-      if(incomeList[i]['farm'] == farmController.farmId){
-      if (incomeList[i]['income_type'] == 'LUCRO'){
-        valueParse = int.parse(incomeList[i]['value']);
-        profitt += valueParse;
+    for (int i = 0; i < incomeList.length; i++) {
+      if (incomeList[i]['farm'] == farmController.farmId) {
+        if (incomeList[i]['income_type'] == 'LUCRO') {
+          valueParse = int.parse(incomeList[i]['value']);
+          profitt += valueParse;
+        } else if (incomeList[i]['income_type'] == 'DESPESA') {
+          valueParse = int.parse(incomeList[i]['value']);
+          expensee += valueParse;
+        }
       }
-      else if (incomeList[i]['income_type'] == 'DESPESA'){
-        valueParse = int.parse(incomeList[i]['value']);
-        expensee += valueParse;
-      }
-    }
     }
     int valorSomado = profitt - expensee;
-     changeProfit(profitt);
-     changeExpense(expensee);
-     changeTotalValue(valorSomado);
+    changeProfit(profitt);
+    changeExpense(expensee);
+    changeTotalValue(valorSomado);
   }
 
   @action
@@ -95,8 +107,7 @@ abstract class IncomeControllerBase with Store {
       int farm) async {
     var resposta = true;
     try {
-      await api.postIncome( incomeType,  value,  date,  description,
-       farm);
+      await api.postIncome(incomeType, value, date, description, farm);
     } on DioError catch (err) {
       print("Erro: ${err.response.statusCode}");
       print("Erro: ${err.response.data}");
@@ -114,24 +125,27 @@ abstract class IncomeControllerBase with Store {
     changeIncomeDate(response.data['date']);
     changeIncomeType(response.data['income_type']);
 
-
     return response.data;
   }
 
-  updateIncome(String incomeType,
+  updateIncome(
+    String incomeType,
     String value,
     String date,
     String description,
     int incomeId,
-    int farm,) async {
+    int farm,
+  ) async {
     var resposta = true;
     try {
-      await api.updateIncome(incomeType,
-     value,
-     date,
-     description,
-     incomeId,
-     farm,);
+      await api.updateIncome(
+        incomeType,
+        value,
+        date,
+        description,
+        incomeId,
+        farm,
+      );
     } on DioError catch (err) {
       resposta = false;
       print('erro');

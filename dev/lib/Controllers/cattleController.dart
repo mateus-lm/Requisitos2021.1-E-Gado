@@ -59,10 +59,29 @@ abstract class CattleControllerBase with Store {
   @action
   changeCattleId(int value) => cattleId = value;
 
+  @observable
+  List cattleList;
+
+  @action
+  changecattleList(List value) => cattleList = value;
+
   @action
   getCattles() async {
     Response response = await api.getCattles();
+    changecattleList(response.data);
     return response.data;
+  }
+
+  @action
+  getListCattles() async {
+    var list = <dynamic>[];
+    assert(list.isEmpty);
+    for (int i = 0; i < cattleList.length; i++) {
+      if (cattleList[i]['farm'] == farmController.farmId) {
+        list.add(cattleList[i]);
+      }
+    }
+    return list;
   }
 
   @action

@@ -39,6 +39,21 @@ mixin _$IncomeController on IncomeControllerBase, Store {
     });
   }
 
+  final _$totalValueAtom = Atom(name: 'IncomeControllerBase.totalValue');
+
+  @override
+  int get totalValue {
+    _$totalValueAtom.reportRead();
+    return super.totalValue;
+  }
+
+  @override
+  set totalValue(int value) {
+    _$totalValueAtom.reportWrite(value, super.totalValue, () {
+      super.totalValue = value;
+    });
+  }
+
   final _$incomeIdAtom = Atom(name: 'IncomeControllerBase.incomeId');
 
   @override
@@ -188,6 +203,17 @@ mixin _$IncomeController on IncomeControllerBase, Store {
   }
 
   @override
+  dynamic changeTotalValue(int value) {
+    final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
+        name: 'IncomeControllerBase.changeTotalValue');
+    try {
+      return super.changeTotalValue(value);
+    } finally {
+      _$IncomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic changeIncomeId(int value) {
     final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
         name: 'IncomeControllerBase.changeIncomeId');
@@ -243,7 +269,7 @@ mixin _$IncomeController on IncomeControllerBase, Store {
   }
 
   @override
-  dynamic changeIncomeList(List<dynamic> value) {
+  dynamic changeIncomeList(dynamic value) {
     final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
         name: 'IncomeControllerBase.changeIncomeList');
     try {
@@ -258,6 +284,7 @@ mixin _$IncomeController on IncomeControllerBase, Store {
     return '''
 profit: ${profit},
 expense: ${expense},
+totalValue: ${totalValue},
 incomeId: ${incomeId},
 incomeType: ${incomeType},
 incomeValue: ${incomeValue},

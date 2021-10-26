@@ -99,7 +99,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                     ),
                   ),
                   FutureBuilder(
-                      future: incomeController.getIncome(),
+                      future: incomeController.getList(),
                       builder: (context, projectSnap) {
                         if (projectSnap.hasError) {
                           return Text("Something went wrong");
@@ -112,7 +112,6 @@ class _FinancialScreenState extends State<FinancialScreen> {
                               itemCount: projectSnap.data.length,
                               itemBuilder: (context, i) {
                                 List income = projectSnap.data;
-                                if(income[i]['farm'] == farmController.farmId){
                                 return buildListIncome(
                                     context,
                                     i,
@@ -120,8 +119,9 @@ class _FinancialScreenState extends State<FinancialScreen> {
                                     income[i]['description'],
                                     income[i]['value'],
                                     income[i]['date'],
-                                    income[i]['id']);
-                                }
+                                    income[i]['id'], 
+                                    );
+                                
                               });
                         } else {
                           return Center(child: CircularProgressIndicator());

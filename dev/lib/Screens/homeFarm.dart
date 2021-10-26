@@ -21,9 +21,10 @@ class _HomeFarmState extends State<HomeFarm> {
         backgroundColor: Colors.white,
         elevation: 5,
         shadowColor: Color.fromRGBO(0, 0, 0, 1),
-        title: Row( children: [
+        title: Row(children: [
           Padding(
-            padding: EdgeInsets.only(right: 10, left: MediaQuery.of(context).size.width * 0.2),
+            padding: EdgeInsets.only(
+                right: 10, left: MediaQuery.of(context).size.width * 0.2),
             child: CircleAvatar(
               radius: 17.5,
               backgroundColor: Theme.of(context).primaryColor,
@@ -35,7 +36,8 @@ class _HomeFarmState extends State<HomeFarm> {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(right:MediaQuery.of(context).size.width * 0.2),
+              padding: EdgeInsets.only(
+                  right: MediaQuery.of(context).size.width * 0.2),
               child: Text(
                 farmController.farmName,
                 style: TextStyle(
@@ -67,7 +69,8 @@ class _HomeFarmState extends State<HomeFarm> {
                     MediaQuery.of(context).size.width * 0.8,
                     50.0,
                     15.0,
-                    Theme.of(context).primaryColor, () {
+                    Theme.of(context).primaryColor, () async {
+                  await cattleController.getCattles();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => CattlesScreen()));
                 })),
