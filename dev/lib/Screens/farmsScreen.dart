@@ -23,17 +23,12 @@ class _FarmsScreenState extends State<FarmsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Padding(
-          padding: EdgeInsets.only(right: 30),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Text(
-              'Fazendas',
-              style: TextStyle(color: Theme.of(context).primaryColor),
-            ),
-          ),
+        title: Text(
+          'Fazendas',
+          style: TextStyle(color: Theme.of(context).primaryColor),
         ),
       ),
       body: SingleChildScrollView(
@@ -62,6 +57,7 @@ class _FarmsScreenState extends State<FarmsScreen> {
                   ],
                 ),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AddFarm()));
                   // userController

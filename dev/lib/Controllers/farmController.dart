@@ -52,6 +52,7 @@ abstract class FarmControllerBase with Store {
       await api.postFarm(nameFarm, city, state, size);
     } on DioError catch (err) {
       print("Erro: ${err.response.statusCode}");
+      print("Erro: ${err.response.data}");
       resposta = false;
     }
     return resposta;

@@ -1,4 +1,4 @@
-import 'package:dev/Screens/ConfigFarm.dart';
+import 'package:dev/Screens/ConfigCattle.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart';
@@ -34,8 +34,9 @@ Widget buildListCattles(
                 //   await _storage.write(
                 //       key: 'profileIndex', value: index.toString());
                 await cattleController.getCattleById(cattleId);
+                Navigator.pop(context);
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ConfigFarm()));
+                    MaterialPageRoute(builder: (context) => ConfigCattle()));
                 // } else
                 //   MyWidgets().logout(context, resposta);
               })

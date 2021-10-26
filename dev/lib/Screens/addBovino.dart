@@ -2,6 +2,7 @@ import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart';
+import 'CattlesScreen.dart';
 
 class AddBovino extends StatefulWidget {
   @override
@@ -77,7 +78,7 @@ class _AddBovinoState extends State<AddBovino> {
             padding: EdgeInsets.only(right: 30),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
-                padding: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.only(right: 10, left: 10),
                 child: CircleAvatar(
                   radius: 17.5,
                   backgroundColor: Theme.of(context).primaryColor,
@@ -87,12 +88,14 @@ class _AddBovinoState extends State<AddBovino> {
                   ),
                 ),
               ),
-              Text(
-                farmController.farmName,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontFamily: 'Roboto',
-                  fontSize: 15,
+              Expanded(
+                child: Text(
+                  farmController.farmName,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ]),
@@ -104,7 +107,8 @@ class _AddBovinoState extends State<AddBovino> {
                 color: Colors.black,
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CattlesScreen()));
                 },
                 alignment: Alignment.centerRight,
               ),
@@ -131,7 +135,7 @@ class _AddBovinoState extends State<AddBovino> {
                       else
                         _sex = null;
                       _weight = weightCon.text;
-                      _lactationPeriod = lactationPeriodCon.text; 
+                      _lactationPeriod = lactationPeriodCon.text;
                       _milkProduced = milkProducedCon.text;
                     });
                     print(_sex);
@@ -201,9 +205,10 @@ class _AddBovinoState extends State<AddBovino> {
                 errorText: _wrongBirthDate,
               ),
               MyWidgets().caixaTexto('Peso(KG)', weightCon),
+              MyWidgets().caixaTexto(
+                  'Quantidade de leite diário(Litros)', milkProducedCon),
               MyWidgets()
-                  .caixaTexto('Quantidade de leite diário(Litros)', milkProducedCon),
-              MyWidgets().caixaTexto('Periodo de lactação(dias)', lactationPeriodCon),
+                  .caixaTexto('Periodo de lactação(dias)', lactationPeriodCon),
             ],
           ),
         ));
@@ -237,9 +242,11 @@ class _AddBovinoState extends State<AddBovino> {
         builder: (_) => PopUpAlertDialog(
           "Bovino criado com sucesso.",
           onPressed: () async {
-            await cattleController.getCattles();
+            // await cattleController.getCattles();
             Navigator.of(context).pop();
             Navigator.of(context).pop();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CattlesScreen()));
           },
         ),
       );

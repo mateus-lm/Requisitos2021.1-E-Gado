@@ -1,8 +1,7 @@
 import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/Screens/farmsScreen.dart';
 import 'package:dev/globals.dart';
 import 'package:flutter/material.dart';
-
-import 'homeFarm.dart';
 
 class AddFarm extends StatefulWidget {
   @override
@@ -43,8 +42,11 @@ class _AddFarmState extends State<AddFarm> {
               child: IconButton(
                 color: Colors.black,
                 icon: const Icon(Icons.arrow_back),
-                onPressed: () async {
-                  Navigator.pop(context);
+                onPressed: () {
+                  Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FarmsScreen()));
                 },
                 alignment: Alignment.centerRight,
               ),
@@ -91,14 +93,13 @@ class _AddFarmState extends State<AddFarm> {
 
                         await farmController.postFarm(
                             _farmName, _farmCity, _farmState, _farmSize);
-                        List farmsList = await farmController.getFarms();
-                        await farmController
-                            .getFarmById(farmsList[farmsList.length - 1]['id']);
+                        // List farmsList = await farmController.getFarms();
+                        // await farmController
+                        //     .getFarmById(farmsList[farmsList.length - 1]['id']);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeFarm()));
-                        // farmController.updateFarm(_farmName, _farmCity, _farmState, _farmSize, farmController.farmId);
+                                builder: (context) => FarmsScreen()));
                       }),
                     )
                   ],

@@ -22,7 +22,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
           padding: EdgeInsets.only(right: 30),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.only(right: 10, left: 10),
               child: CircleAvatar(
                 radius: 17.5,
                 backgroundColor: Theme.of(context).primaryColor,
@@ -32,12 +32,14 @@ class _FinancialScreenState extends State<FinancialScreen> {
                 ),
               ),
             ),
-            Text(
-              farmController.farmName,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontFamily: 'Roboto',
-                fontSize: 15,
+            Expanded(
+              child: Text(
+                farmController.farmName,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 15,
+                ),
               ),
             ),
           ]),
@@ -85,6 +87,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                         ],
                       ),
                       onTap: () {
+                        Navigator.pop(context);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -109,6 +112,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                               itemCount: projectSnap.data.length,
                               itemBuilder: (context, i) {
                                 List income = projectSnap.data;
+                                if(income[i]['farm'] == farmController.farmId){
                                 return buildListIncome(
                                     context,
                                     i,
@@ -117,6 +121,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                                     income[i]['value'],
                                     income[i]['date'],
                                     income[i]['id']);
+                                }
                               });
                         } else {
                           return Center(child: CircularProgressIndicator());

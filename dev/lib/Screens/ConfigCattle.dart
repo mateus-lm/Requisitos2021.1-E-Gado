@@ -1,6 +1,5 @@
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:dev/Screens/CattlesScreen.dart';
-import 'package:dev/Screens/homeFarm.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart';
@@ -77,9 +76,13 @@ class _ConfigCattleState extends State<ConfigCattle> {
   void initState() {
     super.initState();
 
-    cattleController.cattleType == 'GADO_LEITEIRO' ? creationTypeCon.text = '1' : creationTypeCon.text = '2';
+    cattleController.cattleType == 'GADO_LEITEIRO'
+        ? creationTypeCon.text = '1'
+        : creationTypeCon.text = '2';
     nameCon.text = cattleController.cattleName;
-    cattleController.cattleGender == 'MALE'? sexCon.text =  '1' : sexCon.text = '2';
+    cattleController.cattleGender == 'MALE'
+        ? sexCon.text = '1'
+        : sexCon.text = '2';
     birthDateCon.text = cattleController.cattleBirthDay;
     weightCon.text = cattleController.cattleWeight;
     milkProducedCon.text = cattleController.cattleMilkProduced;
@@ -99,7 +102,7 @@ class _ConfigCattleState extends State<ConfigCattle> {
             padding: EdgeInsets.only(right: 30),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
-                padding: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.only(right: 10, left: 10),
                 child: CircleAvatar(
                   radius: 17.5,
                   backgroundColor: Theme.of(context).primaryColor,
@@ -109,12 +112,14 @@ class _ConfigCattleState extends State<ConfigCattle> {
                   ),
                 ),
               ),
-              Text(
-                farmController.farmName,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontFamily: 'Roboto',
-                  fontSize: 15,
+              Expanded(
+                child: Text(
+                  farmController.farmName,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ]),
@@ -126,7 +131,8 @@ class _ConfigCattleState extends State<ConfigCattle> {
                 color: Colors.black,
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CattlesScreen()));
                 },
                 alignment: Alignment.centerRight,
               ),
@@ -172,13 +178,15 @@ class _ConfigCattleState extends State<ConfigCattle> {
                 'Tipo de Criação',
                 'Leiteiro',
                 'Corte',
-                errorText: _wrongCreationType, dropdownValue: creationTypeCon.text,
+                errorText: _wrongCreationType,
+                dropdownValue: creationTypeCon.text,
               ),
               MyWidgets()
                   .caixaTexto('Identificação:', nameCon, errorText: _wrongName),
               GenderPicker(
                 sexCon,
-                errorText: _wrongSex, dropdownValue: sexCon.text,
+                errorText: _wrongSex,
+                dropdownValue: sexCon.text,
               ),
               DatePick(
                 birthDateCon,
@@ -198,7 +206,9 @@ class _ConfigCattleState extends State<ConfigCattle> {
                         right: 25.0, left: 20.0, top: 30.0),
                     child: MyWidgets().button(
                         'Excluir', 100, 40, 15, Colors.redAccent[700], () {
-                      cattleController.deleteCattle(cattleController.cattleId).then((resposta) => validateDelete(resposta));
+                      cattleController
+                          .deleteCattle(cattleController.cattleId)
+                          .then((resposta) => validateDelete(resposta));
                     }),
                   ),
                   Padding(
@@ -261,9 +271,11 @@ class _ConfigCattleState extends State<ConfigCattle> {
         builder: (_) => PopUpAlertDialog(
           "Bovino atualizado com sucesso.",
           onPressed: () async {
-            await cattleController.getCattles();
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeFarm()));
+            // await cattleController.getCattles();
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CattlesScreen()));
           },
         ),
       );
@@ -271,17 +283,19 @@ class _ConfigCattleState extends State<ConfigCattle> {
   }
 
   void validateDelete(bool resposta) async {
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (_) => PopUpAlertDialog(
-          "Bovino deletado com sucesso.",
-          onPressed: () async {
-            await cattleController.getCattles();
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CattlesScreen()));
-          },
-        ),
-      );
-    }
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) => PopUpAlertDialog(
+        "Bovino deletado com sucesso.",
+        onPressed: () async {
+          // await cattleController.getCattles();
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CattlesScreen()));
+        },
+      ),
+    );
+  }
 }

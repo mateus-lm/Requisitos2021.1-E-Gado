@@ -6,49 +6,47 @@ import 'package:flutter/material.dart';
 
 import '../globals.dart';
 
-
 class HomeFarm extends StatefulWidget {
   @override
   _HomeFarmState createState() => _HomeFarmState();
 }
 
 class _HomeFarmState extends State<HomeFarm> {
-
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 5,
         shadowColor: Color.fromRGBO(0, 0, 0, 1),
-        centerTitle: true,
-        title: Padding(
-          padding: EdgeInsets.only(right: 30),
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: CircleAvatar(
-                radius: 17.5,
-                backgroundColor: Theme.of(context).primaryColor,
-                child: Text(
-                  MyWidgets().splitName(),
-                  style: TextStyle(color: Colors.white),
+        title: Row( children: [
+          Padding(
+            padding: EdgeInsets.only(right: 10, left: MediaQuery.of(context).size.width * 0.2),
+            child: CircleAvatar(
+              radius: 17.5,
+              backgroundColor: Theme.of(context).primaryColor,
+              child: Text(
+                MyWidgets().splitName(),
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(right:MediaQuery.of(context).size.width * 0.2),
+              child: Text(
+                farmController.farmName,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 15,
                 ),
               ),
             ),
-            Text(
-          farmController.farmName,
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontFamily: 'Roboto',
-            fontSize: 15,
           ),
-        ),
-          ]),
-        ),
+        ]),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
@@ -81,8 +79,8 @@ class _HomeFarmState extends State<HomeFarm> {
                   50.0,
                   15.0,
                   Theme.of(context).primaryColor, () async {
-                    await incomeController.getIncome();
-                    await incomeController.getValues();
+                await incomeController.getIncome();
+                await incomeController.getValues();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => FinancialScreen()));
               }),

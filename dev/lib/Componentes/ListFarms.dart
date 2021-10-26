@@ -1,5 +1,4 @@
 import 'package:dev/Screens/ConfigFarm.dart';
-import 'package:dev/Screens/addFarm.dart';
 import 'package:dev/Screens/homeFarm.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +15,7 @@ Widget buildListFarms(
       // bool resposta = await userController.checkToken();
       // if (resposta) {
         await farmController.getFarmById(farmId);
+        Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomeFarm()));
       // } else
@@ -50,6 +50,7 @@ Widget buildListFarms(
                   //   await _storage.write(
                   //       key: 'profileIndex', value: index.toString());
                     await farmController.getFarmById(farmId);
+                    Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => ConfigFarm()));
                   // } else

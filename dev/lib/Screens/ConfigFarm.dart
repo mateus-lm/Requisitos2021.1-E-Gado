@@ -1,6 +1,5 @@
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:dev/Screens/farmsScreen.dart';
-import 'package:dev/Screens/homeFarm.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart';
@@ -75,8 +74,8 @@ class _ConfigFarmState extends State<ConfigFarm> {
                 color: Colors.black,
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () async {
-                  await farmController.getFarmById(farmController.farmId);
-                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FarmsScreen()));
                 },
                 alignment: Alignment.centerRight,
               ),
@@ -162,12 +161,14 @@ class _ConfigFarmState extends State<ConfigFarm> {
           builder: (_) => PopUpAlertDialog(
                 "Fazenda atualizada com sucesso.",
                 onPressed: () async {
-                  await farmController.getFarmById(farmController.farmId);
+                  // await farmController.getFarmById(farmController.farmId);
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeFarm()));
+                      MaterialPageRoute(builder: (context) => FarmsScreen()));
                 },
               ));
-    }else{
+    } else {
       print("ruim");
     }
   }
@@ -180,6 +181,8 @@ class _ConfigFarmState extends State<ConfigFarm> {
         context: context,
         builder: (_) =>
             PopUpAlertDialog("Você excluiu todas as fazendas", onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => FarmsScreen()));
         }),
@@ -191,9 +194,10 @@ class _ConfigFarmState extends State<ConfigFarm> {
         builder: (_) => PopUpAlertDialog(
           "Fazenda deletada com sucesso.",
           onPressed: () async {
-            await farmController.getFarmById(farms[0]['id']);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeFarm()));
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FarmsScreen()));
           },
         ),
       );

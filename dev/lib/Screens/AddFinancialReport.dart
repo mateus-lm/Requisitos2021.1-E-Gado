@@ -1,4 +1,5 @@
 import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/Screens/FinancialScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart';
@@ -71,7 +72,7 @@ class _AddFinancialState extends State<AddFinancial> {
           padding: EdgeInsets.only(right: 30),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.only(right: 10, left: 10),
               child: CircleAvatar(
                 radius: 17.5,
                 backgroundColor: Theme.of(context).primaryColor,
@@ -81,12 +82,14 @@ class _AddFinancialState extends State<AddFinancial> {
                 ),
               ),
             ),
-            Text(
-              farmController.farmName,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontFamily: 'Roboto',
-                fontSize: 15,
+            Expanded(
+              child: Text(
+                farmController.farmName,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 15,
+                ),
               ),
             ),
           ]),
@@ -98,7 +101,8 @@ class _AddFinancialState extends State<AddFinancial> {
               color: Colors.black,
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FinancialScreen()));
               },
               alignment: Alignment.centerRight,
             ),
@@ -131,25 +135,22 @@ class _AddFinancialState extends State<AddFinancial> {
                 ],
               ),
             ),
-            DropDownCreate(financesTypeCon, 'Tipo de gasto', 'Lucro', 'Despesa'),
-            MyWidgets().caixaTexto('Valor', valueCon),
-            DatePick(dateCon, 'data'),
-            Container(
-              padding: EdgeInsets.only(bottom: 11.5),
-              child: TextField(
-                controller: descriptionCon,
-                decoration: InputDecoration(
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.blue, width: 1.0),
-                  ),
-                  border: const OutlineInputBorder(),
-                  labelStyle: TextStyle(color: Colors.black54),
-                  labelText: 'Descrição',
-                ),
-                //controller: _textEditingController,
-              ),
+            ErrorText(_error),
+            DropDownCreate(
+              financesTypeCon,
+              'Tipo de gasto',
+              'Lucro',
+              'Despesa',
+              errorText: _wrongFinancesType,
             ),
+            MyWidgets().caixaTexto('Valor', valueCon, errorText: _wrongValue),
+            DatePick(
+              dateCon,
+              'data',
+              errorText: _wrongDate,
+            ),
+            MyWidgets().caixaTexto('Descrição', descriptionCon,
+                errorText: _wrongDescription),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -195,7 +196,9 @@ class _AddFinancialState extends State<AddFinancial> {
           : _wrongFinancesType = null;
       _value.isEmpty ? _wrongValue = text : _wrongValue = null;
       _date == null ? _wrongDate = text : _wrongDate = null;
-      _description == null ? _wrongDescription = text : _wrongDescription = null;
+      _description == null
+          ? _wrongDescription = text
+          : _wrongDescription = null;
     });
     if (_financesType == null ||
         _value.isEmpty ||
@@ -215,7 +218,11 @@ class _AddFinancialState extends State<AddFinancial> {
           "Finança registrada com sucesso.",
           onPressed: () async {
             await incomeController.getIncome();
+            await incomeController.getValues();
             Navigator.pop(context);
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FinancialScreen()));
           },
         ),
       );

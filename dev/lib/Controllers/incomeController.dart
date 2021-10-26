@@ -73,6 +73,7 @@ abstract class IncomeControllerBase with Store {
     int expensee = 0;
     int valueParse = 0;
     for(int i=0; i < incomeList.length; i++){
+      if(incomeList[i]['farm'] == farmController.farmId){
       if (incomeList[i]['income_type'] == 'LUCRO'){
         valueParse = int.parse(incomeList[i]['value']);
         profitt += valueParse;
@@ -81,6 +82,7 @@ abstract class IncomeControllerBase with Store {
         valueParse = int.parse(incomeList[i]['value']);
         expensee += valueParse;
       }
+    }
     }
     int valorSomado = profitt - expensee;
      changeProfit(profitt);

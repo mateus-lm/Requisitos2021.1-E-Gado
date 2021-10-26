@@ -60,7 +60,9 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
   void initState() {
     super.initState();
     print(incomeController.incomeType);
-    incomeController.incomeType == "LUCRO" ? financesTypeCon.text = '1': financesTypeCon.text = '2' ;
+    incomeController.incomeType == "LUCRO"
+        ? financesTypeCon.text = '1'
+        : financesTypeCon.text = '2';
     valueCon.text = incomeController.incomeValue;
     dateCon.text = incomeController.incomeDate;
     descriptionCon.text = incomeController.incomeDescription;
@@ -79,7 +81,7 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
           padding: EdgeInsets.only(right: 30),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.only(right: 10, left: 10),
               child: CircleAvatar(
                 radius: 17.5,
                 backgroundColor: Theme.of(context).primaryColor,
@@ -89,12 +91,14 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
                 ),
               ),
             ),
-            Text(
-              farmController.farmName,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontFamily: 'Roboto',
-                fontSize: 15,
+            Expanded(
+              child: Text(
+                farmController.farmName,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 15,
+                ),
               ),
             ),
           ]),
@@ -106,7 +110,8 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
               color: Colors.black,
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FinancialScreen()));
               },
               alignment: Alignment.centerRight,
             ),
@@ -139,25 +144,29 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
                 ],
               ),
             ),
+            ErrorText(_error),
             DropDownCreate(
-                financesTypeCon, 'Tipo de gasto', 'Lucro', 'Despesa', dropdownValue: financesTypeCon.text,),
-            MyWidgets().caixaTexto('Valor', valueCon),
-            DatePick(dateCon, 'data'),
-            Container(
-              padding: EdgeInsets.only(bottom: 11.5),
-              child: TextField(
-                controller: descriptionCon,
-                decoration: InputDecoration(
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.blue, width: 1.0),
-                  ),
-                  border: const OutlineInputBorder(),
-                  labelStyle: TextStyle(color: Colors.black54),
-                  labelText: 'Descrição',
-                ),
-                //controller: _textEditingController,
-              ),
+              financesTypeCon,
+              'Tipo de gasto',
+              'Lucro',
+              'Despesa',
+              dropdownValue: financesTypeCon.text,
+              errorText: _wrongFinancesType,
+            ),
+            MyWidgets().caixaTexto(
+              'Valor',
+              valueCon,
+              errorText: _wrongValue,
+            ),
+            DatePick(
+              dateCon,
+              'Data',
+              errorText: _wrongDate,
+            ),
+            MyWidgets().caixaTexto(
+              'Descrição',
+              descriptionCon,
+              errorText: _wrongDescription,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -167,7 +176,9 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
                       const EdgeInsets.only(right: 25.0, left: 20.0, top: 30.0),
                   child: MyWidgets().button(
                       'Excluir', 100, 40, 15, Colors.redAccent[700], () {
-                        incomeController.deleteIncome(incomeController.incomeId).then((resposta) => validateDelete(resposta));
+                    incomeController
+                        .deleteIncome(incomeController.incomeId)
+                        .then((resposta) => validateDelete(resposta));
                   }),
                 ),
                 Padding(
@@ -228,28 +239,30 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
             await incomeController.getIncome();
             await incomeController.getValues();
             Navigator.pop(context);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => FinancialScreen()));
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FinancialScreen()));
           },
         ),
       );
     }
   }
 
-   void validateDelete(bool resposta) async {
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (_) => PopUpAlertDialog(
-          "Finança deletada com sucesso.",
-          onPressed: () async {
-            await incomeController.getIncome();
-            await incomeController.getValues();
-            Navigator.pop(context);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => FinancialScreen()));
-          },
-        ),
-      );
-    }
+  void validateDelete(bool resposta) async {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) => PopUpAlertDialog(
+        "Finança deletada com sucesso.",
+        onPressed: () async {
+          await incomeController.getIncome();
+          await incomeController.getValues();
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => FinancialScreen()));
+        },
+      ),
+    );
+  }
 }

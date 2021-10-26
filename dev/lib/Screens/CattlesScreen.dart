@@ -20,7 +20,7 @@ class _CattlesScreenState extends State<CattlesScreen> {
           padding: EdgeInsets.only(right: 30),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.only(right: 10, left: 10),
               child: CircleAvatar(
                 radius: 17.5,
                 backgroundColor: Theme.of(context).primaryColor,
@@ -30,12 +30,14 @@ class _CattlesScreenState extends State<CattlesScreen> {
                 ),
               ),
             ),
-            Text(
-              farmController.farmName,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontFamily: 'Roboto',
-                fontSize: 15,
+            Expanded(
+              child: Text(
+                farmController.farmName,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 15,
+                ),
               ),
             ),
           ]),
@@ -79,6 +81,7 @@ class _CattlesScreenState extends State<CattlesScreen> {
                   ],
                 ),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AddBovino()));
                 },
@@ -98,8 +101,10 @@ class _CattlesScreenState extends State<CattlesScreen> {
                         itemCount: projectSnap.data.length,
                         itemBuilder: (context, i) {
                           List cattles = projectSnap.data;
+                          if(cattles[i]['farm'] == farmController.farmId){
                           return buildListCattles(context, i,
                               cattles[i]['id_cattle'], cattles[i]['id']);
+                          }
                         });
                   } else {
                     return Center(child: CircularProgressIndicator());
