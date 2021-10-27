@@ -1,4 +1,3 @@
-import 'package:dev/Screens/FinancialScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:dev/Componentes/MyWidgets.dart';
 import '../globals.dart';
@@ -261,6 +260,8 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
             await incomeController.getIncome();
             await incomeController.getValues();
             Navigator.pop(context);
+            Navigator.of(context)
+                      .pushReplacementNamed('/financialScreen');
           },
         ),
       );
@@ -277,6 +278,8 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
           await incomeController.getIncome();
           await incomeController.getValues();
           Navigator.pop(context);
+          Navigator.of(context)
+                      .pushReplacementNamed('/financialScreen');
         },
       ),
     );

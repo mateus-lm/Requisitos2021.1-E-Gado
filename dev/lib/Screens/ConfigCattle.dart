@@ -294,6 +294,8 @@ class _ConfigCattleState extends State<ConfigCattle> {
           onPressed: () async {
             // await cattleController.getCattles();
             Navigator.of(context).pop();
+            Navigator.of(context)
+                      .pushReplacementNamed('/cattlesScreen');
           },
         ),
       );
@@ -309,6 +311,8 @@ class _ConfigCattleState extends State<ConfigCattle> {
         onPressed: () async {
           // await cattleController.getCattles();
           Navigator.of(context).pop();
+          Navigator.of(context)
+                      .pushReplacementNamed('/cattlesScreen');
         },
       ),
     );

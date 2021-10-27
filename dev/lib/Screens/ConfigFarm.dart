@@ -183,6 +183,7 @@ class _ConfigFarmState extends State<ConfigFarm> {
                 onPressed: () {
                   // await farmController.getFarmById(farmController.farmId);
                   Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacementNamed('/farmsScreen');
                 },
               ));
     } else {
@@ -210,6 +211,7 @@ class _ConfigFarmState extends State<ConfigFarm> {
           "Fazenda deletada com sucesso.",
           onPressed: () {
             Navigator.of(context).pop();
+            Navigator.of(context).pushReplacementNamed('/farmsScreen');
           },
         ),
       );
