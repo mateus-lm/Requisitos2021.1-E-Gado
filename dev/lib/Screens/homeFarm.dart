@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dev/Componentes/MyWidgets.dart';
+import 'package:dev/Screens/CattleReport.dart';
 import 'package:dev/Screens/FinancialScreen.dart';
 import './CattlesScreen.dart';
 import 'package:dev/Screens/farmsScreen.dart';
@@ -17,7 +18,7 @@ class _HomeFarmState extends State<HomeFarm> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-          child: Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -66,7 +67,8 @@ class _HomeFarmState extends State<HomeFarm> {
                     height: 125,
                   )),
               Padding(
-                  padding: const EdgeInsets.only(bottom: 25.0),
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.03),
                   child: MyWidgets().button(
                       'Bovinos',
                       MediaQuery.of(context).size.width * 0.8,
@@ -74,11 +76,14 @@ class _HomeFarmState extends State<HomeFarm> {
                       15.0,
                       Theme.of(context).primaryColor, () async {
                     await cattleController.getCattles();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CattlesScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CattlesScreen()));
                   })),
               Padding(
-                padding: const EdgeInsets.only(bottom: 25.0),
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.03),
                 child: MyWidgets().button(
                     'Financeiro',
                     MediaQuery.of(context).size.width * 0.8,
@@ -87,40 +92,57 @@ class _HomeFarmState extends State<HomeFarm> {
                     Theme.of(context).primaryColor, () async {
                   await incomeController.getIncome();
                   await incomeController.getValues();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FinancialScreen()));
+                }),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.03),
+                child: MyWidgets().button(
+                    'Fazendas',
+                    MediaQuery.of(context).size.width * 0.8,
+                    50.0,
+                    15.0,
+                    Theme.of(context).primaryColor, () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FinancialScreen()));
+                      MaterialPageRoute(builder: (context) => FarmsScreen()));
                 }),
               ),
               MyWidgets().button(
-                  'Fazendas',
+                  'Relatório de Bovinos',
                   MediaQuery.of(context).size.width * 0.8,
                   50.0,
                   15.0,
-                  Theme.of(context).primaryColor, () {
+                  Theme.of(context).primaryColor, () async {
+                await cattleController.getCattles();
+                await cattleController.getListCattles();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FarmsScreen()));
+                    MaterialPageRoute(builder: (context) => CattleReport()));
               })
             ],
           ),
         ),
       ),
       onWillPop: () => showDialog<bool>(
-      context: context,
-      builder: (c) => AlertDialog(
-        title: Text('Aviso'),
-        content: Text('Realmente deseja sair do Aplicativo'),
-        actions: [
-          TextButton(
-            child: Text('Sim'),
-            onPressed: () => exit(0),
-          ),
-          TextButton(
-            child: Text('Não'),
-            onPressed: () => Navigator.pop(c, false),
-          ),
-        ],
+        context: context,
+        builder: (c) => AlertDialog(
+          title: Text('Aviso'),
+          content: Text('Realmente deseja sair do Aplicativo'),
+          actions: [
+            TextButton(
+              child: Text('Sim'),
+              onPressed: () => exit(0),
+            ),
+            TextButton(
+              child: Text('Não'),
+              onPressed: () => Navigator.pop(c, false),
+            ),
+          ],
+        ),
       ),
-    ),
     );
   }
 }
