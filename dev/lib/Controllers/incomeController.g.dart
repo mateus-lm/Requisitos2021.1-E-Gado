@@ -54,6 +54,51 @@ mixin _$IncomeController on IncomeControllerBase, Store {
     });
   }
 
+  final _$profit30Atom = Atom(name: 'IncomeControllerBase.profit30');
+
+  @override
+  int get profit30 {
+    _$profit30Atom.reportRead();
+    return super.profit30;
+  }
+
+  @override
+  set profit30(int value) {
+    _$profit30Atom.reportWrite(value, super.profit30, () {
+      super.profit30 = value;
+    });
+  }
+
+  final _$expense30Atom = Atom(name: 'IncomeControllerBase.expense30');
+
+  @override
+  int get expense30 {
+    _$expense30Atom.reportRead();
+    return super.expense30;
+  }
+
+  @override
+  set expense30(int value) {
+    _$expense30Atom.reportWrite(value, super.expense30, () {
+      super.expense30 = value;
+    });
+  }
+
+  final _$totalValue90Atom = Atom(name: 'IncomeControllerBase.totalValue90');
+
+  @override
+  int get totalValue90 {
+    _$totalValue90Atom.reportRead();
+    return super.totalValue90;
+  }
+
+  @override
+  set totalValue90(int value) {
+    _$totalValue90Atom.reportWrite(value, super.totalValue90, () {
+      super.totalValue90 = value;
+    });
+  }
+
   final _$incomeIdAtom = Atom(name: 'IncomeControllerBase.incomeId');
 
   @override
@@ -145,11 +190,34 @@ mixin _$IncomeController on IncomeControllerBase, Store {
     });
   }
 
+  final _$incomeListMonthAtom =
+      Atom(name: 'IncomeControllerBase.incomeListMonth');
+
+  @override
+  List<dynamic> get incomeListMonth {
+    _$incomeListMonthAtom.reportRead();
+    return super.incomeListMonth;
+  }
+
+  @override
+  set incomeListMonth(List<dynamic> value) {
+    _$incomeListMonthAtom.reportWrite(value, super.incomeListMonth, () {
+      super.incomeListMonth = value;
+    });
+  }
+
   final _$getIncomeAsyncAction = AsyncAction('IncomeControllerBase.getIncome');
 
   @override
   Future getIncome() {
     return _$getIncomeAsyncAction.run(() => super.getIncome());
+  }
+
+  final _$getListAsyncAction = AsyncAction('IncomeControllerBase.getList');
+
+  @override
+  Future getList(int opcao) {
+    return _$getListAsyncAction.run(() => super.getList(opcao));
   }
 
   final _$getValuesAsyncAction = AsyncAction('IncomeControllerBase.getValues');
@@ -214,6 +282,39 @@ mixin _$IncomeController on IncomeControllerBase, Store {
   }
 
   @override
+  dynamic changeProfit30(int value) {
+    final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
+        name: 'IncomeControllerBase.changeProfit30');
+    try {
+      return super.changeProfit30(value);
+    } finally {
+      _$IncomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeExpense30(int value) {
+    final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
+        name: 'IncomeControllerBase.changeExpense30');
+    try {
+      return super.changeExpense30(value);
+    } finally {
+      _$IncomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeTotalValue90(int value) {
+    final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
+        name: 'IncomeControllerBase.changeTotalValue90');
+    try {
+      return super.changeTotalValue90(value);
+    } finally {
+      _$IncomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic changeIncomeId(int value) {
     final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
         name: 'IncomeControllerBase.changeIncomeId');
@@ -269,11 +370,33 @@ mixin _$IncomeController on IncomeControllerBase, Store {
   }
 
   @override
-  dynamic changeIncomeList(dynamic value) {
+  dynamic changeIncomeList(List<dynamic> value) {
     final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
         name: 'IncomeControllerBase.changeIncomeList');
     try {
       return super.changeIncomeList(value);
+    } finally {
+      _$IncomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeIncomeListMonth(List<dynamic> value) {
+    final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
+        name: 'IncomeControllerBase.changeIncomeListMonth');
+    try {
+      return super.changeIncomeListMonth(value);
+    } finally {
+      _$IncomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getValuePerDay(int opcao) {
+    final _$actionInfo = _$IncomeControllerBaseActionController.startAction(
+        name: 'IncomeControllerBase.getValuePerDay');
+    try {
+      return super.getValuePerDay(opcao);
     } finally {
       _$IncomeControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -285,12 +408,16 @@ mixin _$IncomeController on IncomeControllerBase, Store {
 profit: ${profit},
 expense: ${expense},
 totalValue: ${totalValue},
+profit30: ${profit30},
+expense30: ${expense30},
+totalValue90: ${totalValue90},
 incomeId: ${incomeId},
 incomeType: ${incomeType},
 incomeValue: ${incomeValue},
 incomeDate: ${incomeDate},
 incomeDescription: ${incomeDescription},
-incomeList: ${incomeList}
+incomeList: ${incomeList},
+incomeListMonth: ${incomeListMonth}
     ''';
   }
 }

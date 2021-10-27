@@ -133,12 +133,35 @@ mixin _$CattleController on CattleControllerBase, Store {
     });
   }
 
+  final _$cattleListAtom = Atom(name: 'CattleControllerBase.cattleList');
+
+  @override
+  List<dynamic> get cattleList {
+    _$cattleListAtom.reportRead();
+    return super.cattleList;
+  }
+
+  @override
+  set cattleList(List<dynamic> value) {
+    _$cattleListAtom.reportWrite(value, super.cattleList, () {
+      super.cattleList = value;
+    });
+  }
+
   final _$getCattlesAsyncAction =
       AsyncAction('CattleControllerBase.getCattles');
 
   @override
   Future getCattles() {
     return _$getCattlesAsyncAction.run(() => super.getCattles());
+  }
+
+  final _$getListCattlesAsyncAction =
+      AsyncAction('CattleControllerBase.getListCattles');
+
+  @override
+  Future getListCattles() {
+    return _$getListCattlesAsyncAction.run(() => super.getListCattles());
   }
 
   final _$postCattlesAsyncAction =
@@ -258,6 +281,17 @@ mixin _$CattleController on CattleControllerBase, Store {
   }
 
   @override
+  dynamic changecattleList(List<dynamic> value) {
+    final _$actionInfo = _$CattleControllerBaseActionController.startAction(
+        name: 'CattleControllerBase.changecattleList');
+    try {
+      return super.changecattleList(value);
+    } finally {
+      _$CattleControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 cattleName: ${cattleName},
@@ -267,7 +301,8 @@ cattleBirthDay: ${cattleBirthDay},
 cattleWeight: ${cattleWeight},
 cattleMilkProduced: ${cattleMilkProduced},
 cattleLactationPeriod: ${cattleLactationPeriod},
-cattleId: ${cattleId}
+cattleId: ${cattleId},
+cattleList: ${cattleList}
     ''';
   }
 }
