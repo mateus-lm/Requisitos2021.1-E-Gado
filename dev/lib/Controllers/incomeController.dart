@@ -26,6 +26,24 @@ abstract class IncomeControllerBase with Store {
   changeTotalValue(int value) => totalValue = value;
 
   @observable
+  int profit30 = 0;
+
+  @action
+  changeProfit30(int value) => profit30 = value;
+
+  @observable
+  int expense30 = 0;
+
+  @action
+  changeExpense30(int value) => expense30 = value;
+
+  @observable
+  int totalValue90 = 0;
+
+  @action
+  changeTotalValue90(int value) => totalValue90 = value;
+
+  @observable
   int incomeId = 0;
 
   @action
@@ -61,6 +79,12 @@ abstract class IncomeControllerBase with Store {
   @action
   changeIncomeList(List value) => incomeList = value;
 
+  @observable
+  List incomeListMonth;
+
+  @action
+  changeIncomeListMonth(List value) => incomeListMonth = value;
+
   @action
   getIncome() async {
     Response response = await api.getIncome();
@@ -69,12 +93,43 @@ abstract class IncomeControllerBase with Store {
   }
 
   @action
-  getList() async {
+  getList(int opcao) async {
     var list = <dynamic>[];
     assert(list.isEmpty);
+    DateTime dateIn;
+    DateTime date = new DateTime.now();
+
     for (int i = 0; i < incomeList.length; i++) {
-      if (incomeList[i]['farm'] == farmController.farmId) {
-        list.add(incomeList[i]);
+      dateIn = DateTime.parse(incomeList[i]['date']);
+      final difference = date.difference(dateIn).inDays;
+
+      if (opcao == 1) {
+        if (difference <= 30) {
+          if (incomeList[i]['farm'] == farmController.farmId) {
+            list.add(incomeList[i]);
+          }
+        }
+      }
+
+      if (opcao == 2) {
+        if (difference > 30 && difference <= 90) {
+          if (incomeList[i]['farm'] == farmController.farmId) {
+            list.add(incomeList[i]);
+          }
+        }
+      }
+
+      if (opcao == 3) {
+        if (difference > 90 && difference <= 180) {
+          if (incomeList[i]['farm'] == farmController.farmId) {
+            list.add(incomeList[i]);
+          }
+        }
+      }
+      if (opcao == 0) {
+        if (incomeList[i]['farm'] == farmController.farmId) {
+          list.add(incomeList[i]);
+        }
       }
     }
     return list;
@@ -93,6 +148,63 @@ abstract class IncomeControllerBase with Store {
         } else if (incomeList[i]['income_type'] == 'DESPESA') {
           valueParse = int.parse(incomeList[i]['value']);
           expensee += valueParse;
+        }
+      }
+    }
+
+    int valorSomado = profitt - expensee;
+    changeProfit(profitt);
+    changeExpense(expensee);
+    changeTotalValue(valorSomado);
+  }
+
+  @action
+  getValuePerDay(int opcao) {
+    DateTime dateIn;
+    DateTime date = new DateTime.now();
+    int profitt = 0;
+    int expensee = 0;
+    int valueParse = 0;
+
+    for (int i = 0; i < incomeList.length; i++) {
+      if (incomeList[i]['farm'] == farmController.farmId) {
+        dateIn = DateTime.parse(incomeList[i]['date']);
+        final difference = date.difference(dateIn).inDays;
+
+        if (opcao == 1) {
+          if (difference <= 30) {
+            if (incomeList[i]['income_type'] == 'LUCRO') {
+              valueParse = int.parse(incomeList[i]['value']);
+              profitt += valueParse;
+            } else if (incomeList[i]['income_type'] == 'DESPESA') {
+              valueParse = int.parse(incomeList[i]['value']);
+              expensee += valueParse;
+            }
+          }
+        }
+
+        if (opcao == 2) {
+          if (difference > 30 && difference <= 90) {
+            if (incomeList[i]['income_type'] == 'LUCRO') {
+              valueParse = int.parse(incomeList[i]['value']);
+              profitt += valueParse;
+            } else if (incomeList[i]['income_type'] == 'DESPESA') {
+              valueParse = int.parse(incomeList[i]['value']);
+              expensee += valueParse;
+            }
+          }
+        }
+
+        if (opcao == 3) {
+          if (difference > 90 && difference <= 180) {
+            if (incomeList[i]['income_type'] == 'LUCRO') {
+              valueParse = int.parse(incomeList[i]['value']);
+              profitt += valueParse;
+            } else if (incomeList[i]['income_type'] == 'DESPESA') {
+              valueParse = int.parse(incomeList[i]['value']);
+              expensee += valueParse;
+            }
+          }
         }
       }
     }

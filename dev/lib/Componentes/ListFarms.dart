@@ -18,7 +18,6 @@ Widget buildListFarms(
         incomeController.changeExpense(0);
         incomeController.changeProfit(0);
         incomeController.changeTotalValue(0);
-        Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomeFarm()));
       // } else

@@ -3,6 +3,8 @@ import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:dev/Screens/AddFinancialReport.dart';
 import 'package:dev/globals.dart';
 import 'package:flutter/material.dart';
+import '../Componentes/MyWidgets.dart';
+import '../globals.dart';
 
 class FinancialScreen extends StatefulWidget {
   @override
@@ -10,7 +12,10 @@ class FinancialScreen extends StatefulWidget {
 }
 
 class _FinancialScreenState extends State<FinancialScreen> {
-  int expense = 0;
+  String expense = incomeController.expense.toString();
+  String profit = incomeController.profit.toString();
+  String valueTotal = incomeController.totalValue.toString();
+  Future income = incomeController.getList(0);
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +72,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    height: MediaQuery.of(context).size.height * 0.10,
                     //alignment: Alignment.centerRight,
                     child: GestureDetector(
                       child: Row(
@@ -74,7 +80,9 @@ class _FinancialScreenState extends State<FinancialScreen> {
                         children: [
                           Icon(Icons.add, size: 30),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(5, 40, 30, 40),
+                            padding: EdgeInsets.only(
+                                right:
+                                    MediaQuery.of(context).size.width * 0.08),
                             child: Text(
                               "Adicionar Finança",
                               style: TextStyle(
@@ -99,7 +107,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                     ),
                   ),
                   FutureBuilder(
-                      future: incomeController.getList(),
+                      future: income,
                       builder: (context, projectSnap) {
                         if (projectSnap.hasError) {
                           return Text("Something went wrong");
@@ -113,15 +121,14 @@ class _FinancialScreenState extends State<FinancialScreen> {
                               itemBuilder: (context, i) {
                                 List income = projectSnap.data;
                                 return buildListIncome(
-                                    context,
-                                    i,
-                                    income[i]['income_type'],
-                                    income[i]['description'],
-                                    income[i]['value'],
-                                    income[i]['date'],
-                                    income[i]['id'], 
-                                    );
-                                
+                                  context,
+                                  i,
+                                  income[i]['income_type'],
+                                  income[i]['description'],
+                                  income[i]['value'],
+                                  income[i]['date'],
+                                  income[i]['id'],
+                                );
                               });
                         } else {
                           return Center(child: CircularProgressIndicator());
@@ -132,14 +139,78 @@ class _FinancialScreenState extends State<FinancialScreen> {
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.18,
+            height: MediaQuery.of(context).size.height * 0.24,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                  child: Text(
+                    'Visualizar relatório do(s) último(s):',
+                    style: TextStyle(color: Colors.black),
+                  )),
+              Row(children: [
+                MyWidgets().button(
+                    '1 mês',
+                    MediaQuery.of(context).size.width * 0.25,
+                    MediaQuery.of(context).size.height * 0.04,
+                    10,
+                    Colors.grey, () async {
+                  await incomeController.getValuePerDay(1);
+                  setState(() {
+                    expense = incomeController.expense.toString();
+                    profit = incomeController.profit.toString();
+                    valueTotal = incomeController.totalValue.toString();
+                    income = incomeController.getList(1);
+                  });
+                }),
+                MyWidgets().button(
+                    '3 meses',
+                    MediaQuery.of(context).size.width * 0.25,
+                    MediaQuery.of(context).size.height * 0.04,
+                    10,
+                    Colors.grey, () async {
+                  await incomeController.getValuePerDay(2);
+                  setState(() {
+                    expense = incomeController.expense.toString();
+                    profit = incomeController.profit.toString();
+                    valueTotal = incomeController.totalValue.toString();
+                    income = incomeController.getList(2);
+                  });
+                }),
+                MyWidgets().button(
+                    '6 meses',
+                    MediaQuery.of(context).size.width * 0.25,
+                    MediaQuery.of(context).size.height * 0.04,
+                    10,
+                    Colors.grey, () async {
+                  await incomeController.getValuePerDay(3);
+                  setState(() {
+                    expense = incomeController.expense.toString();
+                    profit = incomeController.profit.toString();
+                    valueTotal = incomeController.totalValue.toString();
+                    income = incomeController.getList(3);
+                  });
+                }),
+                MyWidgets().button(
+                    'Todos',
+                    MediaQuery.of(context).size.width * 0.25,
+                    MediaQuery.of(context).size.height * 0.04,
+                    10,
+                    Colors.grey, () async {
+                  await incomeController.getValues();
+                  setState(() {
+                    expense = incomeController.expense.toString();
+                    profit = incomeController.profit.toString();
+                    valueTotal = incomeController.totalValue.toString();
+                    income = incomeController.getList(0);
+                  });
+                }),
+              ]),
               Row(children: [
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
                       alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.04,
                       width: MediaQuery.of(context).size.width * 0.5,
                       child: Text(
                         'Soma dos Lucros',
@@ -149,8 +220,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                     alignment: Alignment.center,
                     height: MediaQuery.of(context).size.height * 0.06,
                     width: MediaQuery.of(context).size.width * 0.5,
-                    child: Text('R\$${incomeController.profit.toString()}',
-                        style: TextStyle(fontSize: 16)),
+                    child: Text('R\$$profit', style: TextStyle(fontSize: 16)),
                     decoration: BoxDecoration(
                         color: Colors.green,
                         border: Border(
@@ -161,7 +231,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                 ]),
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.04,
                       width: MediaQuery.of(context).size.width * 0.5,
                       alignment: Alignment.center,
                       child: Text(
@@ -179,8 +249,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                           top: BorderSide(color: Colors.black, width: 1.0),
                           bottom: BorderSide(color: Colors.black, width: 1.0),
                         )),
-                    child: Text('R\$${incomeController.expense.toString()}',
-                        style: TextStyle(fontSize: 16)),
+                    child: Text('R\$$expense', style: TextStyle(fontSize: 16)),
                   )
                 ])
               ]),
@@ -189,8 +258,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                 height: MediaQuery.of(context).size.height * 0.06,
                 width: MediaQuery.of(context).size.width,
                 color: Colors.blue,
-                child: Text(
-                    'Total: R\$${incomeController.totalValue.toString()}',
+                child: Text('Total: R\$$valueTotal',
                     style: TextStyle(fontSize: 16)),
               )
             ]),

@@ -70,136 +70,158 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return WillPopScope(
+      child: Scaffold(
         backgroundColor: Colors.white,
-        elevation: 5,
-        shadowColor: Color.fromRGBO(0, 0, 0, 1),
-        centerTitle: true,
-        title: Padding(
-          padding: EdgeInsets.only(right: 30),
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10, left: 10),
-              child: CircleAvatar(
-                radius: 17.5,
-                backgroundColor: Theme.of(context).primaryColor,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 5,
+          shadowColor: Color.fromRGBO(0, 0, 0, 1),
+          centerTitle: true,
+          title: Padding(
+            padding: EdgeInsets.only(right: 30),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10, left: 10),
+                child: CircleAvatar(
+                  radius: 17.5,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  child: Text(
+                    MyWidgets().splitName(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              Expanded(
                 child: Text(
-                  MyWidgets().splitName(),
-                  style: TextStyle(color: Colors.white),
+                  farmController.farmName,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 15,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Text(
-                farmController.farmName,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontFamily: 'Roboto',
-                  fontSize: 15,
-                ),
+            ]),
+          ),
+          leading: Builder(builder: (BuildContext context) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 30.0),
+              child: IconButton(
+                color: Colors.black,
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed('/financialScreen');
+                },
+                alignment: Alignment.centerRight,
               ),
-            ),
-          ]),
+            );
+          }),
         ),
-        leading: Builder(builder: (BuildContext context) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 30.0),
-            child: IconButton(
-              color: Colors.black,
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FinancialScreen()));
-              },
-              alignment: Alignment.centerRight,
-            ),
-          );
-        }),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 30.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Cadastro de Relatório Financeiro',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Roboto',
-                        fontSize: 18,
+        body: SingleChildScrollView(
+          padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 30.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Cadastro de Relatório Financeiro',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Roboto',
+                          fontSize: 18,
+                        ),
                       ),
                     ),
-                  ),
-                  Image(
-                    image: AssetImage('assets/images/logo.png'),
-                    width: 40,
-                    height: 40,
-                  ),
-                ],
-              ),
-            ),
-            ErrorText(_error),
-            DropDownCreate(
-              financesTypeCon,
-              'Tipo de gasto',
-              'Lucro',
-              'Despesa',
-              dropdownValue: financesTypeCon.text,
-              errorText: _wrongFinancesType,
-            ),
-            MyWidgets().caixaTexto(
-              'Valor',
-              valueCon,
-              errorText: _wrongValue,
-            ),
-            DatePick(
-              dateCon,
-              'Data',
-              errorText: _wrongDate,
-            ),
-            MyWidgets().caixaTexto(
-              'Descrição',
-              descriptionCon,
-              errorText: _wrongDescription,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(right: 25.0, left: 20.0, top: 30.0),
-                  child: MyWidgets().button(
-                      'Excluir', 100, 40, 15, Colors.redAccent[700], () {
-                    incomeController
-                        .deleteIncome(incomeController.incomeId)
-                        .then((resposta) => validateDelete(resposta));
-                  }),
+                    Image(
+                      image: AssetImage('assets/images/logo.png'),
+                      width: 40,
+                      height: 40,
+                    ),
+                  ],
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(left: 25.0, top: 30.0),
+              ),
+              ErrorText(_error),
+              DropDownCreate(
+                financesTypeCon,
+                'Tipo de gasto',
+                'Lucro',
+                'Despesa',
+                dropdownValue: financesTypeCon.text,
+                errorText: _wrongFinancesType,
+              ),
+              MyWidgets().caixaTexto(
+                'Valor',
+                valueCon,
+                errorText: _wrongValue,
+              ),
+              DatePick(
+                dateCon,
+                'Data',
+                errorText: _wrongDate,
+              ),
+              MyWidgets().caixaTexto(
+                'Descrição',
+                descriptionCon,
+                errorText: _wrongDescription,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 25.0, left: 20.0, top: 30.0),
                     child: MyWidgets().button(
-                        'Salvar', 100, 40, 15, Colors.greenAccent[700], () {
-                      setState(() {
-                        if (financesTypeCon.text == '1')
-                          _financesType = 'LUCRO';
-                        else if (financesTypeCon.text == '2')
-                          _financesType = 'DESPESA';
-                        else
-                          _financesType = null;
-                        _value = valueCon.text;
-                        _date = setDate(dateCon.text);
-                        _description = descriptionCon.text;
-                      });
-                      updateIncome();
-                    })),
-              ],
-            )
+                        'Excluir', 100, 40, 15, Colors.redAccent[700], () {
+                      incomeController
+                          .deleteIncome(incomeController.incomeId)
+                          .then((resposta) => validateDelete(resposta));
+                    }),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 25.0, top: 30.0),
+                      child: MyWidgets().button(
+                          'Salvar', 100, 40, 15, Colors.greenAccent[700], () {
+                        setState(() {
+                          if (financesTypeCon.text == '1')
+                            _financesType = 'LUCRO';
+                          else if (financesTypeCon.text == '2')
+                            _financesType = 'DESPESA';
+                          else
+                            _financesType = null;
+                          _value = valueCon.text;
+                          _date = setDate(dateCon.text);
+                          _description = descriptionCon.text;
+                        });
+                        updateIncome();
+                      })),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+      onWillPop: () => showDialog<bool>(
+        context: context,
+        builder: (c) => AlertDialog(
+          title: Text('Aviso'),
+          content: Text('Deseja Realmente retornar a tela anterior?'),
+          actions: [
+            TextButton(
+                child: Text('Sim'),
+                onPressed: () {
+                  Navigator.pop(c, false);
+                  Navigator.of(context)
+                      .pushReplacementNamed('/financialScreen');
+                }),
+            TextButton(
+              child: Text('Não'),
+              onPressed: () => Navigator.pop(c, false),
+            ),
           ],
         ),
       ),
@@ -239,9 +261,6 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
             await incomeController.getIncome();
             await incomeController.getValues();
             Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FinancialScreen()));
           },
         ),
       );
@@ -258,9 +277,6 @@ class _ConfigFinancialState extends State<ConfigFinancial> {
           await incomeController.getIncome();
           await incomeController.getValues();
           Navigator.pop(context);
-          Navigator.pop(context);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => FinancialScreen()));
         },
       ),
     );

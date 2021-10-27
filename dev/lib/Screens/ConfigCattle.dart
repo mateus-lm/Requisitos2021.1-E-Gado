@@ -1,7 +1,5 @@
 import 'package:dev/Componentes/MyWidgets.dart';
-import 'package:dev/Screens/CattlesScreen.dart';
 import 'package:flutter/material.dart';
-
 import '../globals.dart';
 
 class ConfigCattle extends StatefulWidget {
@@ -91,156 +89,179 @@ class _ConfigCattleState extends State<ConfigCattle> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+    return WillPopScope(
+      child: Scaffold(
           backgroundColor: Colors.white,
-          elevation: 5,
-          shadowColor: Color.fromRGBO(0, 0, 0, 1),
-          centerTitle: true,
-          title: Padding(
-            padding: EdgeInsets.only(right: 30),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 10, left: 10),
-                child: CircleAvatar(
-                  radius: 17.5,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: Text(
-                    MyWidgets().splitName(),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  farmController.farmName,
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontFamily: 'Roboto',
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ]),
-          ),
-          leading: Builder(builder: (BuildContext context) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 30.0),
-              child: IconButton(
-                color: Colors.black,
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CattlesScreen()));
-                },
-                alignment: Alignment.centerRight,
-              ),
-            );
-          }),
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 16),
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                      width: 2.0, color: const Color.fromRGBO(20, 20, 20, 1)),
-                  borderRadius: BorderRadius.circular(150),
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/logo.png"),
-                      fit: BoxFit.cover), //http rquest in future.
-                ),
-              ),
-              Container(
-                  margin: EdgeInsets.only(bottom: 26),
-                  child: TextButton(
-                    onPressed: () {
-                      print("Mudar");
-                    },
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 5,
+            shadowColor: Color.fromRGBO(0, 0, 0, 1),
+            centerTitle: true,
+            title: Padding(
+              padding: EdgeInsets.only(right: 30),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10, left: 10),
+                  child: CircleAvatar(
+                    radius: 17.5,
+                    backgroundColor: Theme.of(context).primaryColor,
                     child: Text(
-                      "Selecionar Avatar",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.bold,
-                      ),
+                      MyWidgets().splitName(),
+                      style: TextStyle(color: Colors.white),
                     ),
-                  )),
-              ErrorText(_error),
-              DropDownCreate(
-                creationTypeCon,
-                'Tipo de Criação',
-                'Leiteiro',
-                'Corte',
-                errorText: _wrongCreationType,
-                dropdownValue: creationTypeCon.text,
-              ),
-              MyWidgets()
-                  .caixaTexto('Identificação:', nameCon, errorText: _wrongName),
-              GenderPicker(
-                sexCon,
-                errorText: _wrongSex,
-                dropdownValue: sexCon.text,
-              ),
-              DatePick(
-                birthDateCon,
-                "Data de Nascimento",
-                errorText: _wrongBirthDate,
-              ),
-              MyWidgets().caixaTexto('Peso(KG)', weightCon),
-              MyWidgets().caixaTexto(
-                  'Quantidade de leite diário(Litros)', milkProducedCon),
-              MyWidgets()
-                  .caixaTexto('Periodo de lactação(dias)', lactationPeriodCon),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        right: 25.0, left: 20.0, top: 30.0),
-                    child: MyWidgets().button(
-                        'Excluir', 100, 40, 15, Colors.redAccent[700], () {
-                      cattleController
-                          .deleteCattle(cattleController.cattleId)
-                          .then((resposta) => validateDelete(resposta));
-                    }),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 25.0, top: 30.0),
-                      child: MyWidgets().button(
-                          'Salvar', 100, 40, 15, Colors.greenAccent[700], () {
-                        setState(() {
-                          if (creationTypeCon.text == '1')
-                            _creationType = 'GADO_LEITEIRO';
-                          else if (creationTypeCon.text == '2')
-                            _creationType = 'GADO_CORTE';
-                          else
-                            _creationType = null;
-                          _cattleName = nameCon.text;
-                          _birthDate = setDate(birthDateCon.text);
-                          if (sexCon.text == '1')
-                            _sex = 'MALE';
-                          else if (sexCon.text == '2')
-                            _sex = 'FEMALE';
-                          else
-                            _sex = null;
-                          _weight = weightCon.text;
-                          _lactationPeriod = lactationPeriodCon.text;
-                          _milkProduced = milkProducedCon.text;
-                        });
-                        updateCattle();
-                      })),
-                ],
-              )
-            ],
+                ),
+                Expanded(
+                  child: Text(
+                    farmController.farmName,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontFamily: 'Roboto',
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ]),
+            ),
+            leading: Builder(builder: (BuildContext context) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 30.0),
+                child: IconButton(
+                  color: Colors.black,
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed('/cattlesScreen');
+                  },
+                  alignment: Alignment.centerRight,
+                ),
+              );
+            }),
           ),
-        ));
+          body: SingleChildScrollView(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 16),
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        width: 2.0, color: const Color.fromRGBO(20, 20, 20, 1)),
+                    borderRadius: BorderRadius.circular(150),
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/logo.png"),
+                        fit: BoxFit.cover), //http rquest in future.
+                  ),
+                ),
+                Container(
+                    margin: EdgeInsets.only(bottom: 26),
+                    child: TextButton(
+                      onPressed: () {
+                        print("Mudar");
+                      },
+                      child: Text(
+                        "Selecionar Avatar",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )),
+                ErrorText(_error),
+                DropDownCreate(
+                  creationTypeCon,
+                  'Tipo de Criação',
+                  'Leiteiro',
+                  'Corte',
+                  errorText: _wrongCreationType,
+                  dropdownValue: creationTypeCon.text,
+                ),
+                MyWidgets().caixaTexto('Identificação:', nameCon,
+                    errorText: _wrongName),
+                GenderPicker(
+                  sexCon,
+                  errorText: _wrongSex,
+                  dropdownValue: sexCon.text,
+                ),
+                DatePick(
+                  birthDateCon,
+                  "Data de Nascimento",
+                  errorText: _wrongBirthDate,
+                ),
+                MyWidgets().caixaTexto('Peso(KG)', weightCon),
+                MyWidgets().caixaTexto(
+                    'Quantidade de leite diário(Litros)', milkProducedCon),
+                MyWidgets().caixaTexto(
+                    'Periodo de lactação(dias)', lactationPeriodCon),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 25.0, left: 20.0, top: 30.0),
+                      child: MyWidgets().button(
+                          'Excluir', 100, 40, 15, Colors.redAccent[700], () {
+                        cattleController
+                            .deleteCattle(cattleController.cattleId)
+                            .then((resposta) => validateDelete(resposta));
+                      }),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 25.0, top: 30.0),
+                        child: MyWidgets().button(
+                            'Salvar', 100, 40, 15, Colors.greenAccent[700], () {
+                          setState(() {
+                            if (creationTypeCon.text == '1')
+                              _creationType = 'GADO_LEITEIRO';
+                            else if (creationTypeCon.text == '2')
+                              _creationType = 'GADO_CORTE';
+                            else
+                              _creationType = null;
+                            _cattleName = nameCon.text;
+                            _birthDate = setDate(birthDateCon.text);
+                            if (sexCon.text == '1')
+                              _sex = 'MALE';
+                            else if (sexCon.text == '2')
+                              _sex = 'FEMALE';
+                            else
+                              _sex = null;
+                            _weight = weightCon.text;
+                            _lactationPeriod = lactationPeriodCon.text;
+                            _milkProduced = milkProducedCon.text;
+                          });
+                          updateCattle();
+                        })),
+                  ],
+                )
+              ],
+            ),
+          )),
+      onWillPop: () => showDialog<bool>(
+        context: context,
+        builder: (c) => AlertDialog(
+          title: Text('Aviso'),
+          content: Text('Deseja Realmente retornar a tela anterior?'),
+          actions: [
+            TextButton(
+                child: Text('Sim'),
+                onPressed: () {
+                  Navigator.pop(c, false);
+                  Navigator.of(context)
+                      .pushReplacementNamed('/cattlesScreen');
+                }),
+            TextButton(
+              child: Text('Não'),
+              onPressed: () => Navigator.pop(c, false),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   bool isEmpty() {
@@ -273,9 +294,6 @@ class _ConfigCattleState extends State<ConfigCattle> {
           onPressed: () async {
             // await cattleController.getCattles();
             Navigator.of(context).pop();
-            Navigator.of(context).pop();
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CattlesScreen()));
           },
         ),
       );
@@ -291,9 +309,6 @@ class _ConfigCattleState extends State<ConfigCattle> {
         onPressed: () async {
           // await cattleController.getCattles();
           Navigator.of(context).pop();
-          Navigator.of(context).pop();
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CattlesScreen()));
         },
       ),
     );

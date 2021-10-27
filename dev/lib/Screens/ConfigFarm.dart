@@ -1,7 +1,5 @@
 import 'package:dev/Componentes/MyWidgets.dart';
-import 'package:dev/Screens/farmsScreen.dart';
 import 'package:flutter/material.dart';
-
 import '../globals.dart';
 
 class ConfigFarm extends StatefulWidget {
@@ -52,87 +50,109 @@ class _ConfigFarmState extends State<ConfigFarm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+    return WillPopScope(
+      child: Scaffold(
           backgroundColor: Colors.white,
-          elevation: 5,
-          shadowColor: Color.fromRGBO(0, 0, 0, 1),
-          centerTitle: true,
-          title: Text(
-            'Cadastrar fazenda',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontFamily: 'Roboto',
-              fontSize: 15,
-            ),
-          ),
-          leading: Builder(builder: (BuildContext context) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 30.0),
-              child: IconButton(
-                color: Colors.black,
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () async {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FarmsScreen()));
-                },
-                alignment: Alignment.centerRight,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 5,
+            shadowColor: Color.fromRGBO(0, 0, 0, 1),
+            centerTitle: true,
+            title: Text(
+              'Cadastrar fazenda',
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontFamily: 'Roboto',
+                fontSize: 15,
               ),
-            );
-          }),
+            ),
+            leading: Builder(builder: (BuildContext context) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 30.0),
+                child: IconButton(
+                  color: Colors.black,
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacementNamed('/farmsScreen');
+                  },
+                  alignment: Alignment.centerRight,
+                ),
+              );
+            }),
+          ),
+          body: SingleChildScrollView(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      padding: EdgeInsets.only(bottom: 20.0),
+                      alignment: Alignment.center,
+                      child: Image(
+                        image: AssetImage('assets/images/farm_icon.png'),
+                        width: 125,
+                        height: 125,
+                      )),
+                  ErrorText(_error),
+                  MyWidgets().caixaTexto('Nome da Fazenda', farmNameCon,
+                      errorText: _wrongName),
+                  MyWidgets()
+                      .caixaTexto('Cidade', farmCityCon, errorText: _wrongCity),
+                  MyWidgets().caixaTexto('Estado', farmStateCon,
+                      errorText: _wrongState),
+                  MyWidgets().caixaTexto('Tamanho em hectares', farmSizeCon,
+                      errorText: _wrongSize),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 25.0, left: 20.0, top: 15.0),
+                        child: MyWidgets().button(
+                            'Excluir', 100, 40, 15, Colors.redAccent, () {
+                          farmController
+                              .deleteFarm(farmController.farmId)
+                              .then((resposta) => validateDelete(resposta));
+                        }),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25.0, top: 15.0),
+                        child: MyWidgets()
+                            .button('Salvar', 100, 40, 15, Colors.greenAccent,
+                                () async {
+                          setState(() {
+                            _farmName = farmNameCon.text;
+                            _farmCity = farmCityCon.text;
+                            _farmState = farmStateCon.text;
+                            _farmSize = farmSizeCon.text;
+                          });
+                          updateFarm();
+                        }),
+                      )
+                    ],
+                  )
+                ],
+              ))),
+      onWillPop: () => showDialog<bool>(
+        context: context,
+        builder: (c) => AlertDialog(
+          title: Text('Aviso'),
+          content: Text('Deseja Realmente retornar a tela anterior?'),
+          actions: [
+            TextButton(
+                child: Text('Sim'),
+                onPressed: () {
+                  Navigator.pop(c, false);
+                  Navigator.of(context)
+                      .pushReplacementNamed('/farmsScreen');
+                }),
+            TextButton(
+              child: Text('Não'),
+              onPressed: () => Navigator.pop(c, false),
+            ),
+          ],
         ),
-        body: SingleChildScrollView(
-            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                    padding: EdgeInsets.only(bottom: 20.0),
-                    alignment: Alignment.center,
-                    child: Image(
-                      image: AssetImage('assets/images/farm_icon.png'),
-                      width: 125,
-                      height: 125,
-                    )),
-                ErrorText(_error),
-                MyWidgets().caixaTexto('Nome da Fazenda', farmNameCon,
-                    errorText: _wrongName),
-                MyWidgets()
-                    .caixaTexto('Cidade', farmCityCon, errorText: _wrongCity),
-                MyWidgets()
-                    .caixaTexto('Estado', farmStateCon, errorText: _wrongState),
-                MyWidgets().caixaTexto('Tamanho em hectares', farmSizeCon,
-                    errorText: _wrongSize),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 25.0, left: 20.0, top: 15.0),
-                      child: MyWidgets()
-                          .button('Excluir', 100, 40, 15, Colors.redAccent, () {
-                        farmController
-                            .deleteFarm(farmController.farmId)
-                            .then((resposta) => validateDelete(resposta));
-                      }),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25.0, top: 15.0),
-                      child: MyWidgets().button(
-                          'Salvar', 100, 40, 15, Colors.greenAccent, () async {
-                        setState(() {
-                          _farmName = farmNameCon.text;
-                          _farmCity = farmCityCon.text;
-                          _farmState = farmStateCon.text;
-                          _farmSize = farmSizeCon.text;
-                        });
-                        updateFarm();
-                      }),
-                    )
-                  ],
-                )
-              ],
-            )));
+      ),
+    );
   }
 
   bool isEmpty() {
@@ -160,12 +180,9 @@ class _ConfigFarmState extends State<ConfigFarm> {
           context: context,
           builder: (_) => PopUpAlertDialog(
                 "Fazenda atualizada com sucesso.",
-                onPressed: () async {
+                onPressed: () {
                   // await farmController.getFarmById(farmController.farmId);
                   Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FarmsScreen()));
                 },
               ));
     } else {
@@ -181,10 +198,8 @@ class _ConfigFarmState extends State<ConfigFarm> {
         context: context,
         builder: (_) =>
             PopUpAlertDialog("Você excluiu todas as fazendas", onPressed: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => FarmsScreen()));
+          Navigator.pop(context);
+          Navigator.of(context).pushReplacementNamed('/farmsScreen');
         }),
       );
     } else {
@@ -193,11 +208,8 @@ class _ConfigFarmState extends State<ConfigFarm> {
         context: context,
         builder: (_) => PopUpAlertDialog(
           "Fazenda deletada com sucesso.",
-          onPressed: () async {
+          onPressed: () {
             Navigator.of(context).pop();
-            Navigator.of(context).pop();
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FarmsScreen()));
           },
         ),
       );

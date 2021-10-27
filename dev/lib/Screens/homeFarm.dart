@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dev/Componentes/MyWidgets.dart';
 import 'package:dev/Screens/FinancialScreen.dart';
 import './CattlesScreen.dart';
@@ -14,92 +16,111 @@ class HomeFarm extends StatefulWidget {
 class _HomeFarmState extends State<HomeFarm> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
+    return WillPopScope(
+          child: Scaffold(
         backgroundColor: Colors.white,
-        elevation: 5,
-        shadowColor: Color.fromRGBO(0, 0, 0, 1),
-        title: Row(children: [
-          Padding(
-            padding: EdgeInsets.only(
-                right: 10, left: MediaQuery.of(context).size.width * 0.2),
-            child: CircleAvatar(
-              radius: 17.5,
-              backgroundColor: Theme.of(context).primaryColor,
-              child: Text(
-                MyWidgets().splitName(),
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          elevation: 5,
+          shadowColor: Color.fromRGBO(0, 0, 0, 1),
+          title: Row(children: [
+            Padding(
               padding: EdgeInsets.only(
-                  right: MediaQuery.of(context).size.width * 0.2),
-              child: Text(
-                farmController.farmName,
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontFamily: 'Roboto',
-                  fontSize: 15,
+                  right: 10, left: MediaQuery.of(context).size.width * 0.2),
+              child: CircleAvatar(
+                radius: 17.5,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: Text(
+                  MyWidgets().splitName(),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
-          ),
-        ]),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-        child: Column(
-          children: [
-            Container(
-                padding: EdgeInsets.only(bottom: 50.0),
-                alignment: Alignment.center,
-                child: Image(
-                  image: AssetImage('assets/images/farm_icon.png'),
-                  width: 125,
-                  height: 125,
-                )),
-            Padding(
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    right: MediaQuery.of(context).size.width * 0.2),
+                child: Text(
+                  farmController.farmName,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+          ]),
+        ),
+        body: SingleChildScrollView(
+          padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+          child: Column(
+            children: [
+              Container(
+                  padding: EdgeInsets.only(bottom: 50.0),
+                  alignment: Alignment.center,
+                  child: Image(
+                    image: AssetImage('assets/images/farm_icon.png'),
+                    width: 125,
+                    height: 125,
+                  )),
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 25.0),
+                  child: MyWidgets().button(
+                      'Bovinos',
+                      MediaQuery.of(context).size.width * 0.8,
+                      50.0,
+                      15.0,
+                      Theme.of(context).primaryColor, () async {
+                    await cattleController.getCattles();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CattlesScreen()));
+                  })),
+              Padding(
                 padding: const EdgeInsets.only(bottom: 25.0),
                 child: MyWidgets().button(
-                    'Bovinos',
+                    'Financeiro',
                     MediaQuery.of(context).size.width * 0.8,
                     50.0,
                     15.0,
                     Theme.of(context).primaryColor, () async {
-                  await cattleController.getCattles();
+                  await incomeController.getIncome();
+                  await incomeController.getValues();
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CattlesScreen()));
-                })),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 25.0),
-              child: MyWidgets().button(
-                  'Financeiro',
+                      MaterialPageRoute(builder: (context) => FinancialScreen()));
+                }),
+              ),
+              MyWidgets().button(
+                  'Fazendas',
                   MediaQuery.of(context).size.width * 0.8,
                   50.0,
                   15.0,
-                  Theme.of(context).primaryColor, () async {
-                await incomeController.getIncome();
-                await incomeController.getValues();
+                  Theme.of(context).primaryColor, () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FinancialScreen()));
-              }),
-            ),
-            MyWidgets().button(
-                'Fazendas',
-                MediaQuery.of(context).size.width * 0.8,
-                50.0,
-                15.0,
-                Theme.of(context).primaryColor, () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FarmsScreen()));
-            })
-          ],
+                    MaterialPageRoute(builder: (context) => FarmsScreen()));
+              })
+            ],
+          ),
         ),
       ),
+      onWillPop: () => showDialog<bool>(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: Text('Aviso'),
+        content: Text('Realmente deseja sair do Aplicativo'),
+        actions: [
+          TextButton(
+            child: Text('Sim'),
+            onPressed: () => exit(0),
+          ),
+          TextButton(
+            child: Text('Não'),
+            onPressed: () => Navigator.pop(c, false),
+          ),
+        ],
+      ),
+    ),
     );
   }
 }
