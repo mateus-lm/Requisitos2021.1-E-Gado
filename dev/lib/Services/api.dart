@@ -106,7 +106,7 @@ abstract class ApiBase with Store {
         "weigth": weigth,
         "qtd_milk": qtdMilk,
         "days_to_lactation": daysToLactation,
-        "farm": 0
+        "farm": farm
       },
       options: Options(
         headers: {'Authorization': 'Bearer $token'},

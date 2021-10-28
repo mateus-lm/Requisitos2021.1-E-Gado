@@ -14,12 +14,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.blue),
       debugShowCheckedModeBanner: false,
-      home: LoginMenu(),
       routes: <String, WidgetBuilder>{
         '/financialScreen': (BuildContext context) => new FinancialScreen(),
         '/cattlesScreen': (BuildContext context) => new CattlesScreen(),
         '/farmsScreen': (BuildContext context) => new FarmsScreen(),
       },
+      home: LoginMenu(),
     );
   }
 }

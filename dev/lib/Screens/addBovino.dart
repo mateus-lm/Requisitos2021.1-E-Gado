@@ -106,7 +106,8 @@ class _AddBovinoState extends State<AddBovino> {
                 child: IconButton(
                   color: Colors.black,
                   icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
+                  onPressed: () async{
+                    await cattleController.getCattles();
                     Navigator.of(context)
                         .pushReplacementNamed('/cattlesScreen');
                   },
@@ -222,8 +223,7 @@ class _AddBovinoState extends State<AddBovino> {
                 child: Text('Sim'),
                 onPressed: () {
                   Navigator.pop(c, false);
-                  Navigator.of(context)
-                      .pushReplacementNamed('/cattlesScreen');
+                  Navigator.of(context).pushReplacementNamed('/cattlesScreen');
                 }),
             TextButton(
               child: Text('Não'),
@@ -262,8 +262,7 @@ class _AddBovinoState extends State<AddBovino> {
         context: context,
         builder: (_) => PopUpAlertDialog(
           "Bovino criado com sucesso.",
-          onPressed: () async {
-            // await cattleController.getCattles();
+          onPressed: () {
             Navigator.of(context).pop();
           },
         ),

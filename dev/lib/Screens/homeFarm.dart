@@ -112,13 +112,15 @@ class _HomeFarmState extends State<HomeFarm> {
                 }),
               ),
               MyWidgets().button(
-                  'Relatório de Bovinos',
+                  'Relatório',
                   MediaQuery.of(context).size.width * 0.8,
                   50.0,
                   15.0,
                   Theme.of(context).primaryColor, () async {
                 await cattleController.getCattles();
                 await cattleController.getListCattles();
+                await incomeController.getIncome();
+                await incomeController.getValuePerDay(1);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => CattleReport()));
               })

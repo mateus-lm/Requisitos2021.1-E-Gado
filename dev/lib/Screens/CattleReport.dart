@@ -13,7 +13,8 @@ class _CattleReportState extends State<CattleReport> {
   double propCorte = 0;
   double propMaleL = 0;
   double propFemaleL = 0;
-
+  double propMaleC = 0;
+  double propFemaleC = 0;
   @override
   void initState() {
     super.initState();
@@ -25,11 +26,11 @@ class _CattleReportState extends State<CattleReport> {
       propLeiteiro = leiteiro / corte;
       propCorte = corte / leiteiro;
     } else if (leiteiro == 0) {
-      propLeiteiro = 0;
+      propLeiteiro = 0.01;
       propCorte = 1;
     } else if (corte == 0) {
       propLeiteiro = 1;
-      propCorte = 0;
+      propCorte = 0.01;
     }
 
     if (propLeiteiro < propCorte) {
@@ -42,7 +43,7 @@ class _CattleReportState extends State<CattleReport> {
 
     //2a
     int maleL = cattleController.contMaleL;
-    int femaleL = cattleController.contCorte;
+    int femaleL = cattleController.contFemaleL;
 
     if (maleL != 0 && femaleL != 0) {
       propMaleL = maleL / femaleL;
@@ -61,6 +62,29 @@ class _CattleReportState extends State<CattleReport> {
     } else {
       propFemaleL = propFemaleL;
       propMaleL = 1;
+    }
+
+    //3a
+    int maleC = cattleController.contMaleC;
+    int femaleC = cattleController.contFemaleC;
+
+    if (maleC != 0 && femaleC != 0) {
+      propMaleC = maleC / femaleC;
+      propFemaleC = femaleC / maleC;
+    } else if (maleC == 0) {
+      propMaleC = 0.01;
+      propFemaleC = 1;
+    } else if (femaleC == 0) {
+      propMaleC = 1;
+      propFemaleC = 0.01;
+    }
+
+    if (propMaleC < propFemaleC) {
+      propMaleC = propMaleC;
+      propFemaleC = 1;
+    } else {
+      propFemaleC = propFemaleC;
+      propMaleC = 1;
     }
   }
 
@@ -118,7 +142,7 @@ class _CattleReportState extends State<CattleReport> {
               alignment: Alignment.center,
               height: MediaQuery.of(context).size.height * 0.05,
               child: Text(
-                'Relatório Bovinos',
+                'Relatório Geral',
                 style: TextStyle(fontSize: 20),
               )),
           Container(
@@ -226,7 +250,8 @@ class _CattleReportState extends State<CattleReport> {
                     Padding(
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).size.height * 0.006),
-                      child: Row( crossAxisAlignment: CrossAxisAlignment.end,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
@@ -236,14 +261,18 @@ class _CattleReportState extends State<CattleReport> {
                             child: Container(
                               alignment: Alignment.center,
                               color: Colors.black,
-                              height: MediaQuery.of(context).size.height * 0.05 * propMaleL,
+                              height: MediaQuery.of(context).size.height *
+                                  0.05 *
+                                  propMaleL,
                               width: MediaQuery.of(context).size.width * 0.08,
                             ),
                           ),
                           Container(
                             alignment: Alignment.center,
                             color: Colors.white,
-                            height: MediaQuery.of(context).size.height * 0.05 * propFemaleL,
+                            height: MediaQuery.of(context).size.height *
+                                0.05 *
+                                propFemaleL,
                             width: MediaQuery.of(context).size.width * 0.08,
                           ),
                         ],
@@ -295,6 +324,7 @@ class _CattleReportState extends State<CattleReport> {
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).size.height * 0.006),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
@@ -304,14 +334,18 @@ class _CattleReportState extends State<CattleReport> {
                             child: Container(
                               alignment: Alignment.center,
                               color: Colors.black,
-                              height: MediaQuery.of(context).size.height * 0.05,
+                              height: MediaQuery.of(context).size.height *
+                                  0.05 *
+                                  propMaleC,
                               width: MediaQuery.of(context).size.width * 0.08,
                             ),
                           ),
                           Container(
                             alignment: Alignment.center,
                             color: Colors.white,
-                            height: MediaQuery.of(context).size.height * 0.05,
+                            height: MediaQuery.of(context).size.height *
+                                0.05 *
+                                propFemaleC,
                             width: MediaQuery.of(context).size.width * 0.08,
                           ),
                         ],
@@ -373,6 +407,58 @@ class _CattleReportState extends State<CattleReport> {
                 ),
               ),
             ],
+          ),
+          Container(
+            alignment: Alignment.topCenter,
+            height: MediaQuery.of(context).size.height * 0.2,
+            width: MediaQuery.of(context).size.width * 0.9,
+            margin: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.teal[200],
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black,
+                  blurRadius: 2.0,
+                  spreadRadius: 0.0,
+                  offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                )
+              ],
+            ),
+            child: Column(
+              
+              children: [
+                Container(
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Text('Relatório Financeiro ultimo mês',
+                        style: TextStyle(fontSize: 16)),
+                  ),
+                Row(children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    child: Text('Lucro: R\$${incomeController.profit.toString()}',
+                        style: TextStyle(fontSize: 16)),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    alignment: Alignment.center,
+                    child: Text('Despesa: R\$${incomeController.expense}',
+                        style: TextStyle(fontSize: 16)),
+                  )
+                ]),
+                Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  width: MediaQuery.of(context).size.width,
+                  child: Text('Total: R\$${incomeController.totalValue}',
+                      style: TextStyle(fontSize: 16)),
+                )
+              ],
+            ),
           ),
         ],
       ),

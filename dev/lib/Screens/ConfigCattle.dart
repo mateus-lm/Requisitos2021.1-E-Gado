@@ -37,6 +37,7 @@ class _ConfigCattleState extends State<ConfigCattle> {
 
   void updateCattle() {
     if (isEmpty() == false) {
+      print(farmController.farmId);
       _error = false;
       cattleController
           .updateCattle(
@@ -52,7 +53,6 @@ class _ConfigCattleState extends State<ConfigCattle> {
           .then((resposta) => validate(resposta));
     } else {
       _error = true;
-      print("OLÁ");
     }
   }
 
@@ -130,7 +130,8 @@ class _ConfigCattleState extends State<ConfigCattle> {
                 child: IconButton(
                   color: Colors.black,
                   icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
+                  onPressed: () async {
+                    await cattleController.getCattles();
                     Navigator.of(context)
                         .pushReplacementNamed('/cattlesScreen');
                   },
@@ -285,14 +286,14 @@ class _ConfigCattleState extends State<ConfigCattle> {
   }
 
   void validate(bool resposta) {
-    if (resposta == true) {
+    if(resposta == true){
       showDialog(
         barrierDismissible: false,
         context: context,
         builder: (_) => PopUpAlertDialog(
           "Bovino atualizado com sucesso.",
           onPressed: () async {
-            // await cattleController.getCattles();
+            await cattleController.getCattles();
             Navigator.of(context).pop();
             Navigator.of(context)
                       .pushReplacementNamed('/cattlesScreen');
@@ -309,7 +310,7 @@ class _ConfigCattleState extends State<ConfigCattle> {
       builder: (_) => PopUpAlertDialog(
         "Bovino deletado com sucesso.",
         onPressed: () async {
-          // await cattleController.getCattles();
+          await cattleController.getCattles();
           Navigator.of(context).pop();
           Navigator.of(context)
                       .pushReplacementNamed('/cattlesScreen');

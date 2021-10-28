@@ -123,6 +123,7 @@ abstract class CattleControllerBase with Store {
     int contFemaleL = 0;
     int contMaleC = 0;
     int contFemaleC = 0;
+
     assert(list.isEmpty);
     for (int i = 0; i < cattleList.length; i++) {
       if (cattleList[i]['farm'] == farmController.farmId) {
@@ -130,16 +131,16 @@ abstract class CattleControllerBase with Store {
         contT++;
         if (cattleList[i]['type_cattle'] == 'GADO_LEITEIRO') {
           contL++;
-          if (cattleList[i]['gender'] == 'Male') {
+          if (cattleList[i]['gender'] == 'MALE') {
             contMaleL++;
-          } else if (cattleList[i]['gender'] == 'Female') {
+          } else if (cattleList[i]['gender'] == 'FEMALE') {
             contFemaleL++;
           }
         } else if (cattleList[i]['type_cattle'] == 'GADO_CORTE') {
           contC++;
-          if (cattleList[i]['gender'] == 'Male') {
+          if (cattleList[i]['gender'] == 'MALE') {
             contMaleC++;
-          } else if (cattleList[i]['gender'] == 'Female') {
+          } else if (cattleList[i]['gender'] == 'FEMALE') {
             contFemaleC++;
           }
         }
@@ -202,6 +203,7 @@ abstract class CattleControllerBase with Store {
       String daysToLactation,
       int farm) async {
     var resposta = true;
+    print(farm);
     try {
       await api.updateCattle(cattleId, cattleName, creationType, gender,
           birthDay, weigth, qtdMilk, daysToLactation, farm);
@@ -209,6 +211,7 @@ abstract class CattleControllerBase with Store {
       resposta = false;
       print('erro');
       print("Erro: ${err.response.statusCode}");
+      print("Erro: ${err.response.data}");
     }
     return resposta;
   }
