@@ -201,11 +201,11 @@ class _CattleReportState extends State<CattleReport> {
                     ],
                   ),
                 ),
-                Row(
+                Row( mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.33,
+                          
                           right: MediaQuery.of(context).size.width * 0.023),
                       child: Text('Leiteiro'),
                     ),
@@ -278,11 +278,10 @@ class _CattleReportState extends State<CattleReport> {
                         ],
                       ),
                     ),
-                    Row(
+                    Row( mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.09,
                               right: MediaQuery.of(context).size.width * 0.023),
                           child: Text('Macho'),
                         ),
@@ -351,11 +350,10 @@ class _CattleReportState extends State<CattleReport> {
                         ],
                       ),
                     ),
-                    Row(
+                    Row( mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.09,
                               right: MediaQuery.of(context).size.width * 0.023),
                           child: Text('Macho'),
                         ),

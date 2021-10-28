@@ -43,7 +43,7 @@ class _AddFarmState extends State<AddFarm> {
                   color: Colors.black,
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed('/farmsScreen');
+                    Navigator.pop(context);
                   },
                   alignment: Alignment.centerRight,
                 ),
@@ -74,7 +74,7 @@ class _AddFarmState extends State<AddFarm> {
                         padding: const EdgeInsets.only(
                             right: 25.0, left: 20.0, top: 15.0),
                         child: MyWidgets().button('Cancelar', 100, 40, 15,
-                            Colors.redAccent[700], () {}),
+                            Colors.redAccent[700], () {Navigator.pop(context);}),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 25.0, top: 15.0),
@@ -93,7 +93,7 @@ class _AddFarmState extends State<AddFarm> {
                           // List farmsList = await farmController.getFarms();
                           // await farmController
                           //     .getFarmById(farmsList[farmsList.length - 1]['id']);
-                          Navigator.pop(context);
+                          Navigator.of(context).pushReplacementNamed('/farmsScreen');
                         }),
                       )
                     ],
