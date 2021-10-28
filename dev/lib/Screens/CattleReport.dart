@@ -486,40 +486,4 @@ class _CattleReportState extends State<CattleReport> {
   }
 }
 
-//   _criarLinhaTable(String listaNomes) {
-//     return TableRow(
-//       children: listaNomes.split(',').map((name) {
-//         return Container(
-//           alignment: Alignment.center,
-//           child: Text(
-//             name,
-//             style: TextStyle(fontSize: 20.0),
-//           ),
-//           padding: EdgeInsets.all(8.0),
-//         );
-//       }).toList(),
-//     );
-//   }
-// }
 
-Widget buildNumber(String number) => Container(
-      padding: EdgeInsets.all(16),
-      color: Colors.orange,
-      child: GridTile(
-        header: Text(
-          'Header $number',
-          textAlign: TextAlign.center,
-        ),
-        child: Center(
-          child: Text(
-            number,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 48),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        footer: Text(
-          'Footer $number',
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
