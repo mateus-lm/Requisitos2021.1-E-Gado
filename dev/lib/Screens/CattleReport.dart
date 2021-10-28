@@ -387,6 +387,17 @@ class _CattleReportState extends State<CattleReport> {
                     )
                   ],
                 ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.04,
+                              right: MediaQuery.of(context).size.width * 0.04,
+                              top: MediaQuery.of(context).size.height * 0.02 ),
+                        child: Text(
+                            'Média de leite produzido por dia (Em Litros): ${cattleController.qtdMilk/cattleController.contLeiteiro}'))
+                  ],
+                ),
               ),
               Container(
                 alignment: Alignment.center,
@@ -403,6 +414,17 @@ class _CattleReportState extends State<CattleReport> {
                       offset:
                           Offset(2.0, 2.0), // shadow direction: bottom right
                     )
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.04,
+                              right: MediaQuery.of(context).size.width * 0.04,
+                              top: MediaQuery.of(context).size.height * 0.02 ),
+                        child: Text(
+                            'Quantidade de leite produzido por dia (Em Litros): ${cattleController.qtdMilk}'))
                   ],
                 ),
               ),
@@ -425,21 +447,21 @@ class _CattleReportState extends State<CattleReport> {
               ],
             ),
             child: Column(
-              
               children: [
                 Container(
-                    alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Text('Relatório Financeiro ultimo mês',
-                        style: TextStyle(fontSize: 16)),
-                  ),
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Text('Relatório Financeiro ultimo mês',
+                      style: TextStyle(fontSize: 16)),
+                ),
                 Row(children: [
                   Container(
                     alignment: Alignment.center,
                     height: MediaQuery.of(context).size.height * 0.06,
                     width: MediaQuery.of(context).size.width * 0.45,
-                    child: Text('Lucro: R\$${incomeController.profit.toString()}',
+                    child: Text(
+                        'Lucro: R\$${incomeController.profit.toString()}',
                         style: TextStyle(fontSize: 16)),
                   ),
                   Container(

@@ -106,6 +106,12 @@ abstract class CattleControllerBase with Store {
   @action
   changeContFemaleC(int value) => contFemaleC = value;
 
+  @observable
+  int qtdMilk = 0;
+
+  @action
+  changeQtdMilk(int value) => qtdMilk = value;
+
   @action
   getCattles() async {
     Response response = await api.getCattles();
@@ -123,6 +129,7 @@ abstract class CattleControllerBase with Store {
     int contFemaleL = 0;
     int contMaleC = 0;
     int contFemaleC = 0;
+    int qtdMilkD = 0;
 
     assert(list.isEmpty);
     for (int i = 0; i < cattleList.length; i++) {
@@ -135,6 +142,7 @@ abstract class CattleControllerBase with Store {
             contMaleL++;
           } else if (cattleList[i]['gender'] == 'FEMALE') {
             contFemaleL++;
+            qtdMilkD += int.parse(cattleList[i]['qtd_milk']);
           }
         } else if (cattleList[i]['type_cattle'] == 'GADO_CORTE') {
           contC++;
@@ -146,6 +154,7 @@ abstract class CattleControllerBase with Store {
         }
       }
     }
+    changeQtdMilk(qtdMilkD);
     changeContFemaleL(contFemaleL);
     changeContMaleL(contMaleL);
     changeContFemaleC(contFemaleC);
