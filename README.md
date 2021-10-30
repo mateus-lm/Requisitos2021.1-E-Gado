@@ -2,5 +2,4 @@
 Repositório de desenvolvimento para aplicação
 
 # Instalando requirements.txt
-rode no terminal (Requisitos2021.1-E-Gado), com sua venv aberta o seguinte comando:
-pip install -r requirements.txt
+Instale o apk no celular, e seja feliz cadastrando sua conta e administrando os dados de suas fazendas.
