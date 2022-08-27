@@ -26,5 +26,5 @@ class Cattle(models.Model):
 
     owner = models.ForeignKey(to = User, on_delete = models.CASCADE)
 
-    # def __str__(self):
-    #     return self.id_cattle
+    def __str__(self):
+        return self.id_cattle

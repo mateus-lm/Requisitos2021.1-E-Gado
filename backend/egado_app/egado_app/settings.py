@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'cattle',
     'income_farm',
     'farm',
+    'pasture_farm',
     'corsheaders',
 ]
 

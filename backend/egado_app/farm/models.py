@@ -12,4 +12,4 @@ class Farm(models.Model):
     owner = models.ForeignKey(to = User, on_delete = models.CASCADE)
 
     def __str__(self):
-        return self.name_farm
+        return str(self.name_farm) + " | " + str(self.id) + " | " + str(self.owner)
